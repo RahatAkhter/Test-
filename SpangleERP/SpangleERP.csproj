@@ -1,0 +1,416 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F4416212-1CDA-4278-8D8E-B6CF0396C4EC}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SpangleERP</RootNamespace>
+    <AssemblyName>SpangleERP</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\contactform\contactform.js" />
+    <Content Include="Content\contactform\readme.txt" />
+    <Content Include="Content\css\animate.css" />
+    <Content Include="Content\css\animate.min.css" />
+    <Content Include="Content\css\bootstrap-theme.css" />
+    <Content Include="Content\css\bootstrap-theme.min.css" />
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\font-awesome.css" />
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\prettyPhoto.css" />
+    <Content Include="Content\css\style.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\js\bootstrap.js" />
+    <Content Include="Content\js\bootstrap.min.js" />
+    <Content Include="Content\js\functions.js" />
+    <Content Include="Content\js\html5shiv.js" />
+    <Content Include="Content\js\jquery-2.1.1.min.js" />
+    <Content Include="Content\js\jquery.isotope.min.js" />
+    <Content Include="Content\js\jquery.js" />
+    <Content Include="Content\js\jquery.prettyPhoto.js" />
+    <Content Include="Content\js\wow.min.js" />
+    <Content Include="Content\Site.css" />
+    <Content Include="examples\dashboard.html" />
+    <Content Include="examples\icons.html" />
+    <Content Include="examples\map.html" />
+    <Content Include="examples\notifications.html" />
+    <Content Include="examples\tables.html" />
+    <Content Include="examples\typography.html" />
+    <Content Include="examples\upgrade.html" />
+    <Content Include="examples\user.html" />
+    <Content Include="HR Module\Adjustment.aspx" />
+    <Content Include="HR Module\All_Users.aspx" />
+    <Content Include="HR Module\ApplicationLeave.aspx" />
+    <Content Include="HR Module\bootstrap-datepicker.css" />
+    <Content Include="HR Module\bootstrap-datepicker.js" />
+    <Content Include="HR Module\Delete2.aspx" />
+    <Content Include="HR Module\Employees.asmx" />
+    <Content Include="HR Module\Employee_History.aspx" />
+    <Content Include="HR Module\GazatedForm.aspx" />
+    <Content Include="HR Module\Images\spangle.jpg" />
+    <Content Include="HR Module\Images\SpangleMaster.JPG" />
+    <Content Include="HR Module\jani.jpg" />
+    <Content Include="HR Module\jsautotable.js" />
+    <Content Include="HR Module\Payroll.aspx" />
+    <Content Include="HR Module\pdf.js" />
+    <Content Include="HR Module\Scriptpdf.js" />
+    <Content Include="HR Module\teendence.aspx" />
+    <Content Include="HR Module\Time Practice.aspx" />
+    <Content Include="jquery-ui.css" />
+    <Content Include="jquery-ui.js" />
+    <Content Include="HR Module\jspdf.js" />
+    <Content Include="HR Module\Salary_Package.aspx" />
+    <Content Include="HR Module\ShiftDetail.aspx" />
+    <Content Include="HR Module\UpdateLeave.aspx" />
+    <Content Include="HR Module\UpdateShift.aspx" />
+    <Content Include="HR Module\ViewEmployeesDetail.aspx" />
+    <Content Include="Login.aspx" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\css\bootstrap.min.css" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\css\now-ui-dashboard.css" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\css\now-ui-dashboard.min.css" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\demo\demo.css" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\demo\demo.js" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\img\apple-icon.png" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\img\baar web.JPG" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\img\bg5.jpg" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\img\default-avatar.png" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\img\favicon.png" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\img\header.jpg" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\img\logo.PNG" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\img\logotrans.png" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\img\mike.jpg" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\img\now-logo.png" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\img\now-ui-dashboard.gif" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\img\SpangleMaster.JPG" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\js\core\bootstrap.min.js" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\js\core\jquery.min.js" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\js\core\popper.min.js" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\js\now-ui-dashboard.js" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\js\now-ui-dashboard.min.js" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\js\plugins\bootstrap-notify.js" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\js\plugins\chartjs.min.js" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\js\plugins\perfect-scrollbar.jquery.min.js" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\docs\documentation.html" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\examples\dashboard.html" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\examples\icons.html" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\examples\map.html" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\examples\notifications.html" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\examples\tables.html" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\examples\typography.html" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\examples\upgrade.html" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\examples\user.html" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\gulpfile.js" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\nucleo-icons.html" />
+    <Content Include="ViewEmployeeDetail.aspx" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HR Module\Adjustment.aspx.cs">
+      <DependentUpon>Adjustment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR Module\Adjustment.aspx.designer.cs">
+      <DependentUpon>Adjustment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR Module\All_Employees.cs" />
+    <Compile Include="HR Module\All_Leaves.cs" />
+    <Compile Include="HR Module\All_Users.aspx.cs">
+      <DependentUpon>All_Users.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR Module\All_Users.aspx.designer.cs">
+      <DependentUpon>All_Users.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR Module\ApplicationLeave.aspx.cs">
+      <DependentUpon>ApplicationLeave.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR Module\ApplicationLeave.aspx.designer.cs">
+      <DependentUpon>ApplicationLeave.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR Module\AttendenceData.cs" />
+    <Compile Include="HR Module\Delete2.aspx.cs">
+      <DependentUpon>Delete2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR Module\Delete2.aspx.designer.cs">
+      <DependentUpon>Delete2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR Module\EmployeeHistory.cs" />
+    <Compile Include="HR Module\Employees.asmx.cs">
+      <DependentUpon>Employees.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="HR Module\Employee_History.aspx.cs">
+      <DependentUpon>Employee_History.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR Module\Employee_History.aspx.designer.cs">
+      <DependentUpon>Employee_History.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR Module\Emp_Shifts.cs" />
+    <Compile Include="HR Module\GazatedForm.aspx.cs">
+      <DependentUpon>GazatedForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR Module\GazatedForm.aspx.designer.cs">
+      <DependentUpon>GazatedForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR Module\HR_Master.Master.cs">
+      <DependentUpon>HR_Master.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR Module\HR_Master.Master.designer.cs">
+      <DependentUpon>HR_Master.Master</DependentUpon>
+    </Compile>
+    <Compile Include="HR Module\Leaves_Count.cs" />
+    <Compile Include="HR Module\Packages.cs" />
+    <Compile Include="HR Module\Payroll.aspx.cs">
+      <DependentUpon>Payroll.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR Module\Payroll.aspx.designer.cs">
+      <DependentUpon>Payroll.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR Module\SalarySlip.cs" />
+    <Compile Include="HR Module\Salary_Package.aspx.cs">
+      <DependentUpon>Salary_Package.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR Module\Salary_Package.aspx.designer.cs">
+      <DependentUpon>Salary_Package.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR Module\ShiftDetail.aspx.cs">
+      <DependentUpon>ShiftDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR Module\ShiftDetail.aspx.designer.cs">
+      <DependentUpon>ShiftDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR Module\teendence.aspx.cs">
+      <DependentUpon>teendence.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR Module\teendence.aspx.designer.cs">
+      <DependentUpon>teendence.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR Module\Time Practice.aspx.cs">
+      <DependentUpon>Time Practice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR Module\Time Practice.aspx.designer.cs">
+      <DependentUpon>Time Practice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR Module\UpdateLeave.aspx.cs">
+      <DependentUpon>UpdateLeave.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR Module\UpdateLeave.aspx.designer.cs">
+      <DependentUpon>UpdateLeave.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR Module\UpdateShift.aspx.cs">
+      <DependentUpon>UpdateShift.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR Module\UpdateShift.aspx.designer.cs">
+      <DependentUpon>UpdateShift.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR Module\Users.cs" />
+    <Compile Include="HR Module\ViewEmployeesDetail.aspx.cs">
+      <DependentUpon>ViewEmployeesDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR Module\ViewEmployeesDetail.aspx.designer.cs">
+      <DependentUpon>ViewEmployeesDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewEmployeeDetail.aspx.cs">
+      <DependentUpon>ViewEmployeeDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewEmployeeDetail.aspx.designer.cs">
+      <DependentUpon>ViewEmployeeDetail.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\css\bootstrap-theme.css.map" />
+    <Content Include="Content\css\bootstrap.css.map" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="app.manifest" />
+    <Content Include="HR Module\HR_Master.Master" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\css\bootstrap.min.css.map" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\css\now-ui-dashboard.css.map" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\fonts\nucleo-license.md" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\fonts\nucleo-outline.eot" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\fonts\nucleo-outline.ttf" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\fonts\nucleo-outline.woff" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\fonts\nucleo-outline.woff2" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\js\now-ui-dashboard.js.map" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\cards\_card-chart.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\cards\_card-map.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\cards\_card-plain.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\cards\_card-user.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\mixins\_buttons.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\mixins\_cards.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\mixins\_dropdown.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\mixins\_inputs.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\mixins\_page-header.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\mixins\_sidebar.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\mixins\_transparency.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\mixins\_vendor-prefixes.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\plugins\_plugin-animate-bootstrap-notify.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\plugins\_plugin-perfect-scrollbar.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_alerts.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_buttons.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_cards.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_checkboxes-radio.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_dropdown.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_fixed-plugin.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_footers.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_images.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_inputs.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_misc.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_mixins.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_navbar.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_nucleo-outline.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_page-header.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_responsive.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_sidebar-and-main-panel.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_tables.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_typography.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\scss\now-ui-dashboard\_variables.scss" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\CHANGELOG.md" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\ISSUE_TEMPLATE.md" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\LICENSE.md" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\package.json" />
+    <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\README.md" />
+    <None Include="packages.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="HR Module\Document\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>53833</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:53833/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
