@@ -27,29 +27,26 @@ namespace SpangleERP.HR_Module
             }
         }
 
-        [WebMethod]
-        public static List<int> GetMasterData()
-        {
+        //[WebMethod]
+        //public static List<int> GetMasterData()
+        //{
 
 
 
-            List<int> list_det = new List<int>();
+        //    List<int> list_det = new List<int>();
 
 
            
-            for (Int32 i = 0; i < 10; i++)
-            {
-               
+        //    for (Int32 i = 0; i < 10; i++)
+        //    {
+              
+        //        list_det.Add(i);
+        //    }
+        //    return list_det;
 
 
 
-                list_det.Add(i);
-            }
-            return list_det;
-
-
-
-        }
+        //}
 
 
         [WebMethod]

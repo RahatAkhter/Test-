@@ -107,6 +107,7 @@
     <Content Include="HR Module\bootstrap-datepicker.css" />
     <Content Include="HR Module\bootstrap-datepicker.js" />
     <Content Include="HR Module\Delete2.aspx" />
+    <Content Include="HR Module\delete3.aspx" />
     <Content Include="HR Module\Employees.asmx" />
     <Content Include="HR Module\Employee_History.aspx" />
     <Content Include="HR Module\GazatedForm.aspx" />
@@ -192,12 +193,26 @@
       <DependentUpon>ApplicationLeave.aspx</DependentUpon>
     </Compile>
     <Compile Include="HR Module\AttendenceData.cs" />
+    <Compile Include="HR Module\CheckMaster.Master.cs">
+      <DependentUpon>CheckMaster.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR Module\CheckMaster.Master.designer.cs">
+      <DependentUpon>CheckMaster.Master</DependentUpon>
+    </Compile>
     <Compile Include="HR Module\Delete2.aspx.cs">
       <DependentUpon>Delete2.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="HR Module\Delete2.aspx.designer.cs">
       <DependentUpon>Delete2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR Module\delete3.aspx.cs">
+      <DependentUpon>delete3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HR Module\delete3.aspx.designer.cs">
+      <DependentUpon>delete3.aspx</DependentUpon>
     </Compile>
     <Compile Include="HR Module\EmployeeHistory.cs" />
     <Compile Include="HR Module\Employees.asmx.cs">
@@ -361,6 +376,7 @@
     <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\LICENSE.md" />
     <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\package.json" />
     <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\README.md" />
+    <Content Include="HR Module\CheckMaster.Master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

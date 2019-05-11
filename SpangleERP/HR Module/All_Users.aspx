@@ -64,7 +64,7 @@
         var $j = jQuery.noConflict();
 
         $j(document).ready(function () {
-
+            $j('#EditPopup').modal("show");
              $j('#txtseach').autocomplete({
             minLength: 1,
             focus: function (event, ui) {
@@ -219,6 +219,47 @@
     var k = event ? event.which : window.event.keyCode;
     if (k == 32) return false;
 }
+
+        function AddRow() {
+            var quantity = $("#getInQuantity").val();
+                var ddl = document.getElementById("<%=getitems.ClientID%>");
+             var siteems = ddl.options[ddl.selectedIndex].value;
+          
+             var markup = "<tr><td>" + siteems + "</td><td>" + quantity + "</td></tr>";
+             $("#CallTable tbody").append(markup);
+        }
+
+
+        function InsertData() {
+
+            var n = $("#CallTable").find("tr").length;
+            for (var i = 1; i < n - 1; i++) {
+                var Id = $("#txtgetid").text();
+                var ItemsNames = $("#CallTable").find("tr").eq(i + 1).find("td").eq(0).text();
+                var Quantities = $("#CallTable").find("tr").eq(i + 1).find("td").eq(1).text();
+                alert(Id);
+                alert(ItemsNames);
+                alert(Quantities);
+
+                //$.ajax({
+                //    type: "Post",
+                //    url: "GateIn.aspx/ItemInsert",
+                //    data: "{'ItemsId':" + Id + ",'ItemsNames':'" + ItemsNames + "','Quantities':'" + Quantities + "'}",
+
+                //    contentType: "application/json; charset=utf-8",
+                //    dataType: "json",
+                //    success: function () {
+                //        //alert("complete");
+                //    },
+
+                //    error: function (err) {
+                //        alert(err);
+                //    }
+                //})
+
+            }
+        }
+        
 
         function Update() {
             alert("agaya"+uid);
@@ -392,27 +433,75 @@
                                 </div>
                             </div>
 
-                       
-                          
-                           
-                  
-        
-      <%--</div>
-    </div>
-   
- 
-      </div>
-      </div>
-    </div>--%>
-
-
-        </div>
       </div>
     </div>
 </div>
         </div>
 
+          <div class="container">
+        <div class="modal fade" id="EditPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document"  >
+    <div class="modal-content">
+        <div class="modal-header" style="background-color:#0A408A;">
+            <table class="table-responsive-lg">
+                <tr>
+                    <td class="col-sm-4"><h2 style="color:white;">Add Items</h2> </td>
 
+             </tr>
+                    </table>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  
+                </div>
+      <div class="modal-body mx-3" >
+  
+ 
+                        <br />
+      <div class="form-group">
+          <div>
+  <label class="form-control col-sm-9" id="txtgetid" hidden></label>
+              
+
+          </div>
+      </div>
+    
+  <table id="CallTable" class="table table-responsive-lg table-hover" style="font-size:15px;"> 
+               
+           <thead style="font-family:Cambria ;font-size:14px;text-decoration-style:solid;color:#0A408A;">
+      <tr>
+        <th>Items_Id</th>
+        <th>Quantity</th>
+        <th>Add</th>
+ 
+    
+      
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+<td><asp:DropDownList ID="getitems" runat="server">
+
+    <asp:ListItem Value="1" Text="boomb"></asp:ListItem>
+    </asp:DropDownList>
+
+   </td>
+ 
+        <td>
+            <input type ="number" id="getInQuantity" class="form-control" min="1"      />
+        </td>
+          <td><input type="button"  class="btn btn-primary" id="btnAdd" value="Add Row" onclick="AddRow() "/></td>
+               </tr>
+  
+    </tbody>
+      
+  </table>
+      <input type="button" id="savetable" class="btn btn-primary" value="Save" onclick="InsertData();" />
+    
+        </div>
+      </div>
+    </div>
+</div>
+        </div>
         </form>
 
 

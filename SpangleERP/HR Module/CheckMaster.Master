@@ -1,14 +1,12 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="HR_Master.master.cs" Inherits="SpangleERP.HR_Module.HR_Master" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="CheckMaster.master.cs" Inherits="SpangleERP.HR_Module.CheckMaster" %>
 
 <!DOCTYPE html>
 
-
+<html>
 <head runat="server">
-    <meta charset="utf-8" />
-  
-
     <title></title>
- <script src="../jquery-ui.js"></script>
+
+   <script src="../jquery-ui.js"></script>
     <link href="../jquery-ui.css" rel="stylesheet" />
 <link rel="apple-touch-icon" sizes="76x76" href="../now-ui-dashboard-master/now-ui-dashboard-master/assets/img/apple-icon.png"/>
   <link rel="icon" type="image/png" href="../now-ui-dashboard-master/now-ui-dashboard-master/assets/img/favicon.png">
@@ -21,14 +19,48 @@
   <link href="../now-ui-dashboard-master/now-ui-dashboard-master/assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="../now-ui-dashboard-master/now-ui-dashboard-master/assets/css/now-ui-dashboard.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="../Content/js/jquery.js"></script>
+    <script type="text/javascript">
+        var $j = jQuery.noConflict();
+        $j(document).ready(function () {
+            $tbl= $('#main');
+             $j.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: 'delete3.aspx/GetRolos',
+
+                    data: "{}",
+
+                    dataType: "json",
+                    async: false,
+
+                 success: function (data) {
+                     //alert("Agya");
+                                $tbl.empty();
+                              //  $tbl.append('<ul class="nav">');
+
+                     for (var i = 0; i < data.d.length; i++) {
+                        // alert(data.d[i].Icon_Name);
+
+                                    $tbl.append('<li ><a href="' + data.d[i].URL + '" ><i class="' + data.d[i].Icon_Name + '" aria-hidden="true"></i><p style="color:white;"> Click Kro </p></a> </li>');
+                                }
+                            // $tbl.append(' </ul>');
+                     
+
+                    },
+                    Error: function (res) {
+                        alert("Error Occure" + res);
+
+                    }
+                });
 
 
-    </head>
+        });
 
-<asp:ContentPlaceHolder ID="head" runat="server">
-         
+    </script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
-
+</head>
 <body class="">
 
   <div class="wrapper ">
@@ -39,84 +71,8 @@
   <div class="logo" style="background-color:#DCDCDC;">
  <img src="../now-ui-dashboard-master/now-ui-dashboard-master/assets/img/logotrans.png" class="img-responsive" style="height:90px;width:100%;padding:0px;"/>      </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper" style="font-family:Cambria;font-weight:200 bold;background-color:	#0A408A;color:white;">
-        <ul class="nav">
-          <li >
-            <a href="ViewEmployeesDetail.aspx" >
-            <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>
-              <p style="color:white;">View Employee's</p>
-            </a>
-          </li>
-            <li >
-            <a href="All_Users.aspx" >
-            <i class="fas fa-user-circle" aria-hidden="true"></i>
-              <p style="color:white;">Users</p>
-            </a>
-          </li>
-          <li>
-            <a href="Adjustment.aspx">
-             <i class="glyphicon glyphicon-adjust" aria-hidden="true"></i>
-              <p style="color:white;">View Attendence</p>
-            </a>
-          </li>
-          <li>
-            <a href="ApplicationLeave.aspx">
-              <i class="glyphicon glyphicon-envelope"></i>
-              <p style="color:white;">Leave Application</p>
-            </a>
-          </li>
-          <li>
-            <a href="UpdateLeave.aspx">
-              <i class="fa fa-edit"></i>
-              <p style="color:white;">Update Leave</p>
-            </a>
-          </li>
-            <li>
-            <a href="payroll.aspx">
-              <i class="fa fa-edit"></i>
-              <p style="color:white;">Payroll</p>
-            </a>
-          </li>
-              <li>
-            <a href="teendence.aspx">
-              <i class="fa fa-edit"></i>
-              <p style="color:white;">Attendence</p>
-            </a>
-          </li>
-          <li>
-            <a href="ShiftDetail.aspx">
-              <i class="fa fa-plus"></i>
-              <p style="color:white;">Add Shift</p>
-            </a>
-          </li>
-          <li>
-            <a href="UpdateShift.aspx">
-              <i class="fa fa-edit"></i>
-              <p style="color:white;">Employee Shift</p>
-            </a>
-          </li>
-          <li>
-            <a href="GazatedForm.aspx">
-              <i class="glyphicon glyphicon-calendar"></i>
-              <p style="color:white;">Gazated Holiday</p>
-            </a>
-          </li>
-
-            <li>
-            <a href="Salary_Package.aspx">
-              <i class="fa fa-money"></i>
-              <p style="color:white;">Salary Package</p>
-            </a>
-          </li>
-            <li>
-            <a href="Employee_History.aspx">
-              <i class="fa fa-book"></i>
-              <p style="color:white;">Employee's History</p>
-            </a>
-          </li>
-            
-          
-          
-        </ul>
+        <ul class="nav" id="main">
+            </ul>
       </div>
     </div>
         <div class="main-panel" id="main-panel">
@@ -177,5 +133,3 @@
  </div>
     </body>
 </html>
-
-
