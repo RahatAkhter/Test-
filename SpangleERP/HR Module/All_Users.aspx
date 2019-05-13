@@ -64,7 +64,7 @@
         var $j = jQuery.noConflict();
 
         $j(document).ready(function () {
-            $j('#EditPopup').modal("show");
+           
              $j('#txtseach').autocomplete({
             minLength: 1,
             focus: function (event, ui) {
@@ -220,7 +220,7 @@
     if (k == 32) return false;
 }
 
-        function AddRow() {
+       <%-- function AddRow() {
             var quantity = $("#getInQuantity").val();
                 var ddl = document.getElementById("<%=getitems.ClientID%>");
              var siteems = ddl.options[ddl.selectedIndex].value;
@@ -241,24 +241,10 @@
                 alert(ItemsNames);
                 alert(Quantities);
 
-                //$.ajax({
-                //    type: "Post",
-                //    url: "GateIn.aspx/ItemInsert",
-                //    data: "{'ItemsId':" + Id + ",'ItemsNames':'" + ItemsNames + "','Quantities':'" + Quantities + "'}",
-
-                //    contentType: "application/json; charset=utf-8",
-                //    dataType: "json",
-                //    success: function () {
-                //        //alert("complete");
-                //    },
-
-                //    error: function (err) {
-                //        alert(err);
-                //    }
-                //})
+                
 
             }
-        }
+        }--%>
         
 
         function Update() {
@@ -338,6 +324,8 @@
     
             </asp:DropDownList>
   </div>
+                      
+
 
   <button type="button" class="btn pull-right" onclick="Insert()" style=" background-color: #0A408A;">Create</button>
  
@@ -404,7 +392,7 @@
   aria-hidden="true">
   <div class="modal-dialog modal-md" role="document"  >
     <div class="modal-content">
-        <div class="modal-header" style="background-color:#006699">
+        <div class="modal-header" style="background-color:#0A408A">
             <h2 style="color:white;">Salary Package</h2>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                   
@@ -429,7 +417,7 @@
           <div class="form-group">
                                
                                 <div class="col-xs-12  text-center">
-                                    <button type="button" class=" btn btn-primary"  onclick="Update();">Update</button>
+                                    <button type="button" class=" btn btn-primary"  onclick="Update();" style=" background-color:#0A408A">Update</button>
                                 </div>
                             </div>
 

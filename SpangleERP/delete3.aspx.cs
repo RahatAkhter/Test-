@@ -32,8 +32,9 @@ namespace SpangleERP.HR_Module
 
                     p.URL = Convert.ToString(dt.Rows[i]["URL"]);
                     p.Icon_Name = Convert.ToString(dt.Rows[i]["Icon_Name"]);
+                p.Page_Name = Convert.ToString(dt.Rows[i]["Page_Name"]);
 
-                    list_det.Add(p);
+                list_det.Add(p);
                 }
                 return list_det;
             
@@ -63,4 +64,5 @@ public class Roles_Content
 
     public string URL { get; set; }
     public string Icon_Name { get; set; }
+    public string Page_Name { get; set; }
 }

@@ -5,6 +5,15 @@
 <html>
 <head runat="server">
     <title></title>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 
    <script src="../jquery-ui.js"></script>
     <link href="../jquery-ui.css" rel="stylesheet" />
@@ -41,8 +50,8 @@
 
                      for (var i = 0; i < data.d.length; i++) {
                         // alert(data.d[i].Icon_Name);
-
-                                    $tbl.append('<li ><a href="' + data.d[i].URL + '" ><i class="' + data.d[i].Icon_Name + '" aria-hidden="true"></i><p style="color:white;"> Click Kro </p></a> </li>');
+                         //
+                                    $tbl.append('<li ><a href="' + data.d[i].URL + '" ><i class="' + data.d[i].Icon_Name + '" ></i><p style="color:white;"> '+data.d[i].Page_Name+' </p></a> </li>');
                                 }
                             // $tbl.append(' </ul>');
                      
@@ -51,7 +60,8 @@
                     Error: function (res) {
                         alert("Error Occure" + res);
 
-                    }
+                 }
+
                 });
 
 
