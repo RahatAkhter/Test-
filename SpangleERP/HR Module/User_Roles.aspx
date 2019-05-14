@@ -25,10 +25,10 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <title>Spangle</title>
  <script type="text/javascript">
-     
+     var $j = jQuery.noConflict();
 
-     $(document).ready(function () {
-         myFunctions()
+     $j(document).ready(function () {
+         $j('#child').hide();
      });
  
       
@@ -112,135 +112,39 @@
     }
        
 
-function AllowOnlyNumbers(e) {
 
-    e = (e) ? e : window.event;
-    var key = null;
-    var charsKeys = [
-        97, // a  Ctrl + a Select All
-        65, // A Ctrl + A Select All
-        99, // c Ctrl + c Copy
-        67, // C Ctrl + C Copy
-        118, // v Ctrl + v paste
-        86, // V Ctrl + V paste
-        115, // s Ctrl + s save
-        83, // S Ctrl + S save
-        112, // p Ctrl + p print
-        80 // P Ctrl + P print
-    ];
+     function Save() {
 
-    var specialKeys = [
-    8, // backspace
-    9, // tab
-    27, // escape
-    13, // enter
-    35, // Home & shiftKey +  #
-    36, // End & shiftKey + $
-    37, // left arrow &  shiftKey + %
-    39, //right arrow & '
-    46, // delete & .
-    45 //Ins &  -
-    ];
+         var n = $("#CallTable1").find("tr").length;
+         for (var i = 0; i < n - 1; i++) {
+             //var Id = $("#txtgetid").text();
+             var pagepath = $("#CallTable1").find("tr").eq(i + 1).find("td").eq(0).text();
+             var Page_Name = $("#CallTable1").find("tr").eq(i + 1).find("td").eq(1).text();
 
-    key = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+             var Icon_Name = $("#CallTable1").find("tr").eq(i + 1).find("td").eq(2).text();
+             var Level = $("#CallTable1").find("tr").eq(i + 1).find("td").eq(3).text();
 
-    //console.log("e.charCode: " + e.charCode + ", " + "e.which: " + e.which + ", " + "e.keyCode: " + e.keyCode);
-    //console.log(String.fromCharCode(key));
+                       $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                           url: 'User_Roles.aspx/InsertChild',
+                           data: "{'path1':'" + pagepath+ "','pname':'" + Page_Name + "','icon_name':'" + Icon_Name + "','level':'" + Level + "'}",
 
-    // check if pressed key is not number 
-    if (key && key < 48 || key > 57) {
+                    dataType: "json",
+                    async: false,
 
-        //Allow: Ctrl + char for action save, print, copy, ...etc
-        if ((e.ctrlKey && charsKeys.indexOf(key) != -1) ||
-            //Fix Issue: f1 : f12 Or Ctrl + f1 : f12, in Firefox browser
-            (navigator.userAgent.indexOf("Firefox") != -1 && ((e.ctrlKey && e.keyCode && e.keyCode > 0 && key >= 112 && key <= 123) || (e.keyCode && e.keyCode > 0 && key && key >= 112 && key <= 123)))) {
-            return true
-        }
-            // Allow: Special Keys
-        else if (specialKeys.indexOf(key) != -1) {
-            //Fix Issue: right arrow & Delete & ins in FireFox
-            if ((key == 39 || key == 45 || key == 46)) {
-                return (navigator.userAgent.indexOf("Firefox") != -1 && e.keyCode != undefined && e.keyCode > 0);
-            }
-                //DisAllow : "#" & "$" & "%"
-                //add e.altKey to prevent AltGr chars
-            else if ((e.shiftKey || e.altKey) && (key == 35 || key == 36 || key == 37)) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
-        else {
-            return false;
-        }
-    }
-    else {
-        return true;
-       }
-       }
+                    success: function (data) {
+                        alert(data.d);
+                    },
+                    Error: function (res) {
+                        alert("Error Occure" + res);
 
+                    }
+            });
 
-       function onlyAlphabets(e, t) {
-            try {
-                if (window.event) {
-                    var charCode = window.event.keyCode;
-                }
-                else if (e) {
-                    var charCode = e.which;
-                }
-                else { return true; }
-                if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123))
-                    return true;
-                else
-                    return false;
-            }
-            catch (err) {
-                alert(err.Description);
-            }
-        }function onlyAlphabets(e, t) {
-            try {
-                if (window.event) {
-                    var charCode = window.event.keyCode;
-                }
-                else if (e) {
-                    var charCode = e.which;
-                }
-                else { return true; }
-                if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123))
-                    return true;
-                else
-                    return false;
-            }
-            catch (err) {
-                alert(err.Description);
-            }
-       }
-
-       function limit(element, max) {    
-    var max_chars = max;
-    if(element.value.length > max_chars) {
-        element.value = element.value.substr(0, max_chars);
-    } 
-       }
-        //end//
-     // insert data by loop//
-     $(function () {
-         $("#savetable").click(function () {
-        
-                 var n = $("#CallTable").find("tr").length;
-                 for (var i = 1; i < n - 1; i++) {
-                     var Id = $("#txtgetid").text();
-                     var ItemsNames = $("#CallTable").find("tr").eq(i + 1).find("td").eq(0).text();
-                     var Quantities = $("#CallTable").find("tr").eq(i + 1).find("td").eq(1).text();
-   
-           
-
-                 }
-
-             })
-        
-     })
+         }
+     }
+            
      function ViewRecords() {
          $.ajax({
              url: 'GateIn.aspx/GateItems',
@@ -253,9 +157,7 @@ function AllowOnlyNumbers(e) {
                  var employeeTable = $('#viewsdata tbody');
                  employeeTable.empty();
                  for (var i = 0; i < data.d.length; i++) {
-
-                     //employeeTable.append('<tr><td>' + data.d[i].Emp_id + '</td><td>' +data.d[i].Emp_name.toString() + '</td><td> <Input type="time"  id="Txt' + i + '"  class="form-control"/></td><td><button type="button" id="btnAdd" class="btn btn-xs btn-primary   value="' + data.d[i].Emp_id + '"  onclick="add(this.value,' + i + ');">Check In</button></td><td> <Input type="time"  id="Txts' + i + '" class="form-control" /></td ><td><button type="button"  class="btn btn-xs btn-primary value="' + data.d[i].Emp_id + '" onclick="update(this.value,' + i + ');" >Check Out</button></td> </tr > ');
-                     employeeTable.append('<tr ><td class="control-label" style="Text-align:left;" >' + data.d[i].ItemIn_Id + '</td><td class="control_label">' + data.d[i].ItemsId  + '</td><td class="control_label">' + data.d[i].I_Quantity + '</td><td class="control_label">' + data.d[i].GateIn_Id + '</td></tr>')
+ employeeTable.append('<tr ><td class="control-label" style="Text-align:left;" >' + data.d[i].ItemIn_Id + '</td><td class="control_label">' + data.d[i].ItemsId  + '</td><td class="control_label">' + data.d[i].I_Quantity + '</td><td class="control_label">' + data.d[i].GateIn_Id + '</td></tr>')
                  }
              },
              error: function (err) {
@@ -264,16 +166,113 @@ function AllowOnlyNumbers(e) {
          });
      }
      function AddRow() {
-            
-             var markup = "<tr><td>jghjgh </td><td>sddd</td><td> <button type='button' class=' btn btn-danger' onclick='SomeDeleteRowFunction(this);'>Remove</button></td></tr>";
-             $("#CallTable tbody").append(markup);
-        }
+         
+         var URl = $('#URl').val();
+         var Page_Name = $('#Page_Name').val();
+         var Icon_Name = $('#Icon_Name').val();
+       
+            var I = document.getElementById("create").checked;
+         var U = document.getElementById("Update").checked;
+         var D = document.getElementById("delete").checked;
+             var V = document.getElementById("View").checked;
+         var level= Access();
+        
+         $("#CallTable1 tbody").append('<tr><td>' + URl + '</td><td>' + Page_Name + '</td><td>' + Icon_Name + '</td><td>' + level + '</td><td> <button type="button" class=" btn btn-danger" onclick="SomeDeleteRowFunction(this);">Remove</button></td></tr>');
+         $('#URl').val("");
+         $('#Page_Name').val("");
+         $('#Icon_Name').val("");
+     }
     
-  
+
+
+     function SaveParent() {
+
+         var name = $('#name').val();
+         
+         if (name != "") {
+
+             $.ajax({
+                 type: "POST",
+                 contentType: "application/json; charset=utf-8",
+                 url: 'User_Roles.aspx/Insert_Parent',
+                 data: "{'Name':'" + name + "'}",
+
+                 dataType: "json",
+                 async: false,
+
+                 success: function (data) {
+                     if (data.d == "Save") {
+                         $('#parent').hide();
+                         $('#child').show();
+                     }
+                     else {
+                         alert(data.d);
+                     }
+                 },
+                 Error: function (res) {
+                     alert("Error Occure" + res);
+
+                 }
+             });
+
+
+
+         }
+         else {
+             alert("Please Enter ROle Name");
+         }
+        
+     }
+
+
+     function Access() {
+         var Level = "";
+            var I = document.getElementById("create").checked;
+         var U = document.getElementById("Update").checked;
+         var D = document.getElementById("delete").checked;
+         var V = document.getElementById("View").checked;
+         //alert(U+" "+V+""+I+""+D);
+         var level;
+         if (I == true ) {
+             Level +="I";
+         }
+         else {
+             level += "";
+         }
+
+        
+         if (D == true ) {
+             Level +="D";
+         }
+         else {
+             level += "";
+         }
+
+         if (V == true ) {
+             Level +="V";
+         }
+         else {
+             level += "";
+         }
+
+
+         if (U == true) {
+             Level +="U";
+         }
+         else {
+             level += "";
+         }
+
+        
+        // alert(Level);
+         
+         return Level;
+     }
+
        function SomeDeleteRowFunction(row) {
        
         var d = row.parentNode.parentNode.rowIndex;
-           document.getElementById('CallTable').deleteRow(d);
+           document.getElementById('CallTable1').deleteRow(d);
 
 
      }
@@ -282,7 +281,7 @@ function AllowOnlyNumbers(e) {
 function myFunctions() {
 var x = document.getElementById("myUniqueBar");
 x.classList.add("show");
-setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
      }
 
      function SetPopup() {
@@ -472,16 +471,16 @@ display: block;
     <div class="container">
         <div class="modal fade" id="MachinePopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-md" role="document"  >
+  <div class="modal-dialog modal-lg" role="document"  >
     <div class="modal-content">
         <div class="modal-header" style="background-color:#0A408A;">
-            <h2 style="color:white;">Create Items</h2>
+            <h2 style="color:white;">Create Role</h2>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                   
                 </div>
       <div class="modal-body mx-3" >
      
-
+          <div id="parent">
   <form class="form-horizontal" method="post">
 
                         <br />
@@ -492,58 +491,23 @@ display: block;
                        <div class="form-group">
            
                
-          <div class="col-sm-12">
-                   <input type="text" class="form-control" id="Status"  maxlength="30" placeholder="Enter Role Name" required>
+          <div class="col-sm-4 col-sm-offset-4" >
+                   <input type="text" class="form-control" id="name"  maxlength="30" placeholder="Enter Role Name" required>
           </div>
                    
                         </div>    
                         <div class="form-group">
                             <div class="col-sm-12  text-center">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditPopup" style="background-color:#0A408A; border-color:#0A408A; box-sizing:border-box;" id="BtnSave">Save</button>
+                            <button type="button" class="btn btn-primary"  style="background-color:#0A408A; border-color:#0A408A; box-sizing:border-box;" id="BtnSave" onclick="SaveParent()">Save</button>
             
                          
                                 </div>
                         </div>
                     </form>
-        
-    
         </div>
-      </div>
-    </div>
-</div>
-        </div>
-       <%--        End popup--%>
+    <div id="child">
 
-                   <!-- Modal two-->
-    <div class="container">
-        <div class="modal fade" id="EditPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-lg"  role="document"  >
-    <div class="modal-content">
-        <div class="modal-header" style="background-color:#0A408A;">
-            <table class="table-responsive-lg">
-                <tr>
-                    <td class="col-sm-4"><h2 style="color:white;">Role Content</h2> </td>
-
-             </tr>
-                    </table>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  
-                </div>
-      <div class="modal-body mx-3" >
-     
-  <form class="form-horizontal" method="post">
-
-                        <br />
-      <div class="form-group">
-          <div>
-  
-              
-
-          </div>
-      </div>
-    
-  <table id="CallTable" class="table table-responsive-lg table-hover" style="font-size:15px;"> 
+        <table id="CallTable" class="table table-responsive-lg table-hover" style="font-size:15px;"> 
                
            <thead style="font-family:Cambria ;font-size:14px;text-decoration-style:solid;color:#0A408A;">
       <tr>
@@ -560,24 +524,24 @@ display: block;
     </thead>
     <tbody>
       <tr>
-<td style="width:25%;"><input type ="text" id="URl" class="form-control" min="4"  placeholder="URL" /></td>
+<td style="width:25%;"><input type ="text" id="URl" maxlength="40" class="form-control" min="4"  placeholder="URL" /></td>
  
         <td  style="width:25%;">
-            <input type ="text" id="Page_Name" class="form-control" min="4"  placeholder="PName" />
+            <input type ="text" id="Page_Name" maxlength="30" class="form-control" min="4"  placeholder="PName" />
         </td>
           <td  style="width:25%;">
-            <input type ="text" id="Icon_Name" class="form-control" min="4"  placeholder="PName" />
+            <input type ="text" id="Icon_Name" maxlength="20" class="form-control" min="4"  placeholder="PName" />
         </td>
           </tr>
                <tr >
                    <td  style="width:20%;">Rights</td>
                    <td style="width:20%;">
                        
-         <label class="checkbox-inline"><input type="checkbox" value="">Create</label></td>
+         <label class="checkbox-inline"><input type="checkbox" value="" id="create">Create</label></td>
 
-<td style="width:20%;"> <label class="checkbox-inline"><input type="checkbox" value="">Edit</label></td>
-<td style="width:20%;"><label class="checkbox-inline"><input type="checkbox" value="">Delete</label></td>
-             <td style="width:20%;">  <label class="checkbox-inline"><input type="checkbox" value="">View</label>
+<td style="width:20%;"> <label class="checkbox-inline"><input type="checkbox" value="" id="Update">Edit</label></td>
+<td style="width:20%;"><label class="checkbox-inline"><input type="checkbox" id="delete" value="">Delete</label></td>
+             <td style="width:20%;">  <label class="checkbox-inline"><input type="checkbox" id="View" value="">View</label>
                </td>
                    </tr>
         
@@ -591,26 +555,42 @@ display: block;
     </tbody>
       
   </table>
-      <div class=" col-sm-12 text-center">
-      <input type="button" id="savetable" class="btn btn-primary  text-center" value="Save" />
-          </div>          
-          </form>
 
-     
+       <table id="CallTable1" class="table table-responsive-lg table-hover" style="font-size:15px;"> 
+               
+           <thead style="font-family:Cambria ;font-size:14px;text-decoration-style:solid;color:#0A408A;">
+      <tr>
+        <th>URl</th>
+        <th>Page Name</th>
+        <th>Icon_Name</th>
+        <th>Access Level</th>
+  
+ 
+    
+      
+      </tr>
+              
+    </thead>
+   <tbody></tbody>
+      
+  </table>
+      <div class=" col-sm-12 text-center">
+      <input type="button" id="savetable1" class="btn btn-primary  text-center" value="Save" onclick="Save();" />
+          </div>   
+
+
+    </div>
         </div>
       </div>
     </div>
 </div>
         </div>
+       <%--        End popup--%>
 
-<%---End  Popup----%>
-
-
-             
-<%---End  Popup----%>
+                   
 
 
-    <div id="myUniqueBar" class="snackbar">Search By Id Or Date...!</div>
+    <div id="myUniqueBar" class="snackbar">...!</div>
     <div id="setdate" class="snackbar">Select Date...!</div>
      <div id="Alph" class="snackbar">Only Alphabets Are Allowed In This Field...!</div>
     <div id="Numb" class="snackbar">Only Positive Numberes Are Allowed In This Field...!</div>

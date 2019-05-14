@@ -52,6 +52,12 @@
               <p style="color:white;">Users</p>
             </a>
           </li>
+             <li >
+            <a href="User_Roles.aspx" >
+            <i class="fas fa-user-circle" aria-hidden="true"></i>
+              <p style="color:white;">Roles</p>
+            </a>
+          </li>
           <li>
             <a href="Adjustment.aspx">
              <i class="glyphicon glyphicon-adjust" aria-hidden="true"></i>
