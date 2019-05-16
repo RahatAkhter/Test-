@@ -24,10 +24,32 @@ namespace SpangleERP.HR_Module
             }
             else
             {
-                Response.Redirect("~/Login.aspx");
+                Response.Redirect("~/index.aspx");
             }
-        }
 
+            Bound();
+        }
+        public void Bound()
+        {
+            string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
+            SqlConnection conn = new SqlConnection(con1);
+
+            SqlCommand cmd = new SqlCommand(@"Select page_Name,page_id from pages", conn);
+
+            conn.Open();
+            DropDownList1.DataSource = cmd.ExecuteReader();
+            DropDownList1.DataTextField = "page_Name";
+            DropDownList1.DataValueField = "page_id";
+            DropDownList1.DataBind();
+
+            conn.Close();
+            conn.Dispose();
+
+           
+
+
+
+        }
 
         [WebMethod]
         public static string Insert_Parent(string Name)
@@ -77,7 +99,7 @@ namespace SpangleERP.HR_Module
         }
 
         [WebMethod]
-        public static string InsertChild(string path1,string pname,string icon_name,string level)
+        public static string InsertChild(string page_id, string level)
         {
 
             try
@@ -85,16 +107,13 @@ namespace SpangleERP.HR_Module
                 string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
                 SqlConnection conn = new SqlConnection(con1);
 
-                SqlCommand cmd1 = new SqlCommand(@"insert into Roles_Content values(@URl,@rights,@Icon_Name,@Role_Id,@User_Id,@Page_Name)", conn);
+                SqlCommand cmd1 = new SqlCommand(@"insert into Roles_Content values(@Role_Id,@User_Id,@Page_Id,@rights)", conn);
 
-                cmd1.Parameters.AddWithValue("@URl", path1);
+                cmd1.Parameters.AddWithValue("@Page_Id",Convert.ToInt32(page_id));
                 cmd1.Parameters.AddWithValue("@rights", level);
-                cmd1.Parameters.AddWithValue("@Icon_Name", icon_name);
                 cmd1.Parameters.AddWithValue("@Role_Id", Convert.ToInt32(Role_Id));
                 cmd1.Parameters.AddWithValue("@User_Id", id);
-                cmd1.Parameters.AddWithValue("@Page_Name", pname);
-
-
+               
                 conn.Open();
                 cmd1.ExecuteNonQuery();
 
@@ -109,6 +128,51 @@ namespace SpangleERP.HR_Module
             }
         }
 
+
+        [WebMethod]
+        public static List<Roles> GetRolesContent(string RID)
+        {
+
+     
+                List<Roles> list_det = new List<Roles>();
+
+
+                DataTable dt = getprint(Convert.ToInt32(RID));
+                for (Int32 i = 0; i < dt.Rows.Count; i++)
+                {
+                    Roles p = new Roles();
+
+                    p.Page_name = Convert.ToString(dt.Rows[i]["Page_name"]);
+                    p.Rights = Convert.ToString(dt.Rows[i]["Rights"]);
+
+                    list_det.Add(p);
+                }
+                return list_det;
+           
+        }
+
+        private static DataTable getprint(int Rid)
+        {
+
+            string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
+            SqlConnection conn = new SqlConnection(con1);
+            SqlCommand cmd = new SqlCommand(@"Select  page_Name,r.Rights from pages as p
+ left join Roles_Content as r
+ on p.page_id=r.Page_id
+ left join Roles as rc
+ on rc.Role_id=r.Role_id
+ where r.Role_id=@rid", conn);
+            cmd.Parameters.AddWithValue("@rid",Rid);
+            conn.Open();
+            DataTable dt = new DataTable();
+            SqlDataReader dr = cmd.ExecuteReader();
+            dt.Load(dr);
+            dr.Close();
+            conn.Close();
+
+            return dt;
+
+        }
 
     }
 }

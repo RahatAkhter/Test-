@@ -41,20 +41,7 @@ namespace SpangleERP
                 else
                 {
                     
-                    SqlCommand cmd1 = new SqlCommand(@"select r.Role_name
-from Users as u
- left join Roles as r
- on r.Role_id=u.Role
- where u.Email=@email and u.password=@pass", conn);
-                    // cmd.Parameters.AddWithValue("@date", SqlDbType.Date).Value = date;
-                    cmd1.Parameters.AddWithValue("@email", name);
-                    cmd1.Parameters.AddWithValue("@pass", pass);
-
-                    conn.Open();
-                    string Role = Convert.ToString(cmd1.ExecuteScalar());
-                    conn.Close();
-                    if(Role== "Manager")
-                    {
+                    
                         SqlCommand cmd2 = new SqlCommand("select User_id from Users where email=@email and password=@pass",conn);
                         cmd2.Parameters.AddWithValue("@email",name);
                         cmd2.Parameters.AddWithValue("@pass",pass);
@@ -67,11 +54,7 @@ from Users as u
                         return "ok";
 
                         
-                    }
-                    else
-                    {
-                        return "access denied";
-                    }
+                    
                 }
                
             }

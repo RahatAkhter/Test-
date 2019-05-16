@@ -28,7 +28,7 @@ namespace SpangleERP.HR_Module
             }
             else
             {
-                Response.Redirect("~/Login.aspx");
+                Response.Redirect("~/index.aspx");
             }
             Bound_Type();
             Bound_Depart();

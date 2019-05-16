@@ -23,7 +23,7 @@ namespace SpangleERP.HR_Module
             }
             else
             {
-                Response.Redirect("~/Login.aspx");
+                Response.Redirect("~/index.aspx");
             }
             Label1.Text = "Displaying Page" + (GridView1.PageIndex + 1).ToString() + " of " + GridView1.PageCount.ToString();
 

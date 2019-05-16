@@ -22,7 +22,7 @@ namespace SpangleERP.HR_Module
             }
             else
             {
-                Response.Redirect("~/Login.aspx");
+                Response.Redirect("~/index.aspx");
             }
         }
 

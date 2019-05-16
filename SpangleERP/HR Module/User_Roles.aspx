@@ -23,16 +23,74 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <title>Spangle</title>
  <script type="text/javascript">
      var $j = jQuery.noConflict();
 
      $j(document).ready(function () {
          $j('#child').hide();
+         Show_Data();
+         
      });
- 
-      
 
+
+  function Show_Data() {
+                 $j('#datatable').DataTable({
+            "aLengthMenu": [[10, 25,5], [10, 25, 5]],
+                "iDisplayLength": 5,
+                columns: [
+           
+                   { 'data': 'Role_Name' },
+                   
+                  {
+                                'data': 'Role_Id',
+                                'sortable': false,
+                                'searchable': false,
+                      'render': function (val) {
+
+                          return ' <button type="button" class=" btn btn-primary" value="' + val + '"  onclick="View(this.value);" style=" background-color: #0A408A;" >View</button>';
+                      }
+                    }
+                   
+                            
+                                        
+                    ],
+                bServerSide: true,
+                sAjaxSource: 'Employees.asmx/GetAll_Roles',
+                sServerMethod: 'post'
+            });
+        }
+
+     function View(Val) {
+
+         var $tbl = $('#datatable1');
+            $.ajax({
+             url: 'User_Roles.aspx/GetRolesContent',
+             contentType: "application/json; charset=utf-8",
+             dataType: "json",
+             method: 'post',
+             data: "{'RID':'" + Val + "'}",
+             success: function (data) {
+                
+                  $tbl.empty();
+         $tbl.append(' <tr><th>Page Name</th><th>Rights</th></tr>');
+
+                 for (var i = 0; i < data.d.length; i++) {
+                    
+ $tbl.append('<tr ><td >' + data.d[i].Page_name + '</td><td >' + data.d[i].Rights  + '</td></tr>')
+                 }
+                 $j('#MyModal').modal('show');
+             },
+             error: function (err) {
+                 alert(err);
+             }
+         });
+
+
+     }
   
 
      function Insert() {
@@ -116,33 +174,47 @@
      function Save() {
 
          var n = $("#CallTable1").find("tr").length;
-         for (var i = 0; i < n - 1; i++) {
-             //var Id = $("#txtgetid").text();
-             var pagepath = $("#CallTable1").find("tr").eq(i + 1).find("td").eq(0).text();
-             var Page_Name = $("#CallTable1").find("tr").eq(i + 1).find("td").eq(1).text();
+       
+         if (n == 1) {
+             alert("Please Select Some Data");
+         }
+         else {
+             for (var i = 0; i < n - 1; i++) {
+                 //var Id = $("#txtgetid").text();
 
-             var Icon_Name = $("#CallTable1").find("tr").eq(i + 1).find("td").eq(2).text();
-             var Level = $("#CallTable1").find("tr").eq(i + 1).find("td").eq(3).text();
+                 var Page_Id = $("#CallTable1").find("tr").eq(i + 1).find("td").eq(1).text();
 
-                       $.ajax({
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                           url: 'User_Roles.aspx/InsertChild',
-                           data: "{'path1':'" + pagepath+ "','pname':'" + Page_Name + "','icon_name':'" + Icon_Name + "','level':'" + Level + "'}",
+                 // var Icon_Name = $("#CallTable1").find("tr").eq(i + 1).find("td").eq(2).text();
+                 var Level = $("#CallTable1").find("tr").eq(i + 1).find("td").eq(2).text();
 
-                    dataType: "json",
-                    async: false,
+                 $.ajax({
+                     type: "POST",
+                     contentType: "application/json; charset=utf-8",
+                     url: 'User_Roles.aspx/InsertChild',
+                     data: "{'page_id':'" + Page_Id + "','level':'" + Level + "'}",
 
-                    success: function (data) {
-                        alert(data.d);
-                    },
-                    Error: function (res) {
-                        alert("Error Occure" + res);
+                     dataType: "json",
+                     async: false,
 
-                    }
-            });
+                     success: function (data) {
+                         alert(data.d);
+                     },
+                     Error: function (res) {
+                         alert("Error Occure" + res);
+
+                     }
+                 });
+
+             }
+             $j('#child').hide();
+             $j('#parent').show();
+             
+             window.location = "user_Roles.aspx";
 
          }
+
+
+
      }
             
      function ViewRecords() {
@@ -166,21 +238,21 @@
          });
      }
      function AddRow() {
+
          
-         var URl = $('#URl').val();
-         var Page_Name = $('#Page_Name').val();
-         var Icon_Name = $('#Icon_Name').val();
+         var ddl = document.getElementById("<%=DropDownList1.ClientID%>");
+         var Page_Name = ddl.options[ddl.selectedIndex].text;
+         var ddl1 = document.getElementById("<%=DropDownList1.ClientID%>");
+         var Page_id = ddl.options[ddl1.selectedIndex].value;
        
             var I = document.getElementById("create").checked;
          var U = document.getElementById("Update").checked;
          var D = document.getElementById("delete").checked;
              var V = document.getElementById("View").checked;
          var level= Access();
+
+         $("#CallTable1 tbody").append('<tr><td>' + Page_Name + '</td><td style="display:none;">' + Page_id + '</td><td>' + level + '</td><td> <button type="button" class=" btn btn-danger" onclick="SomeDeleteRowFunction(this);">Remove</button></td></tr>');
         
-         $("#CallTable1 tbody").append('<tr><td>' + URl + '</td><td>' + Page_Name + '</td><td>' + Icon_Name + '</td><td>' + level + '</td><td> <button type="button" class=" btn btn-danger" onclick="SomeDeleteRowFunction(this);">Remove</button></td></tr>');
-         $('#URl').val("");
-         $('#Page_Name').val("");
-         $('#Icon_Name').val("");
      }
     
 
@@ -287,7 +359,7 @@ setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
      function SetPopup() {
 var x = document.getElementById("setdate");
 x.classList.add("show");
-setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
      }
                     function TimeValidation() {
 var x = document.getElementById("settime");
@@ -415,53 +487,17 @@ display: block;
          <div class="panel-body">
             
              <!--Table-->          
-   <div class="table-responsive"> 
-      <div class="table-responsive">
-              <table  class="pull-right">
-                  <tr>
-                      <td>
-<input type="text" placeholder="Search Here By Id Or Date" id="search" class="form-control fas fa-search" style="border-radius:6px;font-family:Cambria;font:bold;height:30px;" onkeyup="SearchRecords()" onfocus="myFunctions()" />
-                  </td>
-                      <td>
-     <select id="maxRows" name="state" class="form-control" style="width:120px;height:31px;">
-         <option value="1000">Show All</option>
-         <option value="10">10</option>
-         <option value="20">25</option>
-         <option value="30">50</option>
-         <option value="100">100</option>
-     </select>
-                  </td></tr>
-              </table>
-
-         
-                </div>
-
-       <br />
-       <div class="table-wrapper-scroll-y my-custom-scrollbar">
-       <table id="tblEmployee" class="table table-responsive-lg table-hover" style="font-size:15px;"> 
-               
-           <thead style="font-family:Cambria ;font-size:14px;text-decoration-style:solid;color:#0A408A;">
-      <tr>
-        <th>GateIn_Id</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Rec_By</th>
-        <th>Chk_By</th>
-      
-        <th>Status</th>
-            <th>PO_NO</th>
-            <th>Vehicle No</th>
-    
-      
-      </tr>
-    </thead>
-    <tbody>
-      
-    </tbody>
-  </table>
- </div>
-      <%--scroll bar--%>
-           </div>
+   <table id="datatable" style=" width:100%; height:300px;">
+       <thead>
+                    <tr>
+                       
+                        <th>Role Name</th>
+                        <th>View</th>
+                        
+                        
+                    </tr>
+                </thead>
+    </table>
 </div>
   </div>
 </div>
@@ -506,15 +542,13 @@ display: block;
                     </form>
         </div>
     <div id="child">
-
+        <form runat="server">
         <table id="CallTable" class="table table-responsive-lg table-hover" style="font-size:15px;"> 
                
            <thead style="font-family:Cambria ;font-size:14px;text-decoration-style:solid;color:#0A408A;">
       <tr>
-        <th>URl</th>
-        <th>Page Name</th>
-        <th>Icon_Name</th>
-       
+        <th>Page</th>
+       <th>Rights</th>
   
  
     
@@ -524,18 +558,11 @@ display: block;
     </thead>
     <tbody>
       <tr>
-<td style="width:25%;"><input type ="text" id="URl" maxlength="40" class="form-control" min="4"  placeholder="URL" /></td>
  
-        <td  style="width:25%;">
-            <input type ="text" id="Page_Name" maxlength="30" class="form-control" min="4"  placeholder="PName" />
+        <td  style="width:20%;">
+            <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
         </td>
-          <td  style="width:25%;">
-            <input type ="text" id="Icon_Name" maxlength="20" class="form-control" min="4"  placeholder="PName" />
-        </td>
-          </tr>
-               <tr >
-                   <td  style="width:20%;">Rights</td>
-                   <td style="width:20%;">
+         <td style="width:20%;">
                        
          <label class="checkbox-inline"><input type="checkbox" value="" id="create">Create</label></td>
 
@@ -543,7 +570,8 @@ display: block;
 <td style="width:20%;"><label class="checkbox-inline"><input type="checkbox" id="delete" value="">Delete</label></td>
              <td style="width:20%;">  <label class="checkbox-inline"><input type="checkbox" id="View" value="">View</label>
                </td>
-                   </tr>
+          </tr>
+              
         
       
            <tr>
@@ -560,9 +588,7 @@ display: block;
                
            <thead style="font-family:Cambria ;font-size:14px;text-decoration-style:solid;color:#0A408A;">
       <tr>
-        <th>URl</th>
         <th>Page Name</th>
-        <th>Icon_Name</th>
         <th>Access Level</th>
   
  
@@ -580,6 +606,7 @@ display: block;
 
 
     </div>
+          </form>
         </div>
       </div>
     </div>
@@ -588,10 +615,34 @@ display: block;
        <%--        End popup--%>
 
                    
+    <!--View MOdal-->
+    <div class="container">
+        <div class="modal fade" id="MyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document"  >
+    <div class="modal-content">
+        <div class="modal-header" style="background-color:#0A408A;">
+            <h2 style="color:white;">Role Detail</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  
+                </div>
+      <div class="modal-body mx-3" >
+     
+
+  <table id="datatable1" style=" width:100%; height:300px; border-color:#0A408A" border="1" >
+      
+        
+    </table>
+        </div>
+      </div>
+    </div>
+</div>
+        </div>
+        
 
 
     <div id="myUniqueBar" class="snackbar">...!</div>
-    <div id="setdate" class="snackbar">Select Date...!</div>
+    <div id="setdate" class="snackbar">Your Data Is Saved</div>
      <div id="Alph" class="snackbar">Only Alphabets Are Allowed In This Field...!</div>
     <div id="Numb" class="snackbar">Only Positive Numberes Are Allowed In This Field...!</div>
     <div id="Varc" class="snackbar">Alphabets And Number Both Are Allowed In This Fields...!</div>

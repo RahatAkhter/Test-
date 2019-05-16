@@ -121,6 +121,105 @@ namespace SpangleERP.HR_Module
 
         }
 
+
+        //here we All Roles
+        [WebMethod]
+        public void GetAll_Roles(int iDisplayLength, int iDisplayStart, int iSortCol_0, string sSortDir_0, string sSearch)
+        {
+            int displayLength = iDisplayLength;
+            int displayStart = iDisplayStart;
+            int sortCol = iSortCol_0;
+            string sortDir = sSortDir_0;
+            string search = sSearch;
+
+            string cs = ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
+
+            List<Roles> listEmployees = new List<Roles>();
+            int filteredCount = 0;
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                SqlCommand cmd = new SqlCommand("get_Roles", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter paramDisplayLength = new SqlParameter()
+                {
+                    ParameterName = "@DisplayLength",
+                    Value = displayLength
+                };
+                cmd.Parameters.Add(paramDisplayLength);
+
+                SqlParameter paramDisplayStart = new SqlParameter()
+                {
+                    ParameterName = "@DisplayStart",
+                    Value = displayStart
+                };
+                cmd.Parameters.Add(paramDisplayStart);
+
+                SqlParameter paramSortCol = new SqlParameter()
+                {
+                    ParameterName = "@SortCol",
+                    Value = sortCol
+                };
+                cmd.Parameters.Add(paramSortCol);
+
+                SqlParameter paramSortDir = new SqlParameter()
+                {
+                    ParameterName = "@SortDir",
+                    Value = sortDir
+                };
+                cmd.Parameters.Add(paramSortDir);
+
+                SqlParameter paramSearchString = new SqlParameter()
+                {
+                    ParameterName = "@Search",
+                    Value = string.IsNullOrEmpty(search) ? null : search
+                };
+                cmd.Parameters.Add(paramSearchString);
+
+                con.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    Roles emp = new Roles();
+                    emp.Role_Id = Convert.ToInt32(rdr["Role_Id"]);
+                    filteredCount = Convert.ToInt32(rdr["TotalCount"]);
+                    emp.Role_Name = rdr["Role_Name"].ToString();
+                   
+                    listEmployees.Add(emp);
+                }
+            }
+
+            var result = new
+            {
+                iTotalRecords = GetRolesTotalCount(),
+                iTotalDisplayRecords = filteredCount,
+                aaData = listEmployees
+            };
+
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            Context.Response.Write(js.Serialize(result));
+
+        }
+
+        private int GetRolesTotalCount()
+        {
+            int totalEmployeeCount = 0;
+            string cs = ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                SqlCommand cmd = new
+                    SqlCommand("select count(*) from Roles", con);
+                con.Open();
+                totalEmployeeCount = (int)cmd.ExecuteScalar();
+            }
+            return totalEmployeeCount;
+
+
+
+        }
+
+
         // here we get EMployee History Data
 
         [WebMethod]

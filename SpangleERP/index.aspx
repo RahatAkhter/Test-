@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="SpangleERP.Login" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="index.aspx.cs" Inherits="SpangleERP.Login" %>
 
 <!DOCTYPE html>
 
@@ -105,7 +105,7 @@
                 $.ajax({
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
-                    url: 'Login.aspx/Signin',
+                    url: 'index.aspx/Signin',
 
                     data: "{'name':'" + name + "','pass':'" + pass + "'}",
 
@@ -119,7 +119,7 @@
                             alert("Please Insert Correct Email OR Password");
                         }
                         else if (data.d == "ok") {
-                            window.location = "HR%20Module/Adjustment.aspx";
+                            window.location = "TitlePage.aspx";
                         }
                         else {
                             alert(data.d);
@@ -151,7 +151,7 @@
                $.ajax({
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
-                    url: 'Login.aspx/Send_Pass',
+                    url: 'index.aspx/Send_Pass',
 
                     data: "{'Email':'" + name + "'}",
 

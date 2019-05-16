@@ -21,7 +21,7 @@ namespace SpangleERP.HR_Module
             }
             else
             {
-                Response.Redirect("~/Login.aspx");
+                Response.Redirect("~/index.aspx");
             }
             Button1.Visible = false;
         }

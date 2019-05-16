@@ -107,7 +107,7 @@
     <Content Include="HR Module\bootstrap-datepicker.css" />
     <Content Include="HR Module\bootstrap-datepicker.js" />
     <Content Include="HR Module\Delete2.aspx" />
-    <Content Include="delete3.aspx" />
+    <Content Include="TitlePage.aspx" />
     <Content Include="HR Module\Employees.asmx" />
     <Content Include="HR Module\Employee_History.aspx" />
     <Content Include="HR Module\GazatedForm.aspx" />
@@ -129,7 +129,7 @@
     <Content Include="HR Module\UpdateLeave.aspx" />
     <Content Include="HR Module\UpdateShift.aspx" />
     <Content Include="HR Module\ViewEmployeesDetail.aspx" />
-    <Content Include="Login.aspx" />
+    <Content Include="index.aspx" />
     <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\css\bootstrap.min.css" />
     <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\css\now-ui-dashboard.css" />
     <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\assets\css\now-ui-dashboard.min.css" />
@@ -208,12 +208,12 @@
     <Compile Include="HR Module\Delete2.aspx.designer.cs">
       <DependentUpon>Delete2.aspx</DependentUpon>
     </Compile>
-    <Compile Include="delete3.aspx.cs">
-      <DependentUpon>delete3.aspx</DependentUpon>
+    <Compile Include="TitlePage.aspx.cs">
+      <DependentUpon>TitlePage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="delete3.aspx.designer.cs">
-      <DependentUpon>delete3.aspx</DependentUpon>
+    <Compile Include="TitlePage.aspx.designer.cs">
+      <DependentUpon>TitlePage.aspx</DependentUpon>
     </Compile>
     <Compile Include="HR Module\EmployeeHistory.cs" />
     <Compile Include="HR Module\Employees.asmx.cs">
@@ -294,6 +294,7 @@
     <Compile Include="HR Module\UpdateShift.aspx.designer.cs">
       <DependentUpon>UpdateShift.aspx</DependentUpon>
     </Compile>
+    <Compile Include="HR Module\Roles.cs" />
     <Compile Include="HR Module\Users.cs" />
     <Compile Include="HR Module\User_Roles.aspx.cs">
       <DependentUpon>User_Roles.aspx</DependentUpon>
@@ -309,12 +310,12 @@
     <Compile Include="HR Module\ViewEmployeesDetail.aspx.designer.cs">
       <DependentUpon>ViewEmployeesDetail.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
+    <Compile Include="index.aspx.cs">
+      <DependentUpon>index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
+    <Compile Include="index.aspx.designer.cs">
+      <DependentUpon>index.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewEmployeeDetail.aspx.cs">

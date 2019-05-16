@@ -12,9 +12,20 @@ namespace SpangleERP.HR_Module
 {
     public partial class delete3 : System.Web.UI.Page
     {
+        public static int id;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["id"] != null)
+            {
+                string Us = (string)Session["id"];
+                id = Convert.ToInt32(Us.ToString());
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('"+id+"')", true);
 
+            }
+            else
+            {
+                Response.Redirect("~/index.aspx");
+            }
         }
 
         [WebMethod]
@@ -45,7 +56,16 @@ namespace SpangleERP.HR_Module
 
             string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
             SqlConnection conn = new SqlConnection(con1);
-            SqlCommand cmd = new SqlCommand(@"select * from Roles_Content", conn);
+            SqlCommand cmd = new SqlCommand(@"
+Select  p.page_Name,r.Rights,p.URl,p.Icon_Name from pages as p
+ left join Roles_Content as r
+ on p.page_id=r.Page_id
+ left join Roles as rc
+ on rc.Role_id=r.Role_id
+ left join Users as u
+ on u.Role=rc.Role_id
+ where u.User_id=@id", conn);
+            cmd.Parameters.AddWithValue("@id",id);
             conn.Open();
             DataTable dt = new DataTable();
             SqlDataReader dr = cmd.ExecuteReader();
