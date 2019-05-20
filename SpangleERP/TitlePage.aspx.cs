@@ -20,7 +20,7 @@ namespace SpangleERP.HR_Module
                 string Us = (string)Session["id"];
                 id = Convert.ToInt32(Us.ToString());
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('"+id+"')", true);
-
+                //Response.Redirect(Request.RawUrl.Replace(Request.Url.Query, ""));
             }
             else
             {

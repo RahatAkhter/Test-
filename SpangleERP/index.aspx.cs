@@ -50,8 +50,23 @@ namespace SpangleERP
                         int id = Convert.ToInt32(cmd2.ExecuteScalar());
                         conn.Close();
                        HttpContext.Current.Session["id"] = id.ToString();
-                       
-                        return "ok";
+                    SqlCommand cmd1 = new SqlCommand(@"
+Select Top 1  p.URl from pages as p
+ left join Roles_Content as r
+ on p.page_id = r.Page_id
+ left join Roles as rc
+ on rc.Role_id = r.Role_id
+ left join Users as u
+ on u.Role = rc.Role_id
+ where u.User_id = '"+id+"' ",conn);
+
+
+                    conn.Open();
+                    string direct = Convert.ToString(cmd1.ExecuteScalar());
+                    conn.Close();
+
+                  //  HttpContext.Current.Response.Redirect("TitlePage.aspx");
+                        return "ok"+direct;
 
                         
                     

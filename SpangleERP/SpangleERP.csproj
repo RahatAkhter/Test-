@@ -194,11 +194,11 @@
       <DependentUpon>ApplicationLeave.aspx</DependentUpon>
     </Compile>
     <Compile Include="HR Module\AttendenceData.cs" />
-    <Compile Include="CheckMaster.Master.cs">
+    <Compile Include="Ddd\CheckMaster.Master.cs">
       <DependentUpon>CheckMaster.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CheckMaster.Master.designer.cs">
+    <Compile Include="Ddd\CheckMaster.Master.designer.cs">
       <DependentUpon>CheckMaster.Master</DependentUpon>
     </Compile>
     <Compile Include="HR Module\Delete2.aspx.cs">
@@ -385,7 +385,7 @@
     <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\LICENSE.md" />
     <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\package.json" />
     <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\README.md" />
-    <Content Include="CheckMaster.Master" />
+    <Content Include="Ddd\CheckMaster.Master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

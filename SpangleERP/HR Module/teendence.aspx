@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/HR Module/HR_Master.Master" AutoEventWireup="true" CodeBehind="teendence.aspx.cs" Inherits="SpangleERP.HR_Module.teendence" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Ddd/CheckMaster.Master" AutoEventWireup="true" CodeBehind="teendence.aspx.cs" Inherits="SpangleERP.HR_Module.teendence" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     
     <!-- Latest compiled and minified CSS -->

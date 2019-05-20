@@ -32,39 +32,45 @@
     <script type="text/javascript">
         var $j = jQuery.noConflict();
         $j(document).ready(function () {
-            alert("dsdjbd");
+           
             $tbl= $('#main');
-             $j.ajax({
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    url: 'TitlePage.aspx/GetRolos',
+//             $j.ajax({
+//                    type: "POST",
+//                    contentType: "application/json; charset=utf-8",
+//                    url: 'TitlePage.aspx/GetRolos',
 
-                    data: "{}",
+//                    data: "{}",
 
-                    dataType: "json",
-                    async: false,
+//                    dataType: "json",
+//                    async: false,
 
-                 success: function (data) {
-                     //alert("Agya");
-                                $tbl.empty();
-                              //  $tbl.append('<ul class="nav">');
-                     var URl;
-                     for (var i = 0; i < data.d.length; i++) {
-                        // alert(data.d[i].Icon_Name);
-                         //
-                         URL = data.d[i].URL;
-                                    $tbl.append('<li ><a href="' + data.d[i].URL + '" ><i class="' + data.d[i].Icon_Name + '" ></i><p style="color:white;"> '+data.d[i].Page_Name+' </p></a> </li>');
-                                }
-                            // $tbl.append(' </ul>');
-                     
-                      window.location = URL;
-                 },
-                    Error: function (res) {
-                        alert("Error Occure" + res);
+//                 success: function (data) {
+//                     //alert("Agya");
+//                                $tbl.empty();
+//                              //  $tbl.append('<ul class="nav">');
+//                     var URl;
+//                     for (var i = 0; i < data.d.length; i++) {
+//                        // alert(data.d[i].Icon_Name);
+//                         //
+//                         URL = data.d[i].URL;
+//                                    $tbl.append('<li ><a href="' + data.d[i].URL + '" ><i class="' + data.d[i].Icon_Name + '" ></i><p style="color:white;"> '+data.d[i].Page_Name+' </p></a> </li>');
+//                                }
+//                            // $tbl.append(' </ul>');
+//                     //window.location.href("");
+                    
+//                    // var href = URL;
+////href = href.replace(/\/.*/,'');
+//                    // alert(href);
+//                    // window.location.href.replace(/\/.*/,'')[0]
 
-                 }
+//                      //window.location = URL;
+//                 },
+//                    Error: function (res) {
+//                        alert("Error Occure" + res);
 
-                });
+//                 }
+
+//                });
 
 
         });
@@ -84,6 +90,12 @@
  <img src="../now-ui-dashboard-master/now-ui-dashboard-master/assets/img/logotrans.png" class="img-responsive" style="height:90px;width:100%;padding:0px;"/>      </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper" style="font-family:Cambria;font-weight:200 bold;background-color:	#0A408A;color:white;">
         <ul class="nav" id="main">
+            <asp:Repeater ID="Repeater1" runat="server" >
+                    <ItemTemplate>
+                <li ><a href="<%# Eval("URL") %>" ><i class="<%# Eval("Icon_Name") %>" ></i><p style="color:white;"> <%# Eval("page_Name") %> </p></a> </li>
+                    </ItemTemplate>
+                    
+                    </asp:Repeater>
             </ul>
       </div>
     </div>

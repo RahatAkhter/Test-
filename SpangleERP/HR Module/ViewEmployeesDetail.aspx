@@ -1,4 +1,4 @@
-﻿ <%@ Page Title="" Language="C#" MasterPageFile="~/HR Module/HR_Master.Master" AutoEventWireup="true" CodeBehind="ViewEmployeesDetail.aspx.cs" Inherits="SpangleERP.HR_Module.ViewEmployeesDetail" %>
+﻿ <%@ Page Title="" Language="C#" MasterPageFile="~/Ddd/CheckMaster.Master" AutoEventWireup="true" CodeBehind="ViewEmployeesDetail.aspx.cs" Inherits="SpangleERP.HR_Module.ViewEmployeesDetail" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>

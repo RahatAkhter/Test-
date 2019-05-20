@@ -26,7 +26,7 @@ namespace SpangleERP.HR_Module
             Bound();
 
         }
-
+      
         public void Bound()
         {
             string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
