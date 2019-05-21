@@ -260,14 +260,15 @@
      function SaveParent() {
 
          var name = $('#name').val();
-         
-         if (name != "") {
+         var name1 = $('#fname').val();
+
+         if (name != "" && name1!="") {
 
              $.ajax({
                  type: "POST",
                  contentType: "application/json; charset=utf-8",
                  url: 'User_Roles.aspx/Insert_Parent',
-                 data: "{'Name':'" + name + "'}",
+                 data: "{'Name':'" + name + "','folder_name':'" + name1 + "'}",
 
                  dataType: "json",
                  async: false,
@@ -532,6 +533,14 @@ display: block;
           </div>
                    
                         </div>    
+         <div class="form-group">
+           
+               
+          <div class="col-sm-4 col-sm-offset-4" >
+                   <input type="text" class="form-control" id="fname"  maxlength="30" placeholder="Enter Folder Name" required>
+          </div>
+                   
+                        </div>  
                         <div class="form-group">
                             <div class="col-sm-12  text-center">
                             <button type="button" class="btn btn-primary"  style="background-color:#0A408A; border-color:#0A408A; box-sizing:border-box;" id="BtnSave" onclick="SaveParent()">Save</button>

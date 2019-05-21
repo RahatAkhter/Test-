@@ -17,8 +17,7 @@ namespace SpangleERP.HR_Module
         {
             string Us = (string)Session["id"];
             id = Convert.ToInt32(Us.ToString());
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + id + "')", true);
-            //Response.Redirect(Request.RawUrl.Replace(Request.Url.Query, ""));
+          
             string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
             SqlConnection conn = new SqlConnection(con1);
             SqlCommand cmd = new SqlCommand(@"

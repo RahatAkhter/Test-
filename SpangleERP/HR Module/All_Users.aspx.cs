@@ -102,11 +102,11 @@ namespace SpangleERP.HR_Module
                 {
 
 
-                    SqlCommand cmd = new SqlCommand("insert into Users values(@email,@pass,@Role,@emp_id)", conn);
+                    SqlCommand cmd = new SqlCommand("insert into Users values(@email,@pass,@Role,@emp_id,0)", conn);
                     cmd.Parameters.AddWithValue("@email", email);
                     cmd.Parameters.AddWithValue("@pass", password);
                     cmd.Parameters.AddWithValue("@Role", Convert.ToInt32(Role));
-                    cmd.Parameters.AddWithValue("@emp_id", Convert.ToInt32(Role));
+                    cmd.Parameters.AddWithValue("@emp_id", Convert.ToInt32(emp_id));
 
                     conn.Open();
                     cmd.ExecuteNonQuery();

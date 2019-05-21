@@ -31,56 +31,43 @@
     <script src="../Content/js/jquery.js"></script>
     <script type="text/javascript">
         var $j = jQuery.noConflict();
-        $j(document).ready(function () {
-           
-            $tbl= $('#main');
-//             $j.ajax({
-//                    type: "POST",
-//                    contentType: "application/json; charset=utf-8",
-//                    url: 'TitlePage.aspx/GetRolos',
+       
 
-//                    data: "{}",
+        function Logout() {
+            
+                
+            $.ajax({
 
-//                    dataType: "json",
-//                    async: false,
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: '/Ddd/TitlePage.aspx/Logout',
 
-//                 success: function (data) {
-//                     //alert("Agya");
-//                                $tbl.empty();
-//                              //  $tbl.append('<ul class="nav">');
-//                     var URl;
-//                     for (var i = 0; i < data.d.length; i++) {
-//                        // alert(data.d[i].Icon_Name);
-//                         //
-//                         URL = data.d[i].URL;
-//                                    $tbl.append('<li ><a href="' + data.d[i].URL + '" ><i class="' + data.d[i].Icon_Name + '" ></i><p style="color:white;"> '+data.d[i].Page_Name+' </p></a> </li>');
-//                                }
-//                            // $tbl.append(' </ul>');
-//                     //window.location.href("");
-                    
-//                    // var href = URL;
-////href = href.replace(/\/.*/,'');
-//                    // alert(href);
-//                    // window.location.href.replace(/\/.*/,'')[0]
+                    data: "{}",
 
-//                      //window.location = URL;
-//                 },
-//                    Error: function (res) {
-//                        alert("Error Occure" + res);
+                    dataType: "json",
+                    async: false,
 
-//                 }
+                 success: function (data) {
+                     if (data.d == "OK") {
+                        
+                         window.location = "/Index.aspx";
+                     }
+                 },
+                    Error: function (res) {
+                        alert("Error Occure" + res);
 
-//                });
+                 }
 
+                });
 
-        });
+        }
 
     </script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
-<body class="">
-
+<body >
+   
   <div class="wrapper ">
     <div class="sidebar text-primary" data-color="blue" id"sidebar">
       <!--
@@ -96,6 +83,9 @@
                     </ItemTemplate>
                     
                     </asp:Repeater>
+            <li >
+
+                <button type="button" class=" btn btn-danger" onclick="Logout();" style=" width:200px;height:42px; font-size:17px; margin-left:20px; border-radius:20px;">Logout</button></li>
             </ul>
       </div>
     </div>
@@ -155,5 +145,6 @@
   <script src="../now-ui-dashboard-master/now-ui-dashboard-master/assets/js/now-ui-dashboard.min.js?v=1.3.0" type="text/javascript"></script>
         </div>
  </div>
+        
     </body>
 </html>

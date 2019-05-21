@@ -116,13 +116,13 @@
                         var myString = data.d;
                         var ok = myString.substr(0, 2);
                         var path = myString.substr(2);
-                      
+                        var folder = path.split('#')[1];
                         if (data.d == "Incorrect") {
                             alert("Please Insert Correct Email OR Password");
                         }
                         else if ("ok" == ok) {
 
-                            window.location = "HR%20Module/" + path;
+                            window.location = folder + "/" + path;
                         }
                         else {
                             alert(data.d);

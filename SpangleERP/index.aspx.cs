@@ -51,14 +51,14 @@ namespace SpangleERP
                         conn.Close();
                        HttpContext.Current.Session["id"] = id.ToString();
                     SqlCommand cmd1 = new SqlCommand(@"
-Select Top 1  p.URl from pages as p
+Select Top 1  Concat(p.URl,'#',rc.Folder_Name) from pages as p
  left join Roles_Content as r
  on p.page_id = r.Page_id
  left join Roles as rc
  on rc.Role_id = r.Role_id
  left join Users as u
  on u.Role = rc.Role_id
- where u.User_id = '"+id+"' ",conn);
+ where u.User_id = '" + id+"' ",conn);
 
 
                     conn.Open();

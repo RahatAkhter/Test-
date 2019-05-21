@@ -176,7 +176,7 @@
              var ddl6 = document.getElementById("<%=DropDownList1.ClientID%>");
             var Role = ddl6.options[ddl6.selectedIndex].value;
            
-           
+               alert(id);
                 $.ajax({
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
@@ -189,17 +189,19 @@
                     async: false,
 
                     success: function (data) {
+                        $('#id').val("");
+                        $('#txtseach').val("");
                         if (data.d == "Save") {
                             alert("Insert Successfully " + data.d);
-                            Show_Data();
+                           
 
                         }
                         else if (data.d = "Not") {
-                            alert("This Employee alreay In Users");
+                            alert("This Employee alreay In Users"+data.d);
 
                         }
                         else {
-                            alert("Something Went Wrong");
+                            alert("Something Went Wrong"+data.d);
                         }
                     },
                     Error: function (res) {

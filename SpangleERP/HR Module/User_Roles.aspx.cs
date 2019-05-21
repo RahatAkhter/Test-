@@ -52,7 +52,7 @@ namespace SpangleERP.HR_Module
         }
 
         [WebMethod]
-        public static string Insert_Parent(string Name)
+        public static string Insert_Parent(string Name,string folder_name)
         {
 
             try
@@ -71,10 +71,10 @@ namespace SpangleERP.HR_Module
                 conn.Close();
                 if (count == 0)
                 {
-                    SqlCommand cmd1 = new SqlCommand(@"insert into Roles OUTPUT inserted.Role_id values(@name)", conn);
+                    SqlCommand cmd1 = new SqlCommand(@"insert into Roles OUTPUT inserted.Role_id values(@name,@fname)", conn);
                     
                     cmd1.Parameters.AddWithValue("@name", Name);
-
+                    cmd1.Parameters.AddWithValue("@fname", folder_name);
                     conn.Open();
                     Role_Id = Convert.ToInt32(cmd1.ExecuteScalar());
 
