@@ -112,7 +112,6 @@
     <Content Include="HR Module\Employee_History.aspx" />
     <Content Include="HR Module\GazatedForm.aspx" />
     <Content Include="HR Module\Images\spangle.jpg" />
-    <Content Include="HR Module\Images\SpangleMaster.JPG" />
     <Content Include="HR Module\jani.jpg" />
     <Content Include="HR Module\jsautotable.js" />
     <Content Include="HR Module\Payroll.aspx" />
@@ -121,6 +120,7 @@
     <Content Include="HR Module\teendence.aspx" />
     <Content Include="HR Module\Time Practice.aspx" />
     <Content Include="HR Module\User_Roles.aspx" />
+    <Content Include="ITDepart\ITService.asmx" />
     <Content Include="ITDepart\Pages.aspx" />
     <Content Include="jquery-ui.css" />
     <Content Include="jquery-ui.js" />
@@ -316,6 +316,11 @@
     </Compile>
     <Compile Include="index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ITDepart\AllPage.cs" />
+    <Compile Include="ITDepart\ITService.asmx.cs">
+      <DependentUpon>ITService.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="ITDepart\Pages.aspx.cs">
       <DependentUpon>Pages.aspx</DependentUpon>

@@ -21,7 +21,7 @@ namespace SpangleERP.HR_Module
             string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
             SqlConnection conn = new SqlConnection(con1);
             SqlCommand cmd = new SqlCommand(@"
-Select  p.page_Name,r.Rights,p.URl,p.Icon_Name from pages as p
+Select  p.page_Name,r.Rights,CONCAT('../',p.Folder_Name,'/',p.URl) as URL,p.Icon_Name from pages as p
  left join Roles_Content as r
  on p.page_id=r.Page_id
  left join Roles as rc
