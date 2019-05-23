@@ -116,7 +116,25 @@
 
             Show_Data();
         });
-        
+
+
+
+        $(function() {
+    $('#pass').on('keypress', function(e) {
+        if (e.which == 32)
+            return false;
+            });
+
+             $('#ipass').on('keypress', function(e) {
+        if (e.which == 32)
+            return false;
+    });
+});
+
+
+
+
+
         function Show_Data() {
                  $j('#datatable').DataTable({
             "aLengthMenu": [[10, 25,5], [10, 25, 5]],
@@ -222,40 +240,16 @@
     if (k == 32) return false;
 }
 
-       <%-- function AddRow() {
-            var quantity = $("#getInQuantity").val();
-                var ddl = document.getElementById("<%=getitems.ClientID%>");
-             var siteems = ddl.options[ddl.selectedIndex].value;
-          
-             var markup = "<tr><td>" + siteems + "</td><td>" + quantity + "</td></tr>";
-             $("#CallTable tbody").append(markup);
-        }
-
-
-        function InsertData() {
-
-            var n = $("#CallTable").find("tr").length;
-            for (var i = 1; i < n - 1; i++) {
-                var Id = $("#txtgetid").text();
-                var ItemsNames = $("#CallTable").find("tr").eq(i + 1).find("td").eq(0).text();
-                var Quantities = $("#CallTable").find("tr").eq(i + 1).find("td").eq(1).text();
-                alert(Id);
-                alert(ItemsNames);
-                alert(Quantities);
-
-                
-
-            }
-        }--%>
+      
         
 
         function Update() {
-            alert("agaya"+uid);
+            
             var pass = $('#ipass').val();
               var ddl6 = document.getElementById("<%=DropDownList2.ClientID%>");
             var Role = ddl6.options[ddl6.selectedIndex].value;
 
-            if (pass != "" && uid != "" ) {
+            if (pass != "" && uid != "" && pass.length>=4) {
                $.ajax({
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
@@ -271,7 +265,8 @@
                         if (data.d == "Save") {
                             uid = "";
                             alert("Insert Successfully ");
-                          
+                            $('#ipass').val("");
+                            
                              
                         }
                         
@@ -288,7 +283,7 @@
                
             }
             else {
-                alert("Not");
+                alert("Please Enter Atleast 4 Charecter Password");
 
             }
         }
@@ -318,7 +313,7 @@
 
   <div class="input-container">
     <i class="fa fa-key icon"></i>
-    <input class="input-field" type="password" placeholder="Password" name="psw" maxlength="8" minlength="4"  id="pass" required onkeypress="return AvoidSpace(event)">
+    <input class="input-field" type="password" placeholder="Password" name="psw" maxlength="8" minlength="4"  id="pass" required >
   </div>
                    <div class="input-container">
    <i class="fa fa-street-view icon"></i>
@@ -407,7 +402,7 @@
                               <div class="form-group">
                                 <label class="control-label col-xs-12" for="pak_Name">Password:</label>
                                 <div class="col-xs-12">
-                                    <input type="text" class="form-control" id="ipass"  maxlength="8" placeholder="Password" required>
+                                    <input type="text" class="form-control" id="ipass"  maxlength="8" placeholder="Password" minlength="4" required>
                                 </div>
                                      <label class="control-label col-xs-12"  for="Reason">Role:</label>
                                 <div class="col-xs-12">

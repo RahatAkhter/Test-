@@ -26,6 +26,8 @@
     
 <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.2.6/dist/sweetalert2.all.js"></script>
+
     <title>Spangle</title>
  <script type="text/javascript">
      var $j = jQuery.noConflict();
@@ -76,13 +78,20 @@
              success: function (data) {
                 
                   $tbl.empty();
-         $tbl.append(' <tr><th>Page Name</th><th>Rights</th></tr>');
+                 $tbl.append(' <tr><th>Page Name</th><th>Rights</th></tr>');
+                 if (data.d.length > 0) {
+                     for (var i = 0; i < data.d.length; i++) {
 
-                 for (var i = 0; i < data.d.length; i++) {
-                    
- $tbl.append('<tr ><td >' + data.d[i].Page_name + '</td><td >' + data.d[i].Rights  + '</td></tr>')
+                         $tbl.append('<tr ><td >' + data.d[i].Page_name + '</td><td >' + data.d[i].Rights + '</td></tr>')
+                     }
+                     $j('#MyModal').modal('show');
                  }
-                 $j('#MyModal').modal('show');
+                 else {
+                     alert("Does not have Any Role Discription");
+                 }
+                 
+
+                 
              },
              error: function (err) {
                  alert(err);
@@ -93,19 +102,7 @@
      }
   
 
-     function Insert() {
-          var xs = document.getElementById("Date");
-         var txtdates = xs.value;
-      
-         var txttime = ($('#Time').val());
-         var txtvehicle = ($('#Vehicle').val());
-         var txtreferences = ($('#Reference').val());
-         var txtRec_By = ($('#Rec_By').val());
-         var txtChk_By = ($('#Chk_By').val());
-         var txtPO = ($('#POnum').val());
-         var txtStatus = ($('#Status').val());
-         
-     }
+    
 
      function CallEditPopup(Val,i) {
          var ItemsName = document.getElementById("EditName");
@@ -119,64 +116,54 @@
 
      }
 
-        function EditRecords() {
-        
-            var txtname = ($('#EditName').val());
-            
-            var xs = document.getElementById("Item_id");
-            var dobs = xs.innerText;
-            
-   
-
-     }
-
-    function SearchRecords() {
-      var input, filter, table, tr, td, i;
-      input = document.getElementById("search");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("tblEmployee");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        td1 = tr[i].getElementsByTagName("td")[1];
-        if (td+td1) {
-          if ((td.innerHTML.toUpperCase().indexOf(filter)+td1.innerHTML.toUpperCase().indexOf(filter)) > -2) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }       
-      }
-     }
-
-      function SearchRecordItems() {
-      var input, filter, table, tr, td, i;
-      input = document.getElementById("search1");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("viewsdata");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-          td1 = tr[i].getElementsByTagName("td")[1];
-            td2 = tr[i].getElementsByTagName("td")[3];
-        if (td+td1) {
-          if ((td.innerHTML.toUpperCase().indexOf(filter)+td1.innerHTML.toUpperCase().indexOf(filter)+td2.innerHTML.toUpperCase().indexOf(filter)) > -3) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }       
-      }
-    }
        
-
 
      function Save() {
 
          var n = $("#CallTable1").find("tr").length;
        
          if (n == 1) {
-             alert("Please Select Some Data");
+Swal.fire({
+  title: 'if you Insert Empty Data ',
+  text: "This Role Will Be Delete!",
+  type: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+    if (result.value) {
+
+            $.ajax({
+                     type: "POST",
+                     contentType: "application/json; charset=utf-8",
+                     url: 'User_Roles.aspx/Delete_Parent',
+                     data: "{}",
+
+                     dataType: "json",
+                     async: false,
+
+                     success: function (data) {
+                         Swal.fire(
+      'Deleted!',
+      'Your file has been deleted.'+data.d,
+      'success'
+                         )
+                          $j('#child').hide();
+             $j('#parent').show();
+
+                     },
+                     Error: function (res) {
+                         alert("Error Occure" + res);
+
+                     }
+                 });
+
+    
+  }
+})
+
+
          }
          else {
              for (var i = 0; i < n - 1; i++) {
@@ -217,26 +204,7 @@
 
      }
             
-     function ViewRecords() {
-         $.ajax({
-             url: 'GateIn.aspx/GateItems',
-             contentType: "application/json; charset=utf-8",
-             dataType: "json",
-             method: 'post',
-             data: "{}",
-             success: function (data) {
-                 alert("agay");
-                 var employeeTable = $('#viewsdata tbody');
-                 employeeTable.empty();
-                 for (var i = 0; i < data.d.length; i++) {
- employeeTable.append('<tr ><td class="control-label" style="Text-align:left;" >' + data.d[i].ItemIn_Id + '</td><td class="control_label">' + data.d[i].ItemsId  + '</td><td class="control_label">' + data.d[i].I_Quantity + '</td><td class="control_label">' + data.d[i].GateIn_Id + '</td></tr>')
-                 }
-             },
-             error: function (err) {
-                 alert(err);
-             }
-         });
-     }
+   
      function AddRow() {
 
          
@@ -249,10 +217,30 @@
          var U = document.getElementById("Update").checked;
          var D = document.getElementById("delete").checked;
              var V = document.getElementById("View").checked;
-         var level= Access();
+         var level = Access();
 
-         $("#CallTable1 tbody").append('<tr><td>' + Page_Name + '</td><td style="display:none;">' + Page_id + '</td><td>' + level + '</td><td> <button type="button" class=" btn btn-danger" onclick="SomeDeleteRowFunction(this);">Remove</button></td></tr>');
-        
+         var n = $("#CallTable1").find("tr").length;
+         var flag = true;
+         for (var i = 0; i < n - 1; i++) {
+
+             var pid = $("#CallTable1").find("tr").eq(i + 1).find("td").eq(1).text();
+
+            
+
+             if (Page_id == pid) {
+                 flag = false;
+             }
+
+
+         }
+
+         if (flag == false) {
+             alert("You Already Select This Page");
+         }
+         else {
+
+             $("#CallTable1 tbody").append('<tr><td>' + Page_Name + '</td><td style="display:none;">' + Page_id + '</td><td>' + level + '</td><td> <button type="button" class=" btn btn-danger" onclick="SomeDeleteRowFunction(this);">Remove</button></td></tr>');
+         }
      }
     
 
@@ -473,12 +461,12 @@ display: block;
      <div class="container" style="width:100%;margin-top:-26px;">
      <div class="panel-group" style="width:100%;">
        <div class="panel panel-primary"  style="border-color:#0A408A;border:2px;">
-      <div class="panel-heading"style="background-color:#0A408A;"><h2 style="color:white;font-family:Cambria;font-weight:200;">GateIn</h2>
+      <div class="panel-heading"style="background-color:#0A408A;"><h2 style="color:white;font-family:Cambria;font-weight:200;">User Roles</h2>
           <div class="table-responsive table-striped">
               <table  class="pull-right">
                   <tr>
                       <td>
-         <button type="button" class="btn btn-primary" style=" font-size:18px;background-color:white;color:#0A408A;" data-toggle="modal" data-target="#MachinePopup" data-backdrop="false" >Add New</button>
+         <button type="button" class="btn btn-primary" style=" font-size:18px;background-color:#0A408A;color:white;" data-toggle="modal" data-target="#MachinePopup" data-backdrop="false" >Add New</button>
                   </td></tr>
               </table>
 

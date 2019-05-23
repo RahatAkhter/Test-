@@ -51,6 +51,8 @@ namespace SpangleERP.HR_Module
 
         }
 
+
+
         [WebMethod]
         public static string Insert_Parent(string Name)
         {
@@ -127,6 +129,33 @@ namespace SpangleERP.HR_Module
             }
         }
 
+        [WebMethod]
+        public static string Delete_Parent()
+        {
+            try
+            {
+                string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
+                SqlConnection conn = new SqlConnection(con1);
+
+                SqlCommand cmd1 = new SqlCommand(@"
+Delete from Roles where Role_id=@Role_Id", conn);
+
+                cmd1.Parameters.AddWithValue("@Role_Id", Convert.ToInt32(Role_Id));
+                
+                conn.Open();
+                cmd1.ExecuteNonQuery();
+
+                conn.Close();
+                int rid = Convert.ToInt32(Role_Id);
+                Role_Id = null;
+                return "Deleted"+Role_Id;
+
+            }
+            catch(Exception ex)
+            {
+                return ex.Message+" Role_id :"+Role_Id;
+            }
+        }
 
         [WebMethod]
         public static List<Roles> GetRolesContent(string RID)
