@@ -31,12 +31,57 @@
     <title>Spangle</title>
  <script type="text/javascript">
      var $j = jQuery.noConflict();
+     var view = false;
+        var Insert = false;
+        var Update = false;
+     var Access = "";
 
      $j(document).ready(function () {
          $j('#child').hide();
-         Show_Data();
+         Access_Levels();
+         
+         if (view == true) {
+             Show_Data();
+         }
+         else {
+             console.log("You Dont Hvae Rights To View This");
+         }
+
+         if (Insert == true) {
+             $j('#In').show();
+         }
+         else {
+             $j('#In').hide();
+         }
+
          
      });
+
+      function Access_Levels() {
+
+                    $.ajax({
+                    url: 'User_Roles.aspx/Access_Levels',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    method: 'post',
+                        data: "{}",
+                        async: false,
+                    success: function (data) {
+                        Access = data.d;
+                        view = Access.includes("V");
+                        Insert = Access.includes("I");
+                        Update = Access.includes("U");
+                        
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+            });
+
+            
+              
+                
+            }
 
 
   function Show_Data() {
@@ -65,6 +110,9 @@
                 sServerMethod: 'post'
             });
         }
+
+   
+
 
      function View(Val) {
 
@@ -217,7 +265,7 @@ Swal.fire({
          var U = document.getElementById("Update").checked;
          var D = document.getElementById("delete").checked;
              var V = document.getElementById("View").checked;
-         var level = Access();
+         var level = AccessL();
 
          var n = $("#CallTable1").find("tr").length;
          var flag = true;
@@ -286,7 +334,7 @@ Swal.fire({
      }
 
 
-     function Access() {
+     function AccessL() {
          var Level = "";
             var I = document.getElementById("create").checked;
          var U = document.getElementById("Update").checked;
@@ -466,8 +514,10 @@ display: block;
               <table  class="pull-right">
                   <tr>
                       <td>
+                          <div id="In">
          <button type="button" class="btn btn-primary" style=" font-size:18px;background-color:#0A408A;color:white;" data-toggle="modal" data-target="#MachinePopup" data-backdrop="false" >Add New</button>
-                  </td></tr>
+                 </div>
+                              </td></tr>
               </table>
 
 

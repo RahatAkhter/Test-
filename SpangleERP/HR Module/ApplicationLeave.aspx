@@ -31,43 +31,28 @@
     <script type="text/javascript">
         var $j = jQuery.noConflict();
         var id = "";
+        var view = false;
+        var Insert = false;
+        var Update = false;
+        var Access="";
+
 
             $j(document).ready(function () {
 
-                 $j('#datatable').DataTable({
-            "aLengthMenu": [[10, 25,5], [10, 25, 5]],
-                "iDisplayLength": 5,
-                columns: [
-           
-                   { 'data': 'emp_id' },
-                    { 'data': 'emp_name' },
-                      {
-                        'data': 'Img',
+                Access_Levels();
+                if (view == true) {
+                    ShowData();
+                }
+                else {
+                    alert("You Have No Rights To View Data");
+                }
 
-                        'sortable': false,
-                                'searchable': false,
-                        'render': function (webSite) {
-                            return '<img src="' + webSite + '" class=" img img-responsive  img-rounded" style="width:80; height:80px;" />';
-                                    
-                                }
-
-                    },
-                    { 'data': 'type' },
-                    { 'data': 'reason' },
-                    { 'data': 'days' },
-                    { 'data': 'date' }
-
-                   
-                   
-                            
-                                        
-                    ],
-                bServerSide: true,
-                sAjaxSource: 'Employees.asmx/GetALl_Leaves',
-                sServerMethod: 'post'
-            });
-
-
+                if (Insert == true) {
+                    $j('#In').show();
+                }
+                else {
+                    $j('#In').hide();
+                }
 
         $j('#txtseach').autocomplete({
             minLength: 1,
@@ -124,7 +109,70 @@
 
         });
 
-        
+
+        function ShowData() {
+
+                  $j('#datatable').DataTable({
+            "aLengthMenu": [[10, 25,5], [10, 25, 5]],
+                "iDisplayLength": 5,
+                columns: [
+           
+                   { 'data': 'emp_id' },
+                    { 'data': 'emp_name' },
+                      {
+                        'data': 'Img',
+
+                        'sortable': false,
+                                'searchable': false,
+                        'render': function (webSite) {
+                            return '<img src="' + webSite + '" class=" img img-responsive  img-rounded" style="width:80; height:80px;" />';
+                                    
+                                }
+
+                    },
+                    { 'data': 'type' },
+                    { 'data': 'reason' },
+                    { 'data': 'days' },
+                    { 'data': 'date' }
+
+                   
+                   
+                            
+                                        
+                    ],
+                bServerSide: true,
+                sAjaxSource: 'Employees.asmx/GetALl_Leaves',
+                sServerMethod: 'post'
+            });
+        }
+
+
+          function Access_Levels() {
+
+                    $.ajax({
+                    url: 'ApplicationLeave.aspx/Access_Levels',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    method: 'post',
+                        data: "{}",
+                        async: false,
+                    success: function (data) {
+                        Access = data.d;
+                        view = Access.includes("V");
+                        Insert = Access.includes("I");
+                        Update = Access.includes("U");
+                        
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+            });
+
+            
+              
+                
+            }
+
 
         function Save() {
             var days = 0;
@@ -215,7 +263,7 @@ var strUser = e.options[e.selectedIndex].value;
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <!--start Table Panel-->
-   
+   <div >
      <div class="container" style="width:99%;margin-top:-26px;">
      <div class="panel-group" style="width:99%;">
        <div class="panel panel-primary" style="border-color:#0A408A;border:2px;">
@@ -224,8 +272,10 @@ var strUser = e.options[e.selectedIndex].value;
               <table  class="pull-right" style="border-color:#0A408A;border:2px;">
                   <tr>
                       <td>
+                          <div id="In">
           <button type="button" class="btn btn-primary" style="font-size:18px;background-color:#0A408A;color:white;" data-toggle="modal" data-target="#AddEmployeePopup" data-backdrop="false" >Leave Application</button>
-  </td><td>
+  </div>
+                              </td><td>
 
                   </td></tr>
               </table>
@@ -261,18 +311,7 @@ var strUser = e.options[e.selectedIndex].value;
     
 
          </div>
-           <%-- <div class="panel-group" style="width:99%;">
-                <div class="panel panel-primary">
-                    <div class="panel-heading"><h2>Leave Application </h2></div>
-                    <div class="panel-body">--%>
-
-                       
-          <%--      </div>
-
-
-            </div>
-        </div>--%>
-        <!--model-->
+        </div>  
     
            <div class="container">
         <div class="modal fade" id="AddEmployeePopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -285,11 +324,7 @@ var strUser = e.options[e.selectedIndex].value;
                   
                 </div>
       <div class="modal-body mx-3" >
-       <%--  <div class="container">
-     <div class="panel-group">
-       <div class="panel panel-primary">
-      <div class="panel-heading"><h2>Add Employee</h2></div>
-      <div class="panel-body">--%>
+      
 
           <form class="form-horizontal" method="post">
 

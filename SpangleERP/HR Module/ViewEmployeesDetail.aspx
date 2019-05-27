@@ -27,9 +27,36 @@
         var eid = "";
         var status;
         var $j = jQuery.noConflict();
-        $j(document).ready(function () {
+          var view = false;
+        var Insert = false;
+        var Update = false;
+        var Access = "";
 
-            
+
+
+        $j(document).ready(function () {
+            Access_Levels();
+
+            if (view == true) {
+                
+                showData();
+            }
+            else {
+                alert("You Have No Rights To View Employee Information");
+            }
+
+
+            if (Insert == true) {
+                $j('#In').show();
+            }
+            else {
+                $j('#In').hide();
+            }
+
+        });
+
+        function showData() {
+
               $j('#datatable').DataTable({
             "aLengthMenu": [[10, 25,5], [10, 25, 5]],
                 "iDisplayLength": 5,
@@ -66,9 +93,12 @@
                                 'sortable': false,
                                 'searchable': false,
                         'render': function (val) {
-                            if (status == 1)
-                                return ' <button type="button" class=" btn btn-primary" value="' + val + '" data-toggle="modal" data-target="#AddEmployeePopup" onclick="Edit(this.value);" style="background-color:#0A408A;color:white;">Edit</button>';
-                            else return "";
+                            if (status == 1) {
+                                if (Update == true)
+                                    return ' <button type="button" class=" btn btn-primary" value="' + val + '" data-toggle="modal" data-target="#AddEmployeePopup" onclick="Edit(this.value);" style="background-color:#0A408A;color:white;">Edit</button>';
+                                else return '';
+                            }
+                            else { return ""; }
                                 }
                     }, 
                      {
@@ -90,18 +120,40 @@
                 sAjaxSource: 'Employees.asmx/GetAll_Employees',
                 sServerMethod: 'post'
             });
+        }
 
-        });
+
+            function Access_Levels() {
+
+                    $.ajax({
+                    url: 'ViewEmployeesDetail.aspx/Access_Levels',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    method: 'post',
+                        data: "{}",
+                        async: false,
+                    success: function (data) {
+                        Access = data.d;
+                        view = Access.includes("V");
+                        Insert = Access.includes("I");
+                        Update = Access.includes("U");
+                       
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+            });
+
             
-
-
-
+              
+                
+            }
 
 
        function Save_Emp() {
 
 
-           alert("agaya");
+
         var fname = $('#fname').val();
         var lname = $('#lname').val();
         var desig = $('#desig').val();
@@ -141,7 +193,7 @@
               var emr_numb = $('#emr_num').val();
            var ddl6 = document.getElementById("<%=DropDownList6.ClientID%>");
            var jobtype = ddl6.options[ddl6.selectedIndex].text;
-           alert(doj + "" + dob );
+           
               
            $.ajax({
                         type: "POST",
@@ -157,7 +209,7 @@
 
                         success: function (data) {
                             if (data.d == "Save") {
-                                alert("ho gya " + data.d);
+                                alert("Save Successfully");
 
                             }
                             else {
@@ -217,7 +269,7 @@
               var doj = y.value;
               var emr_numb = $('#emr_num').val();
 
-           alert(doj + "" + dob);
+           
            if (eid != "") {
                $.ajax({
                    type: "POST",
@@ -233,7 +285,7 @@
 
                    success: function (data) {
                        if (data.d == "Save") {
-                           alert("ho gya " + data.d);
+                           alert("Update Successfully ");
 
                            eid = "";
                        }
@@ -261,7 +313,7 @@
 
 
         function print(Val) {
-            alert(Val);
+           
             var id = Val.toString();
              
             $.ajax({
@@ -413,7 +465,8 @@ img.src = ''+data.d[i].Img;
      <div class="container" style="width:99%;margin-top:-26px;">
      <div class="panel-group" style="width:99%;">
        <div class="panel panel-primary" style="border-color:#0A408A;border:2px;" >
-      <div class="panel-heading"style="background-color:#0A408A;"><h2 style="color:white;font-family:Cambria;font-weight:200;">View Employee</h2><button type="button" class="btn btn-primary pull-right" style="margin-top:-35px;font-size:18px; background-color:#0A408A;color:white;" data-toggle="modal" data-target="#AddEmployeePopup" data-backdrop="true"  >Add Employee's</button>
+      <div class="panel-heading"style="background-color:#0A408A;" id="In">
+          <h2 style="color:white;font-family:Cambria;font-weight:200;">View Employee</h2><button type="button" class="btn btn-primary pull-right" style="margin-top:-35px;font-size:18px; background-color:#0A408A;color:white;" data-toggle="modal" data-target="#AddEmployeePopup" data-backdrop="true"  >Add Employee's</button>
 
 
 

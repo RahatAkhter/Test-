@@ -26,10 +26,59 @@
     <script type="text/javascript">
 
         var pid = "";
+         var view = false;
+        var Insert = false;
+        var Up = false;
+        var Access = "";
+        $(document).ready(function () {
+            Access_Levels();
+
+            if (view == true) {
+                $('#view').show();
+            }
+            else {
+                $('#view').hide();
+            }
+
+
+            if (Insert == true) {
+                $('#In').show();
+            }
+            else {
+                $('#In').hide();
+            }
+        });
+
+
+        function Access_Levels() {
+
+                    $.ajax({
+                    url: 'Salary_Package.aspx/Access_Levels',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    method: 'post',
+                        data: "{}",
+                        async: false,
+                    success: function (data) {
+                        Access = data.d;
+                        view = Access.includes("V");
+                        Insert = Access.includes("I");
+                        Up = Access.includes("U");
+                        
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+            });
+
+            
+              
+                
+            }
         function Edit(Val) {
             pid = Val;
+                $('#SalaryPackageUpdate').modal('show');
             
-
              $.ajax({
                 type: "POST",
                 contentType: "application/json",
@@ -71,68 +120,73 @@
 
         function Update() {
 
+            if (Up == true) {
 
-            var basic = 0, mobile = 0, petrol = 0, Lunch = 0, HouseRent = 0, Medical = 0, motor_car = 0, Otime = 0,Utility=0,driverFuel=0,bonus=0;
-            var pname = $('#p_Name1').val();
-            basic += $('#basic1').val();
-             mobile +=$('#mobile1').val();
-             petrol += $('#petrol1').val();
-             Lunch += $('#Lunch1').val();
-             HouseRent += $('#HouseRent1').val();
-             Medical += $('#Medical1').val();
-            motor_car += $('#motor_car1').val();
-            Otime += $('#Otime1').val();
-            Utility += $('#Utility1').val();
-               var bonus = $('#bonus1').val();
-            driverFuel += $('#Driver_Fuel1').val();
-            if (pname != "" && basic != ""  && pid!="") {
+                var basic = 0, mobile = 0, petrol = 0, Lunch = 0, HouseRent = 0, Medical = 0, motor_car = 0, Otime = 0, Utility = 0, driverFuel = 0, bonus = 0;
+                var pname = $('#p_Name1').val();
+                basic += $('#basic1').val();
+                mobile += $('#mobile1').val();
+                petrol += $('#petrol1').val();
+                Lunch += $('#Lunch1').val();
+                HouseRent += $('#HouseRent1').val();
+                Medical += $('#Medical1').val();
+                motor_car += $('#motor_car1').val();
+                Otime += $('#Otime1').val();
+                Utility += $('#Utility1').val();
+                var bonus = $('#bonus1').val();
+                driverFuel += $('#Driver_Fuel1').val();
+                if (pname != "" && basic != "" && pid != "") {
 
-                $.ajax({
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    url: 'Salary_Package.aspx/Update',
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: 'Salary_Package.aspx/Update',
 
-                    //  data: "{'fname':'" + fname.toString() + "','lname':'" + lanme.toString() + "','doj':'" + doj.toString() + "','dob':'" + dob.toString() + "','desig':'" + desig.toString() + "','father':'" + father.toString() + "','lno':'" + lno.toString() + "','nic':'" + nic.toString() + "','mobile':'" + mobile.toString() + "','gender':'" + gender.toString() + "','cur':'" + curaddress.toString() + "','pur':'" + puraddress.toString() + "','exp':'" + exp.toString() + "','bnk':'" + bnk.toString() + "','emr':'" + emr_numb.toString() + "','pid':'" + pack_id.toString() + "','type_id':'" + typeid.toString() + "','edu_id':'" + edu_id.toString() + "','dep_id':'" + dep_id.toString() + "'}",
-                    data: "{'pname':'" + pname.toString() + "','basic':'" + basic.toString() + "','mobile':'" + mobile + "','petrol':'" + petrol + "','Lunch':'" + Lunch.toString() + "','HouseRent':'" + HouseRent.toString() + "','Medical':'" + Medical.toString() + "','motor_car':'" + motor_car.toString() + "','pid':'" + pid + "','Ot':'" + Otime + "','utility':'" + Utility + "','driverFuel':'" + driverFuel + "','bonus':'" + bonus + "'}",
+                        //  data: "{'fname':'" + fname.toString() + "','lname':'" + lanme.toString() + "','doj':'" + doj.toString() + "','dob':'" + dob.toString() + "','desig':'" + desig.toString() + "','father':'" + father.toString() + "','lno':'" + lno.toString() + "','nic':'" + nic.toString() + "','mobile':'" + mobile.toString() + "','gender':'" + gender.toString() + "','cur':'" + curaddress.toString() + "','pur':'" + puraddress.toString() + "','exp':'" + exp.toString() + "','bnk':'" + bnk.toString() + "','emr':'" + emr_numb.toString() + "','pid':'" + pack_id.toString() + "','type_id':'" + typeid.toString() + "','edu_id':'" + edu_id.toString() + "','dep_id':'" + dep_id.toString() + "'}",
+                        data: "{'pname':'" + pname.toString() + "','basic':'" + basic.toString() + "','mobile':'" + mobile + "','petrol':'" + petrol + "','Lunch':'" + Lunch.toString() + "','HouseRent':'" + HouseRent.toString() + "','Medical':'" + Medical.toString() + "','motor_car':'" + motor_car.toString() + "','pid':'" + pid + "','Ot':'" + Otime + "','utility':'" + Utility + "','driverFuel':'" + driverFuel + "','bonus':'" + bonus + "'}",
 
-                    //   data: "{}",                  
-                    dataType: "json",
-                    async: false,
+                        //   data: "{}",                  
+                        dataType: "json",
+                        async: false,
 
-                    success: function (data) {
-                        if (data.d == "Update") {
-                          
-                        $('#p_Name1').val("");
-                        $('#basic1').val("");
-                        $('#mobile1').val("");
-            $('#petrol1').val("");
-            $('#Lunch1').val("");
-            $('#HouseRent1').val("");
-            $('#Medical1').val("");
-                            $('#motor_car1').val("");
-                                 $('#Utility1').val("");
-            $('#Driver_Fuel1').val("");
-                           $('#Otime1').val("");
-                            $('#bonus1').val("");
-                            pid = "";
-                            
+                        success: function (data) {
+                            if (data.d == "Update") {
+
+                                $('#p_Name1').val("");
+                                $('#basic1').val("");
+                                $('#mobile1').val("");
+                                $('#petrol1').val("");
+                                $('#Lunch1').val("");
+                                $('#HouseRent1').val("");
+                                $('#Medical1').val("");
+                                $('#motor_car1').val("");
+                                $('#Utility1').val("");
+                                $('#Driver_Fuel1').val("");
+                                $('#Otime1').val("");
+                                $('#bonus1').val("");
+                                pid = "";
+
+                            }
+                            else {
+                                alert("Some thing went wromg" + data.d);
+
+                            }
+
+                        },
+                        Error: function (res) {
+                            alert("Error Occure" + res);
+
                         }
-                        else {
-                            alert("Some thing went wromg" + data.d);
+                    });
 
-                        }
+                }
+                else {
+                    alert("Please fill the form correctly");
 
-                    },
-                    Error: function (res) {
-                        alert("Error Occure" + res);
-
-                    }
-                });
-
+                }
             }
             else {
-                alert("Please fill the form correctly");
-
+                alert("You Dont Have Rights To Update Record");
             }
 
 
@@ -219,10 +273,10 @@
      <div class="container" style="width:99%;margin-top:-26px;">
      <div class="panel-group" style="width:99%;">
        <div class="panel panel-primary"  style="border-color:#0A408A;border:2px;">
-      <div class="panel-heading"style="background-color:#0A408A;"><h2 style="color:white;font-family:Cambria;font-weight:200;">Salary Packages</h2><button type="button" class="btn btn-primary pull-right" style="margin-top:-35px;font-size:18px;background-color:#0A408A;color:white;" data-toggle="modal" data-target="#SalaryPackage" data-backdrop="false" >Add Salary Packages</button></div>
+      <div class="panel-heading"style="background-color:#0A408A;" id="In"><h2 style="color:white;font-family:Cambria;font-weight:200;">Salary Packages</h2><button type="button" class="btn btn-primary pull-right" style="margin-top:-35px;font-size:18px;background-color:#0A408A;color:white;" data-toggle="modal" data-target="#SalaryPackage" data-backdrop="false" >Add Salary Packages</button></div>
          <div class="panel-body" style=" height:600px;">
              <div style=" width:100%; height:500px;" class=" col-sm-12">
-             
+             <div>
                  <div class=" table-responsive" style=" width:100%;">
              <asp:GridView ID="GridView1"  runat="server" AllowPaging="True" Width="100%" AutoGenerateColumns="False" BackColor="White" BorderColor="#999999" BorderStyle="Solid" BorderWidth="1px" CellPadding="3" DataKeyNames="pack_id" DataSourceID="SqlDataSource1" ForeColor="Black" GridLines="Vertical">
                  <AlternatingRowStyle BackColor="#CCCCCC" />
@@ -259,7 +313,7 @@
              </asp:GridView>
                      </div>
              <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-        
+        </div>
              <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:DBMS %>" SelectCommand="SELECT * FROM [Packages]"></asp:SqlDataSource>
         </div>
 </div>

@@ -30,13 +30,34 @@
     <link href="../jquery-ui.css" rel="stylesheet" />
     <script type="text/javascript">
         var $j = jQuery.noConflict();
+
+        var view = false;
+        var Insert = false;
+        var Update = false;
+        var Access = "";
+
         $j(document).ready(function () {
+            Access_Levels();
             $j('#hide').hide();
             $j('#download').hide();
             $j('#form').show();
 
-            Show();
-            //dkdj
+            if (view == true) {
+                Show();
+
+            }
+            else {
+                alert("You Dont Have Rights To View This")
+            }
+
+            if (Insert == true) {
+                $j('#In').show();
+            }
+            else {
+                $j('#In').hide();
+            }
+
+
             
         $j('#txtseach').autocomplete({
             minLength: 1,
@@ -88,6 +109,33 @@
 
 
         });
+
+
+        function Access_Levels() {
+
+                    $.ajax({
+                    url: 'Employee_History.aspx/Access_Levels',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    method: 'post',
+                        data: "{}",
+                        async: false,
+                    success: function (data) {
+                        Access = data.d;
+                        view = Access.includes("V");
+                        Insert = Access.includes("I");
+                        Update = Access.includes("U");
+                        
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+            });
+
+            
+              
+                
+            }
          
                 function Show() {
                     var hid=0;
@@ -243,9 +291,9 @@
               <table  class="pull-right" style="border-color:#0A408A;border:2px;">
                   <tr>
                       <td>
-                         
+                         <div id="In">
           <button type="button" class="btn btn-primary pull-right" style="font-size:18px;background-color:#0A408A;color:white;" data-toggle="modal" data-target="#SalaryPackage" data-backdrop="false"  >Resigned Employee's History</button>
-                       
+                       </div>
                       </td><td>
 
                   </td></tr>

@@ -33,73 +33,34 @@
         var id = "";
         var edit_id;
         var mon;
+        var view = false;
+        var Insert = false;
+        var Update = false;
+        var Access="";
+
 
         $j(document).ready(function () {
             $('#hide').hide();
-                   $j('#datatable').DataTable({
-            "aLengthMenu": [[10, 25,5], [10, 25, 5]],
-                "iDisplayLength": 5,
-                columns: [
-           
-                    {
-                        'data': 'emp_id',
-                        'render': function (webSite) {
-                            edit_id = webSite;
-                            return edit_id;
-                                },
 
-                    },
-                    { 'data': 'emp_name' },
-                      {'data': 'desig', },
-                    {
-                        'data': 'mon',
-                        'render': function (webSite) {
-                            mon = webSite;
-                            return mon;
-                                },
+            Access_Levels();
 
-                    },
-                    { 'data': 'tue' },
-                    { 'data': 'wed' },
-                    { 'data': 'thu' },
-                    { 'data': 'fri' },
-                    { 'data': 'sat' },
-                    { 'data': 'sun' },
+            if (view == true) {
+                showData();
+            }
+            else {
+                alert("You Have Not Rights to View Data");
 
+            }
 
-                     {
-                                'data': 'status',
-                               
-                         'render': function (webSite) {
-                             if (webSite == 1) return "Woking";
-                             else return "Fired";
+            if (Insert == true) {
+                $('#In').show();
 
-                                },
-                            },
-                   
-                   
-                   
-                     {
-                                'data': 'status',
-                               
-                         'render': function (webSite) {
-                             if (webSite == 1 && mon != " to ") {
-                                 return ' <button type="button" class=" btn btn-primary" value="' + edit_id + '" onclick="Edit(this.value);" >Edit</button>';
-                                 
-                             }
-                             else if (webSite == 1 && mon == " to ") return 'Add Shifts';
-                             else  return "";
+            }
+            else {
+                $('#In').hide();
 
-                                },
-                            },
-                   
-                            
-                                        
-                    ],
-                bServerSide: true,
-                sAjaxSource: 'Employees.asmx/Get_EmpShifts',
-                sServerMethod: 'post'
-            });
+            }
+
             
 
 
@@ -157,6 +118,102 @@
 
 
     });
+
+
+        function showData() {
+              $j('#datatable').DataTable({
+            "aLengthMenu": [[10, 25,5], [10, 25, 5]],
+                "iDisplayLength": 5,
+                columns: [
+           
+                    {
+                        'data': 'emp_id',
+                        'render': function (webSite) {
+                            edit_id = webSite;
+                            return edit_id;
+                                },
+
+                    },
+                    { 'data': 'emp_name' },
+                      {'data': 'desig', },
+                    {
+                        'data': 'mon',
+                        'render': function (webSite) {
+                            mon = webSite;
+                            return mon;
+                                },
+
+                    },
+                    { 'data': 'tue' },
+                    { 'data': 'wed' },
+                    { 'data': 'thu' },
+                    { 'data': 'fri' },
+                    { 'data': 'sat' },
+                    { 'data': 'sun' },
+
+
+                     {
+                                'data': 'status',
+                               
+                         'render': function (webSite) {
+                             if (webSite == 1) return "Woking";
+                             else return "Fired";
+
+                                },
+                            },
+                   
+                   
+                   
+                     {
+                                'data': 'status',
+                               
+                         'render': function (webSite) {
+                             if (webSite == 1 && mon != " to ") {
+                                 if (Update == true)
+                                     return ' <button type="button" class=" btn btn-primary" value="' + edit_id + '" onclick="Edit(this.value);" >Edit</button>';
+                                 else return '';
+                             }
+                             else if (webSite == 1 && mon == " to ") return 'Add Shifts';
+                             else  return "";
+
+                                },
+                            },
+                   
+                            
+                                        
+                    ],
+                bServerSide: true,
+                sAjaxSource: 'Employees.asmx/Get_EmpShifts',
+                sServerMethod: 'post'
+            });
+            
+        }
+
+           function Access_Levels() {
+
+                    $.ajax({
+                    url: 'UpdateShift.aspx/Access_Levels',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    method: 'post',
+                        data: "{}",
+                        async: false,
+                    success: function (data) {
+                        Access = data.d;
+                        view = Access.includes("V");
+                        Insert = Access.includes("I");
+                        Update = Access.includes("U");
+                        
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+            });
+
+            
+              
+                
+            }
 
 
         function Save() {
@@ -220,7 +277,7 @@
 
         function Update() {
 
-             alert(id);
+            
 
             
               var ddl1 = document.getElementById("<%=DropDownList1.ClientID%>");
@@ -356,11 +413,13 @@
                         <br />
                       
                            <div class=" col-sm-6 ">
+                               <div id="In">
                             <button type="button" class="btn btn-primary" onclick="Save();" style="background-color:#0A408A;color:white;">Save</button>
+                               </div>
                                </div>
                                <div id="hide">
                                    
-                            <button type="button" class="btn btn-primary" onclick="Update();" style="background-color:#0A408A;color:white;">Update</button>
+                            <button type="button" id="btn_hide" class="btn btn-primary" onclick="Update();" style="background-color:#0A408A;color:white;">Update</button>
                                </div>
   
                       

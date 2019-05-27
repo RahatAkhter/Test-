@@ -26,7 +26,7 @@ namespace SpangleERP.HR_Module
             }
             Bound();
            Access= PageName().ToString();
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert(''+'" + Access + "')", true);
+            //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert(''+'" + Access + "')", true);
 
 
         }
@@ -100,6 +100,14 @@ namespace SpangleERP.HR_Module
 
 
         }
+
+        [WebMethod]
+        public static string Access_Levels()
+        {
+
+            return Access;
+        }
+
 
         [WebMethod]
         public static string Update(string uid,string pass,string Role)

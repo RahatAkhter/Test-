@@ -35,12 +35,6 @@ namespace SpangleERP.GateIn
 
         }
 
-
-
-
-
-
-
         [WebMethod]
         public static List<Inventory_OutClass> getall()
         {
@@ -569,18 +563,6 @@ where ino.Items_Id ='" + ItemdNames + "'", conn);
 
         }
 
-
-
-
-
-
-
-
-
-
-
-
-  
 
 
         private void bind()

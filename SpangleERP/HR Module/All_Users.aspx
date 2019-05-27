@@ -61,10 +61,36 @@
 
     <script type="text/javascript">
         var id = "";
+        
         var $j = jQuery.noConflict();
+       
+        
+
+        var view = false;
+        var Create = false;
+        var Update = false;
+        var Access="";
+
 
         $j(document).ready(function () {
-           
+
+            Access_Levels();
+            
+            if (Create == true) {
+                $j('#In').show();
+            }
+            else {
+                $j('#In').hide();
+            }
+
+            if (view == true) {
+                Show_Data();
+            }
+            else {
+                alert("You Have Not Rights to View Data");
+
+            }
+            
              $j('#txtseach').autocomplete({
             minLength: 1,
             focus: function (event, ui) {
@@ -113,11 +139,12 @@
             }
         }
 
+            
 
-            Show_Data();
         });
 
 
+       
 
         $(function() {
     $('#pass').on('keypress', function(e) {
@@ -131,50 +158,79 @@
     });
 });
 
+        function Access_Levels() {
 
+                    $.ajax({
+                    url: 'All_Users.aspx/Access_Levels',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    method: 'post',
+                        data: "{}",
+                        async: false,
+                    success: function (data) {
+                        Access = data.d;
+                        view = Access.includes("V");
+                        Create = Access.includes("I");
+                        Update = Access.includes("U");
+                        
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+            });
 
-
+            
+              
+                
+            }
 
         function Show_Data() {
-                 $j('#datatable').DataTable({
-            "aLengthMenu": [[10, 25,5], [10, 25, 5]],
-                "iDisplayLength": 5,
-                columns: [
+
            
-                   { 'data': 'emp_name' },
-                    { 'data': 'Role' },
-                    { 'data': 'Desig' },
-                    { 'data': 'dep' },
-                    {
-                        'data': 'Img',
-
-                        'sortable': false,
-                                'searchable': false,
-                        'render': function (webSite) {
-                            return '<img src="' + webSite + '" class=" img img-responsive  img-rounded" style="width:80; height:80px;" />';
-                                    
-                                }
 
 
+                $j('#datatable').DataTable({
+                    "aLengthMenu": [[10, 25, 5], [10, 25, 5]],
+                    "iDisplayLength": 5,
+                    columns: [
 
-                    },
-                  {
-                                'data': 'User_id',
-                                'sortable': false,
-                                'searchable': false,
-                      'render': function (val) {
+                        { 'data': 'emp_name' },
+                        { 'data': 'Role' },
+                        { 'data': 'Desig' },
+                        { 'data': 'dep' },
+                        {
+                            'data': 'Img',
 
-                          return ' <button type="button" class=" btn btn-primary" value="' + val + '" data-toggle="modal" data-target="#AddEmployeePopup" onclick="Edit(this.value);" style=" background-color: #0A408A;" >Edit</button>';
-                      }
-                    }
-                   
-                            
-                                        
+                            'sortable': false,
+                            'searchable': false,
+                            'render': function (webSite) {
+                                return '<img src="' + webSite + '" class=" img img-responsive  img-rounded" style="width:80; height:80px;" />';
+
+                            }
+
+
+
+                        },
+                        {
+                            'data': 'User_id',
+                            'sortable': false,
+                            'searchable': false,
+                            'render': function (val) {
+                                if (Update == true)
+                                    return ' <button type="button" class=" btn btn-primary" value="' + val + '" data-toggle="modal" data-target="#AddEmployeePopup" onclick="Edit(this.value);" style=" background-color: #0A408A;" >Edit</button>';
+                                else
+                                    return '';
+                            }
+                        }
+
+
+
                     ],
-                bServerSide: true,
-                sAjaxSource: 'Employees.asmx/GetAll_Users',
-                sServerMethod: 'post'
-            });
+                    bServerSide: true,
+                    sAjaxSource: 'Employees.asmx/GetAll_Users',
+                    sServerMethod: 'post'
+                });
+           
         }
         var uid="";
         function Edit(Val) {
@@ -292,6 +348,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <form runat="server">
+        <div id="In">
      <div class="container" style="width:99%;margin-top:-26px;">
      <div class="panel-group" style="width:99%;">
        <div class="panel panel-primary" style="border-color:#0A408A;border:2px;">
@@ -336,6 +393,7 @@
              </div>
            </div>
          </div>
+            </div>
 
         <br />
         <br />

@@ -135,7 +135,7 @@
             var Icon = $('#Icon_Name').val();
           
 
-            if (pname != "" && page_url != "" && Icon != "" && fnam!="") {
+            if (pname != "" && page_url != "" && Icon != "" && fname!="") {
 
                 $.ajax({
                     type: "POST",
@@ -151,6 +151,7 @@
                             $('#Page_Name').val("");
                             $('#path').val("");
                             $('#Icon_Name').val("");
+                             $('#fname').val("");
                             alert("Save Successfully");
                         }
                         else {

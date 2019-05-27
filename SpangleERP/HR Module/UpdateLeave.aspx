@@ -23,55 +23,27 @@
         var $j = jQuery.noConflict();
         var id = "";
         var eid = "";
+        var view = false;
+        var Insert = false;
+        var Update = false;
+        var Access="";
+
             $j(document).ready(function () {
 
-                
-              $j('#datatable').DataTable({
-            "aLengthMenu": [[10, 25,5], [10, 25, 5]],
-                "iDisplayLength": 5,
-                columns: [
-           
-                   { 'data': 'emp_id' },
-                    { 'data': 'emp_name' },
-                      {
-                        'data': 'Img',
+                Access_Levels();
 
-                        'sortable': false,
-                                'searchable': false,
-                        'render': function (webSite) {
-                            return '<img src="' + webSite + '" class=" img img-responsive  img-circle" style="width:80; height:80px;" />';
-                                    
-                                }
-
-                    },
-                    { 'data': 'Desig' },
-                    { 'data': 'sl' },
-                    { 'data': 'cl' },
-                    { 'data': 'al' },
-                    { 'data': 'lsl' },
-                    { 'data': 'lcl' },
-                    { 'data': 'lal' },
-
-
-                     {
-                                'data': 'emp_id',
-                                'sortable': false,
-                                'searchable': false,
-                        'render': function (webSite) {
-                            return ' <button type="button" class=" btn btn-primary" value="'+webSite+'" onclick="Edit(this.value);" data-toggle="modal" data-target="#AddEmployeePopup"  style="background-color:#0A408A;color:white;">Edit</button>';
-                                    
-                                }
-                            }
-                   
-                   
-                            
-                                        
-                    ],
-                bServerSide: true,
-                sAjaxSource: 'Employees.asmx/GetLeaves_Count',
-                sServerMethod: 'post'
-            });
-
+                if (view == true) {
+                    showData();
+                }
+                else {
+                    alert("you Have no Rights To Show Data");
+                }
+                if (Insert == true) {
+                    $('#In').show();
+                }
+                else {
+                    $('#In').hide();
+                }
 
 
 
@@ -128,7 +100,85 @@
 
 
 
-    });
+        });
+
+        function showData() {
+                $j('#datatable').DataTable({
+            "aLengthMenu": [[10, 25,5], [10, 25, 5]],
+                "iDisplayLength": 5,
+                columns: [
+           
+                   { 'data': 'emp_id' },
+                    { 'data': 'emp_name' },
+                      {
+                        'data': 'Img',
+
+                        'sortable': false,
+                                'searchable': false,
+                        'render': function (webSite) {
+                            return '<img src="' + webSite + '" class=" img img-responsive  img-circle" style="width:80; height:80px;" />';
+                                    
+                                }
+
+                    },
+                    { 'data': 'Desig' },
+                    { 'data': 'sl' },
+                    { 'data': 'cl' },
+                    { 'data': 'al' },
+                    { 'data': 'lsl' },
+                    { 'data': 'lcl' },
+                    { 'data': 'lal' },
+
+
+                     {
+                                'data': 'emp_id',
+                                'sortable': false,
+                                'searchable': false,
+                         'render': function (webSite) {
+                             if (Update == true)
+                                 return ' <button type="button" class=" btn btn-primary" value="' + webSite + '" onclick="Edit(this.value);" data-toggle="modal" data-target="#AddEmployeePopup"  style="background-color:#0A408A;color:white;">Edit</button>';
+                             else return '';
+                                }
+                            }
+                   
+                   
+                            
+                                        
+                    ],
+                bServerSide: true,
+                sAjaxSource: 'Employees.asmx/GetLeaves_Count',
+                sServerMethod: 'post'
+            });
+
+
+        }
+
+
+           function Access_Levels() {
+
+                    $.ajax({
+                    url: 'UpdateLeave.aspx/Access_Levels',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    method: 'post',
+                        data: "{}",
+                        async: false,
+                    success: function (data) {
+                        Access = data.d;
+                        view = Access.includes("V");
+                        Insert = Access.includes("I");
+                        Update = Access.includes("U");
+                        
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+            });
+
+            
+              
+                
+            }
 
         function Edit(Val) {
             
@@ -296,7 +346,7 @@
                         <br />
 
 
-
+                        <div id="In">
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="Name">Employee Name:</label>
                              <input type="text" id="id" name="postId" style=" display:none;" />
@@ -330,7 +380,7 @@
 
                         </div>
 
-                   
+                   </div>
                            
     <table id="datatable" style=" width:100%; height:300px; overflow:scroll;" >
        <thead>
