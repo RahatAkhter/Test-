@@ -114,6 +114,7 @@
     <Content Include="GateIn\GRN.aspx" />
     <Content Include="GateIn\Index.aspx" />
     <Content Include="GateIn\InventoryOut.aspx" />
+    <Content Include="GateIn\InventoryService.asmx" />
     <Content Include="GateIn\Items.aspx" />
     <Content Include="GateIn\ItemsCategories.aspx" />
     <Content Include="GateIn\Location.aspx" />
@@ -219,6 +220,10 @@
     </Compile>
     <Compile Include="GateIn\InventoryOut.aspx.designer.cs">
       <DependentUpon>InventoryOut.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GateIn\InventoryService.asmx.cs">
+      <DependentUpon>InventoryService.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="GateIn\Inventory_OutClass.cs" />
     <Compile Include="GateIn\ItemCategories.cs" />

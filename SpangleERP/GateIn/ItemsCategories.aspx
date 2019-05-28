@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GateIn/WareHouse.Master" AutoEventWireup="true" CodeBehind="ItemsCategories.aspx.cs" Inherits="SpangleERP.invent.ItemsCategories" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Ddd/CheckMaster.Master" AutoEventWireup="true" CodeBehind="ItemsCategories.aspx.cs" Inherits="SpangleERP.invent.ItemsCategories" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <meta charset="utf-8"/>
@@ -253,7 +253,7 @@ function AllowOnlyNumbers(e) {
         element.value = element.value.substr(0, max_chars);
     } 
        }
-        //end//
+       
     </script>
 
     
@@ -262,7 +262,7 @@ function AllowOnlyNumbers(e) {
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
- 
+ <form runat="server">
           
      <div class="container" style="width:100%;margin-top:-26px;">
      <div class="panel-group" style="width:100%;">
@@ -291,13 +291,7 @@ function AllowOnlyNumbers(e) {
                       <td>
 <input type="text" placeholder="Search By Category" id="search" style="border-radius:6px;font-family:Cambria;font:bold;height:30px;" onkeyup="SearchRecords()" onkeypress="return onlyAlphabets(event,this);" onpaste="return false"/>
                   </td><td>
-     <%--<select id="maxRows" name="state" class="form-control" style="width:120px;height:31px;">
-    <%--     <option value="1000">Show All</option>
-         <option value="10">10</option>
-         <option value="20">25</option>
-         <option value="30">50</option>
-         <option value="100">100</option>
-     </select>--%>
+     
                   </td></tr>
               </table>
 
@@ -435,5 +429,5 @@ function AllowOnlyNumbers(e) {
         </div>
 
 
-           
+           </form>
 </asp:Content>

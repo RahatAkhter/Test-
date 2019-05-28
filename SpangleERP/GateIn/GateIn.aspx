@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GateIn/WareHouse.Master" AutoEventWireup="true" CodeBehind="GateIn.aspx.cs" Inherits="SpangleERP.WareHouse.GateIn" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Ddd/CheckMaster.Master" AutoEventWireup="true" CodeBehind="GateIn.aspx.cs" Inherits="SpangleERP.WareHouse.GateIn" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
        <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -454,7 +454,7 @@ function AllowOnlyNumbers(e) {
   </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-        
+        <form runat="server">
     <div class="container" style="width:100%;margin-top:-26px;">
         
    
@@ -665,14 +665,7 @@ function AllowOnlyNumbers(e) {
                   
                 </div>
       <div class="modal-body mx-3" >
-       <%--  <div class="container">
-     <div class="panel-group">
-       <div class="panel panel-primary">
-      <div class="panel-heading"><h2>Add Employee</h2></div>
-      <div class="panel-body">--%>
-
-
-
+       
  
     
   <table id="viewsdata" class="table table-responsive-lg table-hover" style="font-size:15px;"> 
@@ -756,7 +749,7 @@ function AllowOnlyNumbers(e) {
   </table>
   </div>
       <%--<button type="button" class="btn btn-primary" onclick="print();" value="ok" id="app" style="background-color:#0A408A;">Print</button>--%>
-       <div class="col-sm-3 offset-7">
+       <div class="col-sm-12 text-center ">
             <asp:Button ID="Button2" runat="server" Text="Print" OnClick="Button1_Click" UseSubmitBehavior="false" CssClass="btn btn-primary" BackColor="#0A408A" ForeColor="White"/>              
                        </div>
                         </div>
@@ -769,11 +762,5 @@ function AllowOnlyNumbers(e) {
     </div>
 </div>
 
-
-   
-
-    
-
-
-
+    </form>
 </asp:Content>

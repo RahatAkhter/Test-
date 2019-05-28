@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GateIn/WareHouse.Master" AutoEventWireup="true" CodeBehind="GRN.aspx.cs" Inherits="SpangleERP.WareHouse.GRN" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Ddd/CheckMaster.Master" AutoEventWireup="true" CodeBehind="GRN.aspx.cs" Inherits="SpangleERP.WareHouse.GRN" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     
       <link href="../Content/css/style.css" rel="stylesheet" />
@@ -246,7 +246,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     
-   
+   <form runat="server">
           
         
      <div class="container" style="width:100%;margin-top:-26px;">
@@ -481,7 +481,7 @@
 
 
 
-        
+        </form>
 
  
   

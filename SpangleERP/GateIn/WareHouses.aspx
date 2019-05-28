@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GateIn/WareHouse.Master" AutoEventWireup="true" CodeBehind="WareHouses.aspx.cs" Inherits="SpangleERP.WareHouse.WareHouses" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Ddd/CheckMaster.Master" AutoEventWireup="true" CodeBehind="WareHouses.aspx.cs" Inherits="SpangleERP.WareHouse.WareHouses" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
      <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>

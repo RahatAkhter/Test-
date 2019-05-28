@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GateIn/WareHouse.Master" AutoEventWireup="true" CodeBehind="Items.aspx.cs" Inherits="SpangleERP.invent.Items" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Ddd/CheckMaster.Master" AutoEventWireup="true" CodeBehind="Items.aspx.cs" Inherits="SpangleERP.invent.Items" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <meta charset="utf-8"/>
@@ -303,8 +303,7 @@ function AllowOnlyNumbers(e) {
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        
-     <div class="container" style="width:100%;margin-top:-26px;">
+        <form runat="server">     <div class="container" style="width:100%;margin-top:-26px;">
      <div class="panel-group" style="width:100%;">
        <div class="panel panel-primary"  style="border-color:#0A408A;border:2px;">
       <div class="panel-heading"style="background-color:#0A408A;"><h2 style="color:white;font-family:Cambria;font-weight:200;">Items Details</h2>
@@ -484,5 +483,6 @@ function AllowOnlyNumbers(e) {
 
 <%---End  Popup----%>
              
-   
+   </form>
+
 </asp:Content>

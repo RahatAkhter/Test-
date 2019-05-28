@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GateIn/WareHouse.Master" AutoEventWireup="true" CodeBehind="InventoryOut.aspx.cs" Inherits="SpangleERP.GateIn.InventoryOut" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Ddd/CheckMaster.Master" AutoEventWireup="true" CodeBehind="InventoryOut.aspx.cs" Inherits="SpangleERP.GateIn.InventoryOut" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -379,7 +379,8 @@
 </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-      
+    <form runat="server">  
+
             <div class="container" style="width: 100%; margin-top: -26px;">
                 <div class="panel-group" style="width: 100%;">
                     <div class="panel panel-primary" style="border-color: #0A408A; border: 2px;">
@@ -548,7 +549,7 @@
                             </div>
               
           
-
+    </form>
 
 </asp:Content>
 

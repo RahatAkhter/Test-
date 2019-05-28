@@ -39,7 +39,7 @@ namespace SpangleERP.WareHouse
             }
             else
             {
-                Response.Redirect("Index.aspx");
+                Response.Redirect("~/Index.aspx");
             }
         }
 
