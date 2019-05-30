@@ -392,14 +392,14 @@ where ino.Items_Id ='" + ItemdNames + "'", conn);
                                                 {
                                                     if (orderItems > LeftQuantity)
                                                     {
-                                                        SqlCommand cmd2 = new SqlCommand("insert into InventoryOut values('" + lastidout + "','" + LeftQuantity.ToString() + "','" + now.ToString() + "','"+ItemsName+"','" + id + "')", con);
+                                                        SqlCommand cmd2 = new SqlCommand("insert into InventoryOut values('" + lastidout + "','" + LeftQuantity.ToString() + "','" + now.ToString() + "','"+id+"','" + ItemsName + "')", con);
                                                         cmd2.ExecuteNonQuery();
                                                     }
                                                     else
                                                     {
                                                         int hg = LeftQuantity - orderItems;
                                                         int lgh = LeftQuantity - hg;
-                                                        SqlCommand cmd23 = new SqlCommand("insert into InventoryOut values('" + lastidout + "','" + lgh.ToString() + "','" + now.ToString() + "','"+ItemsName+"','" + id + "')", con);
+                                                        SqlCommand cmd23 = new SqlCommand("insert into InventoryOut values('" + lastidout + "','" + lgh.ToString() + "','" + now.ToString() + "','"+id+"','" + ItemsName + "')", con);
                                                         cmd23.ExecuteNonQuery();
                                                         getquantity += LeftQuantity;
                                                     }
@@ -412,7 +412,7 @@ where ino.Items_Id ='" + ItemdNames + "'", conn);
                                                 int k = orderItems - getquantity;
                                                 if (k > quantitiesok)
                                                 {
-                                                    SqlCommand cmd21 = new SqlCommand("insert into InventoryOut values('" + getnextrow + "','" + quantitiesok.ToString() + "','" + now.ToString() + "','"+ItemsName+"','" + id + "')", con);
+                                                    SqlCommand cmd21 = new SqlCommand("insert into InventoryOut values('" + getnextrow + "','" + quantitiesok.ToString() + "','" + now.ToString() + "','"+id+"','" + ItemsName + "')", con);
                                                     cmd21.ExecuteNonQuery();
                                                 }
                                                 k = orderItems - getquantity;
@@ -421,7 +421,7 @@ where ino.Items_Id ='" + ItemdNames + "'", conn);
 
                                                     int n = quantitiesok - k;
                                                     int all = quantitiesok - n;
-                                                    SqlCommand cmd21 = new SqlCommand("insert into InventoryOut values('" + getnextrow + "','" + all.ToString() + "','" + now.ToString() + "','"+ItemsName+"','" + id + "')", con);
+                                                    SqlCommand cmd21 = new SqlCommand("insert into InventoryOut values('" + getnextrow + "','" + all.ToString() + "','" + now.ToString() + "','"+id+"','" + ItemsName + "')", con);
                                                     cmd21.ExecuteNonQuery();
                                                 }
                                                 getquantity += quantitiesok;
@@ -495,14 +495,14 @@ where ino.Items_Id ='" + ItemdNames + "'", conn);
                                         int k = orderItems - getquantity;
                                         if (k > quantitiesok)
                                         {
-                                            SqlCommand cmd2 = new SqlCommand("insert into InventoryOut values('" + getnextrow + "','" + quantitiesok.ToString() + "','" + now.ToString() + "','"+ItemsName+"','" + id + "')", con);
+                                            SqlCommand cmd2 = new SqlCommand("insert into InventoryOut values('" + getnextrow + "','" + quantitiesok.ToString() + "','" + now.ToString() + "','"+id+"','" + ItemsName + "')", con);
                                             cmd2.ExecuteNonQuery();
                                         }
                                         if (k <= quantitiesok && k > 0)
                                         {
                                             int n = quantitiesok - k;
                                             int all = quantitiesok - n;
-                                            SqlCommand cmd2 = new SqlCommand("insert into InventoryOut values('" + getnextrow + "','" + all.ToString() + "','" + now.ToString() + "','"+ItemsName+"','" + id + "')", con);
+                                            SqlCommand cmd2 = new SqlCommand("insert into InventoryOut values('" + getnextrow + "','" + all.ToString() + "','" + now.ToString() + "','"+id+"','" + ItemsName + "')", con);
                                             cmd2.ExecuteNonQuery();
                                         }
                                         getquantity += quantitiesok;

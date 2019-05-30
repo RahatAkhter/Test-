@@ -48,37 +48,15 @@
         
                  
        });
-$(document).ready(function () {  
-         $.ajax({
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                //url is the path of our web method (Page name/function name)
-                url: "WareHouses.aspx/PopulateDropDownList",
-                data: "{}",
-                dataType: "json",
-                //called on jquery ajax call success
-                success: function (result) {
-                    $('#Head').empty();
-                    $('#Head').append("<option value='0'>WareHouse Head </option>");
-                    $.each(result.d, function (key, value) {
-                        $("#Head").append($("<option></option>").text(value.user_id));
-                    });
-                },
-                //called on jquery ajax call failure
-                error: function ajaxError(result) {
-                    alert(result.status + ' : ' + result.statusText);
-                }
-            });
-                     });
        
 
 
        function Insert() {
             var txtname = ($('#WareHouseName').val());
           
-            var ddl = document.getElementById("City");
-            var city = ddl.options[ddl.selectedIndex].text;
-      
+            var ddl = document.getElementById("<%=DropDownList1.ClientID%>");
+            var city = ddl.options[ddl.selectedIndex].value;
+           
                  $.ajax({  
                 url: 'WareHouses.aspx/Save', 
                 contentType: "application/json; charset=utf-8", 
@@ -90,6 +68,7 @@ $(document).ready(function () {
                      
                 success: function (data) {  
                     alert(data.d);
+                    $('#WareHouseName').val("");
                     
                     },  
                      error: function (err) {
@@ -104,7 +83,7 @@ $(document).ready(function () {
          var Items_Id = document.getElementById("WareHouse_Id");
              var getname = ItemsName.innerText;
      
-                     alert(Val);
+                     
                   $.ajax({  
                 url: 'WareHouses.aspx/GotoPopup', 
                 contentType: "application/json; charset=utf-8", 
@@ -125,18 +104,21 @@ $(document).ready(function () {
         
             var txtname = ($('#EditName').val());
             
-            var xs = document.getElementById("WareHouse_Id");
-            var dobs = xs.innerText;
-            alert(dobs);
+          var ddl = document.getElementById("<%=DropDownList2.ClientID%>");
+            var city = ddl.options[ddl.selectedIndex].value;
+           var id = $('#WareHouse_Id').text();
+            alert(city);
                   $.ajax({  
                 url: 'WareHouses.aspx/Edit', 
                 contentType: "application/json; charset=utf-8", 
                 dataType: "json",  
                       method: 'post',
-                    data: "{'id':'" + dobs + "','txtname':'" + txtname + "'}",
+                    data: "{'city':'" + city + "','txtname':'" + txtname + "','id':'" + id + "'}",
                      
                 success: function (data) {  
                     alert(data.d);
+                    $('#EditName').val("");
+                    window.location = "WareHouses.aspx";
                  
                     },  
                 error: function (err) {  
@@ -280,7 +262,7 @@ function AllowOnlyNumbers(e) {
 </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-   
+   <form runat="server">
      <div class="container" style="width:100%;margin-top:-26px;">
      <div class="panel-group" style="width:100%;">
        <div class="panel panel-primary" style="border-color:#0A408A;border:2px;" >
@@ -362,32 +344,21 @@ function AllowOnlyNumbers(e) {
            </div>
 
              <label class="control-label col-sm-2" for="City">City:</label>
-            <div class="col-sm-3">
-                <select class="form-control" id="City">
-                    <option>Karachi</option>
-                     <option>Lahore</option>
-                      <option>Bhawalpur</option>
-                         <option>Islamabad</option>
-                    
-                </select>
-       </div>
+           <div >          
+               
+               <asp:DropDownList ID="DropDownList1" Size="1" runat="server"  >
+                            
+                         </asp:DropDownList>
+            </div>
 
-            
        
        </div>
 
-         
-   
-              
-                 
-         
-
-    
        <br />
         <div class="form-group">
 
 
-                     <div class="col-sm-3 col-sm-offset-3">
+                     <div class="col-sm-12 text-center">
 
                             <button type="button" class="btn" onclick="Insert()" style="background-color:#0A408A">Saved</button> 
 
@@ -405,11 +376,13 @@ function AllowOnlyNumbers(e) {
 
             <!--end model one-->
             
+
+
           <!-- Modal two-->
     <div class="container">
         <div class="modal fade" id="EditPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document"  >
+  <div class="modal-dialog modal-md" role="document"  >
     <div class="modal-content">
         <div class="modal-header" style="background-color:#0A408A">
             <h2 style="color:white;">Edit Records</h2>
@@ -417,31 +390,38 @@ function AllowOnlyNumbers(e) {
                   
                 </div>
       <div class="modal-body mx-3" >
-       <%--  <div class="container">
-     <div class="panel-group">
-       <div class="panel panel-primary">
-      <div class="panel-heading"><h2>Add Employee</h2></div>
-      <div class="panel-body">--%>
+      
 
 
 
                         <br />
 
           <div class="form-horizontal">
-        <div class="form-group">
+        <div class="form-group" style="display:none;">
               <label class="control-label col-sm-3" for="Warehouse_Id">WareHouse_id</label>
             <div class="col-sm-3">
                 <label class="control-label col-sm-2" for="WareHouse_Id" id="WareHouse_Id"></label>
             </div>
             </div>
       <div class="form-group">
-            <label class="control-label col-sm-3" for="WarehouseName">WareHouse Name:</label>
-            <div class="col-sm-3">
+            <label class="control-label col-sm-4" for="WarehouseName">WareHouse Name:</label>
+            <div class="col-sm-8">
      <input type="text" class="form-control" id="EditName" placeholder="WareHouse Name" required maxlength="14" onkeypress="return onlyAlphabets(event,this);" onpaste="return false" >
 
             </div>
           </div>
-                         
+                      
+              <div class="form-group">
+            <label class="control-label col-sm-4" for="WarehouseName">City:</label>
+            <div class="col-sm-8">
+     
+               <asp:DropDownList ID="DropDownList2" Size="1" runat="server"  >
+                            
+                         </asp:DropDownList>
+            </div>
+          </div>
+                      
+
                       
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-offset-3">
@@ -463,6 +443,6 @@ function AllowOnlyNumbers(e) {
 
      
 
-           
+           </form>
 
 </asp:Content>

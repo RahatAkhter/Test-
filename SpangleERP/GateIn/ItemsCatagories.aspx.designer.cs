@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SpangleERP.WareHouse {
+namespace SpangleERP.invent {
     
     
-    public partial class WareHouses {
+    public partial class ItemsCategories {
         
         /// <summary>
         /// DropDownList1 control.
@@ -20,14 +20,5 @@ namespace SpangleERP.WareHouse {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
-        
-        /// <summary>
-        /// DropDownList2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList2;
     }
 }

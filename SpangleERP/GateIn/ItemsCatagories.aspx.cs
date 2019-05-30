@@ -46,7 +46,7 @@ namespace SpangleERP.invent
                 ItemCategories u = new ItemCategories();
                 u.cat_id = Convert.ToInt32(dt.Rows[i]["cat_id"].ToString());
                 u.cat_name = dt.Rows[i]["cat_name"].ToString();
-                u.size = dt.Rows[i]["size"].ToString();
+                u.type = Convert.ToInt32(dt.Rows[i]["type"]);
 
 
 
@@ -73,26 +73,28 @@ namespace SpangleERP.invent
 
         }
         [WebMethod]
-        public static string Save(string ItemsName, string Size)
+        public static string Save(string ItemsName, string Val)
         {
 
             try
             {
-                if (ItemsName != "" && Size !="")
+                if (ItemsName != "" && Val !="")
                 {
 
                     SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString);
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("insert into ItemsCategories values('" + ItemsName + "','" + Size + "')", con);
+                    SqlCommand cmd = new SqlCommand("insert into ItemsCategories values('" + ItemsName + "','" + Convert.ToInt32(Val) + "')", con);
                     cmd.ExecuteNonQuery();
                     con.Close();
+                    return "Save Successfully";
                 }
+                return "Please Fill The Form Correctly";
             }
             catch (Exception ex)
             {
-
+                return ex.Message;
             }
-            return "Save Successfully";
+            
         }
 
         [WebMethod]

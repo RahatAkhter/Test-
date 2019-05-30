@@ -100,12 +100,24 @@ namespace SpangleERP.invent
             {
                 if (cat_id != 0 && items_name != "")
                 {
-
                     SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString);
+                    SqlCommand cmd1 = new SqlCommand("select Count(*) from Items where items_name=@name", con);
+                    cmd1.Parameters.AddWithValue("@name",items_name);
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("insert into Items values('" + items_name + "','" + cat_id + "')", con);
-                    cmd.ExecuteNonQuery();
+                    int count = Convert.ToInt32(cmd1.ExecuteScalar());
                     con.Close();
+
+                    if (count == 0)
+                    {
+                        SqlCommand cmd = new SqlCommand("insert into Items values('" + items_name + "','" + cat_id + "')", con);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                    else
+                    {
+                        return "Item Already Exist";
+                    }
                 }
             }
             catch (Exception ex)

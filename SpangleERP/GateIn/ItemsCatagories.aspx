@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Ddd/CheckMaster.Master" AutoEventWireup="true" CodeBehind="ItemsCategories.aspx.cs" Inherits="SpangleERP.invent.ItemsCategories" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Ddd/CheckMaster.Master" AutoEventWireup="true" CodeBehind="ItemsCatagories.aspx.cs" Inherits="SpangleERP.invent.ItemsCategories" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <meta charset="utf-8"/>
@@ -26,7 +26,7 @@
     <script>
       $(document).ready(function () {  
             $.ajax({  
-                url: 'ItemsCategories.aspx/GetUserDetail', 
+                url: 'ItemsCataFgories.aspx/GetUserDetail', 
                 contentType: "application/json; charset=utf-8", 
                 dataType: "json",  
                 method: 'post',
@@ -38,7 +38,7 @@
                     for (var i = 0; i < data.d.length; i++) {
 
                         //employeeTable.append('<tr><td>' + data.d[i].Emp_id + '</td><td>' +data.d[i].Emp_name.toString() + '</td><td> <Input type="time"  id="Txt' + i + '"  class="form-control"/></td><td><button type="button" id="btnAdd" class="btn btn-xs btn-primary   value="' + data.d[i].Emp_id + '"  onclick="add(this.value,' + i + ');">Check In</button></td><td> <Input type="time"  id="Txts' + i + '" class="form-control" /></td ><td><button type="button"  class="btn btn-xs btn-primary value="' + data.d[i].Emp_id + '" onclick="update(this.value,' + i + ');" >Check Out</button></td> </tr > ');
-                        employeeTable.append('<tr ><td class="control-label" >' + data.d[i].cat_id + '</td><td class="control_label">' + data.d[i].cat_name + '</td><td class="control_label">' + data.d[i].size + '</td>    <td><button type="button" value="' + data.d[i].cat_id + '" data-toggle="modal" data-target="#EditPopup"  onclick="CallEditPopup(this.value,' + i + ')" class="btn" style="background-color:#0A408A;">Edit</button></td></tr>')
+                        employeeTable.append('<tr ><td class="control-label" >' + data.d[i].cat_id + '</td><td class="control_label">' + data.d[i].cat_name + '</td><td class="control_label">' + data.d[i].type + '</td>    <td><button type="button" value="' + data.d[i].cat_id + '" data-toggle="modal" data-target="#EditPopup"  onclick="CallEditPopup(this.value,' + i + ')" class="btn" style="background-color:#0A408A;">Edit</button></td></tr>')
                     }
                     },  
                 error: function (err) {  
@@ -50,14 +50,17 @@
 function Insert() {
                  var txtname = ($('#ItemsName').val());
        
-               var txtsize = ($('#Size').val());
+               
+        var ddl = document.getElementById("<%=DropDownList1.ClientID%>");
+    var type = ddl.options[ddl.selectedIndex].value;
+    alert(type);
                  $.ajax({  
-                url: 'ItemsCategories.aspx/Save', 
+                url: 'ItemsCatagories.aspx/Save', 
                 contentType: "application/json; charset=utf-8", 
                 dataType: "json",  
                 method: 'post',
 
-                     data: "{'ItemsName':'" + txtname + "','Size':'" + txtsize + "'}",
+                     data: "{'ItemsName':'" + txtname + "','Val':'" + type + "'}",
                      
                 success: function (data) {  
                     alert(data.d);
@@ -104,7 +107,7 @@ function Insert() {
             var dobs = xs.innerText;
             alert(dobs);
                   $.ajax({  
-                url: 'ItemsCategories.aspx/Edit', 
+                url: 'ItemsCatagories.aspx/Edit', 
                 contentType: "application/json; charset=utf-8", 
                 dataType: "json",  
                       method: 'post',
@@ -122,26 +125,7 @@ function Insert() {
 
      }
 
-         function SearchRecords() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("search");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("tblEmployee");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[1];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-       }
- 
-
+        
 function AllowOnlyNumbers(e) {
 
     e = (e) ? e : window.event;
@@ -342,13 +326,15 @@ function AllowOnlyNumbers(e) {
         <div class="form-group">
             <label class="control-label col-sm-2" for="ItemsName">Categories:</label>
             <div class="col-sm-3">
-     <input type="text" class="form-control" id="ItemsName" placeholder="Categories Name" maxlength="14" onkeypress="return onlyAlphabets(event,this);" onpaste="return false" required>
+     <input type="text" class="form-control" id="ItemsName" placeholder="Categories Name" maxlength="40"   required>
 
             </div>
   <label class="control-label col-sm-2" for="Size">Size:</label>
                      <div class="col-sm-3">
-     <input type="text" class="form-control" id="Size"   onkeypress="return AllowOnlyNumbers(event);"  onkeydown="limit(this, 5);" onpaste="return false"  required placeholder="enter value">
-
+                         <asp:DropDownList ID="DropDownList1" runat="server">
+                             <asp:ListItem Text="Packaging Material" Value="0"></asp:ListItem>
+                             <asp:ListItem Text="Row Material" Value="1"></asp:ListItem>
+                         </asp:DropDownList>
             </div>
                         </div>
     

@@ -95,7 +95,7 @@
                      success: function (data) {
                       
                     alert(data.d);
-                   
+                         $('#ItemsName').val("");
                     
                     
                     },  
@@ -163,94 +163,8 @@
 
      }
 
-    function SearchRecords() {
-      var input, filter, table, tr, td, i;
-      input = document.getElementById("search");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("tblEmployee");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        td1 = tr[i].getElementsByTagName("td")[1];
-        if (td+td1) {
-          if ((td.innerHTML.toUpperCase().indexOf(filter)+td1.innerHTML.toUpperCase().indexOf(filter)) > -2) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }       
-      }
-    }
+
        
-
-function AllowOnlyNumbers(e) {
-
-    e = (e) ? e : window.event;
-    var key = null;
-    var charsKeys = [
-        97, // a  Ctrl + a Select All
-        65, // A Ctrl + A Select All
-        99, // c Ctrl + c Copy
-        67, // C Ctrl + C Copy
-        118, // v Ctrl + v paste
-        86, // V Ctrl + V paste
-        115, // s Ctrl + s save
-        83, // S Ctrl + S save
-        112, // p Ctrl + p print
-        80 // P Ctrl + P print
-    ];
-
-    var specialKeys = [
-    8, // backspace
-    9, // tab
-    27, // escape
-    13, // enter
-    35, // Home & shiftKey +  #
-    36, // End & shiftKey + $
-    37, // left arrow &  shiftKey + %
-    39, //right arrow & '
-    46, // delete & .
-    45 //Ins &  -
-    ];
-
-    key = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
-
-    //console.log("e.charCode: " + e.charCode + ", " + "e.which: " + e.which + ", " + "e.keyCode: " + e.keyCode);
-    //console.log(String.fromCharCode(key));
-
-    // check if pressed key is not number 
-    if (key && key < 48 || key > 57) {
-
-        //Allow: Ctrl + char for action save, print, copy, ...etc
-        if ((e.ctrlKey && charsKeys.indexOf(key) != -1) ||
-            //Fix Issue: f1 : f12 Or Ctrl + f1 : f12, in Firefox browser
-            (navigator.userAgent.indexOf("Firefox") != -1 && ((e.ctrlKey && e.keyCode && e.keyCode > 0 && key >= 112 && key <= 123) || (e.keyCode && e.keyCode > 0 && key && key >= 112 && key <= 123)))) {
-            return true
-        }
-            // Allow: Special Keys
-        else if (specialKeys.indexOf(key) != -1) {
-            //Fix Issue: right arrow & Delete & ins in FireFox
-            if ((key == 39 || key == 45 || key == 46)) {
-                return (navigator.userAgent.indexOf("Firefox") != -1 && e.keyCode != undefined && e.keyCode > 0);
-            }
-                //DisAllow : "#" & "$" & "%"
-                //add e.altKey to prevent AltGr chars
-            else if ((e.shiftKey || e.altKey) && (key == 35 || key == 36 || key == 37)) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
-        else {
-            return false;
-        }
-    }
-    else {
-        return true;
-       }
-       }
-
 
        function onlyAlphabets(e, t) {
             try {
@@ -288,12 +202,7 @@ function AllowOnlyNumbers(e) {
             }
        }
 
-       function limit(element, max) {    
-    var max_chars = max;
-    if(element.value.length > max_chars) {
-        element.value = element.value.substr(0, max_chars);
-    } 
-       }
+      
         //end//
      
      </script>
@@ -328,7 +237,6 @@ function AllowOnlyNumbers(e) {
               <table  class="pull-right">
                   <tr>
                       <td>
-<input type="text" placeholder="Search Here By Items Name" id="search" class="form-control fas fa-search" style="border-radius:6px;font-family:Cambria;font:bold;height:30px;" onkeyup="SearchRecords()" />
                   </td><td>
    
                   </td></tr>
@@ -384,7 +292,7 @@ function AllowOnlyNumbers(e) {
         <div class="form-group">
             <label class="control-label col-sm-2" for="ItemsName">Items Name:</label>
             <div class="col-sm-3">
-     <input type="text" class="form-control" id="ItemsName" placeholder="Items Name" maxlength="14" onkeypress="return onlyAlphabets(event,this);" onpaste="return false"   required>
+     <input type="text" class="form-control" id="ItemsName" placeholder="Items Name" maxlength="30"   required>
 
             </div>
                 <label class="control-label col-sm-3" for="Cat_Id">Cat_id:</label>
@@ -430,7 +338,7 @@ function AllowOnlyNumbers(e) {
     <div class="container">
         <div class="modal fade" id="EditPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document"  >
+  <div class="modal-dialog modal-md" role="document"  >
     <div class="modal-content">
         <div class="modal-header" style="background-color:#0A408A;">
             <h2 style="color:white;">Edit Items</h2>
@@ -438,34 +346,29 @@ function AllowOnlyNumbers(e) {
                   
                 </div>
       <div class="modal-body mx-3" >
-       <%--  <div class="container">
-     <div class="panel-group">
-       <div class="panel panel-primary">
-      <div class="panel-heading"><h2>Add Employee</h2></div>
-      <div class="panel-body">--%>
-
+     
 
 
                         <br />
 
           <div class="form-horizontal">
-        <div class="form-group">
+        <div class="form-group" style="display:none;">
               <label class="control-label col-sm-2" for="ItemsName">Item_id</label>
             <div class="col-sm-3">
                 <label class="control-label col-sm-2" for="ItemsName" id="Item_id"></label>
             </div>
             </div>
       <div class="form-group">
-            <label class="control-label col-sm-2" for="ItemsName">Items Name:</label>
-            <div class="col-sm-3">
-     <input type="text" class="form-control" id="EditName" placeholder="Items Name" required maxlength="14" onkeypress="return onlyAlphabets(event,this);" onpaste="return false" required>
+            <label class="control-label col-sm-4" for="ItemsName">Items Name:</label>
+            <div class="col-sm-8">
+     <input type="text" class="form-control" id="EditName" placeholder="Items Name" required maxlength="30" onkeypress="return onlyAlphabets(event,this);"  required>
 
             </div>
           </div>
                          
                       
                         <div class="form-group">
-                            <div class="col-xs-12 col-sm-offset-3">
+                            <div class="col-xs-12 text-center">
                             <button type="button" class="btn btn-primary" onclick="EditRecords()" style="background-color:#0A408A;">Saved</button>
             
                          

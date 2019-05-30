@@ -10,15 +10,10 @@
     <script src="../Content/js/jquery-2.1.1.min.js"></script>
    
 
-    <!--online-->
-
-    <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
-<!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script type="text/javascript"> 
         var count;
@@ -36,8 +31,7 @@
                     employeeTable.empty();  
                     for (var i = 0; i < data.d.length; i++) {
                         if (data.d[i].G_Status == 0) {
-                            //employeeTable.append('<tr><td>' + data.d[i].Emp_id + '</td><td>' +data.d[i].Emp_name.toString() + '</td><td> <Input type="time"  id="Txt' + i + '"  class="form-control"/></td><td><button type="button" id="btnAdd" class="btn btn-xs btn-primary   value="' + data.d[i].Emp_id + '"  onclick="add(this.value,' + i + ');">Check In</button></td><td> <Input type="time"  id="Txts' + i + '" class="form-control" /></td ><td><button type="button"  class="btn btn-xs btn-primary value="' + data.d[i].Emp_id + '" onclick="update(this.value,' + i + ');" >Check Out</button></td> </tr > ');
-                            employeeTable.append('<tr ><td class="control_label">' + data.d[i].G_Date + '</td><td><button type="button" id="pen"  value="' + data.d[i].GateIn_Id + '" data-toggle="modal" data-target="#EditPopup"  onclick="CallEditPopup(this.value,' + i + ')" class="btn btn-sucess" >Pending</button></td></tr>');
+                              employeeTable.append('<tr ><td class="control_label">' + data.d[i].G_Date + '</td><td><button type="button" id="pen"  value="' + data.d[i].GateIn_Id + '" data-toggle="modal" data-target="#EditPopup"  onclick="CallEditPopup(this.value,' + i + ')" class="btn btn-sucess" >Pending</button></td></tr>');
                         } else {
                             employeeTable.append('<tr ><td class="control_label">' + data.d[i].G_Date + '</td><td><button type="button" id="vw"  value="' + data.d[i].GateIn_Id + '" data-toggle="modal" data-target="#Popup"  onclick="Popup(this.value,' + i + ')" class="btn btn-primary" style="background-color:#0A408A;">View</button></td></tr>')
                         }
@@ -68,8 +62,7 @@
           count = data.d.length;
                     for (var i = 0; i < data.d.length; i++) {
 
-                        //employeeTable.append('<tr><td>' + data.d[i].Emp_id + '</td><td>' +data.d[i].Emp_name.toString() + '</td><td> <Input type="time"  id="Txt' + i + '"  class="form-control"/></td><td><button type="button" id="btnAdd" class="btn btn-xs btn-primary   value="' + data.d[i].Emp_id + '"  onclick="add(this.value,' + i + ');">Check In</button></td><td> <Input type="time"  id="Txts' + i + '" class="form-control" /></td ><td><button type="button"  class="btn btn-xs btn-primary value="' + data.d[i].Emp_id + '" onclick="update(this.value,' + i + ');" >Check Out</button></td> </tr > ');
-                        employeeTable.append('<tr ><td class="control-label" style="display:none;" >' + data.d[i].ItemIn_Id + '</td><td class="control_label">' + data.d[i].I_Quantity + '</td><td class="control_label" style="display:none;">' + data.d[i].ItemsId + '</td><td class="control_label">' + data.d[i].Itemsname + '</td><td><Input type="date"  id="mfg' + i + '" class="form-control" /></td ><td><Input type="date"  id="exp' + i + '" class="form-control" /></td ><td><Input type="text"  id= "btch' + i + '" class="form-control" /></td >')
+                           employeeTable.append('<tr ><td class="control-label" style="display:none;" >' + data.d[i].ItemIn_Id + '</td><td class="control_label">' + data.d[i].I_Quantity + '</td><td class="control_label" style="display:none;">' + data.d[i].ItemsId + '</td><td class="control_label">' + data.d[i].Itemsname + '</td><td><Input type="date"  id="mfg' + i + '" class="form-control" /></td ><td><Input type="date"  id="exp' + i + '" class="form-control" /></td ><td><Input type="text"  id= "btch' + i + '" class="form-control" /></td >')
           }
 
                     },  

@@ -28,11 +28,37 @@ namespace SpangleERP.WareHouse
             {
                 Response.Redirect("~/Index.aspx");
             }
-
-
+            Bound_Type();
         
         }
-       
+
+
+
+        public void Bound_Type()
+        {
+
+            string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
+            SqlConnection conn = new SqlConnection(con1);
+
+            SqlCommand cmd = new SqlCommand(@"select * from Cities", conn);
+
+            conn.Open();
+            DropDownList1.DataSource = cmd.ExecuteReader();
+            DropDownList1.DataTextField = "City";
+            DropDownList1.DataValueField = "id";
+            DropDownList1.DataBind();
+            conn.Close();
+            conn.Open();
+
+            DropDownList2.DataSource = cmd.ExecuteReader();
+            DropDownList2.DataTextField = "City";
+            DropDownList2.DataValueField = "id";
+            DropDownList2.DataBind();
+
+            conn.Close();
+            conn.Dispose();
+
+        }
 
 
         [WebMethod]
@@ -106,9 +132,7 @@ namespace SpangleERP.WareHouse
         public static string Save(string WhName,  string City)
         {
             
-            string StopEmptyMfg = "";
-            int i = 0;
-            string cn = i.ToString();
+            
 
     
                
@@ -121,14 +145,15 @@ namespace SpangleERP.WareHouse
                     {
                         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString);
                         con.Open();
-                        SqlCommand cmd = new SqlCommand("insert into warehouse values('" + WhName + "','" + City + "')", con);
+                        SqlCommand cmd = new SqlCommand("insert into warehouse values('" + WhName + "','" + Convert.ToInt32(City) + "')", con);
                         cmd.ExecuteNonQuery();
-                    }
+
+                return "Save Items Sucessfully..!";
+            }
                 
-               
+              
         
 
-            return "Save Items Sucessfully..!";
         }
 
         [WebMethod]
@@ -148,14 +173,14 @@ namespace SpangleERP.WareHouse
         }
         // end //
         [WebMethod]
-        public static string Edit(string id, string txtname)
+        public static string Edit(string city, string txtname,string id)
         {
           
             if (txtname != "")
             {
                 SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString);
                 con.Open();
-                SqlCommand cmd = new SqlCommand("update  warehouse  set wh_name ='" + txtname + "'where wh_id ='" + id + "'", con);
+                SqlCommand cmd = new SqlCommand("update  warehouse  set wh_name ='" + txtname + "', city='"+Convert.ToInt32(city)+"' where wh_id ='" + Convert.ToInt32(id)+"'", con);
                 cmd.ExecuteNonQuery();
             }
             else

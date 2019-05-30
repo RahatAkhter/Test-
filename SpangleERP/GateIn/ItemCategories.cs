@@ -9,6 +9,6 @@ namespace SpangleERP.invent
     {
         public int cat_id { get; set; }
         public string cat_name { get; set; }
-        public string size { get; set; }
+        public int type { get; set; }
     }
 }

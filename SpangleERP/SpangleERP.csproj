@@ -112,11 +112,10 @@
     <Content Include="examples\user.html" />
     <Content Include="GateIn\GateIn.aspx" />
     <Content Include="GateIn\GRN.aspx" />
-    <Content Include="GateIn\Index.aspx" />
     <Content Include="GateIn\InventoryOut.aspx" />
     <Content Include="GateIn\InventoryService.asmx" />
     <Content Include="GateIn\Items.aspx" />
-    <Content Include="GateIn\ItemsCategories.aspx" />
+    <Content Include="GateIn\ItemsCatagories.aspx" />
     <Content Include="GateIn\Location.aspx" />
     <Content Include="GateIn\logo\spangle.jpg" />
     <Content Include="GateIn\logo\SpangleMaster.JPG" />
@@ -206,13 +205,6 @@
     <Compile Include="GateIn\GRN.aspx.designer.cs">
       <DependentUpon>GRN.aspx</DependentUpon>
     </Compile>
-    <Compile Include="GateIn\Index.aspx.cs">
-      <DependentUpon>Index.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GateIn\Index.aspx.designer.cs">
-      <DependentUpon>Index.aspx</DependentUpon>
-    </Compile>
     <Compile Include="GateIn\InventoryInClass.cs" />
     <Compile Include="GateIn\InventoryOut.aspx.cs">
       <DependentUpon>InventoryOut.aspx</DependentUpon>
@@ -234,12 +226,12 @@
     <Compile Include="GateIn\Items.aspx.designer.cs">
       <DependentUpon>Items.aspx</DependentUpon>
     </Compile>
-    <Compile Include="GateIn\ItemsCategories.aspx.cs">
-      <DependentUpon>ItemsCategories.aspx</DependentUpon>
+    <Compile Include="GateIn\ItemsCatagories.aspx.cs">
+      <DependentUpon>ItemsCatagories.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="GateIn\ItemsCategories.aspx.designer.cs">
-      <DependentUpon>ItemsCategories.aspx</DependentUpon>
+    <Compile Include="GateIn\ItemsCatagories.aspx.designer.cs">
+      <DependentUpon>ItemsCatagories.aspx</DependentUpon>
     </Compile>
     <Compile Include="GateIn\ItemsClass.cs" />
     <Compile Include="GateIn\Location.aspx.cs">
@@ -252,13 +244,6 @@
     <Compile Include="GateIn\Locations.cs" />
     <Compile Include="GateIn\Users.cs" />
     <Compile Include="GateIn\warehouse.cs" />
-    <Compile Include="GateIn\WareHouse.Master.cs">
-      <DependentUpon>WareHouse.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GateIn\WareHouse.Master.designer.cs">
-      <DependentUpon>WareHouse.Master</DependentUpon>
-    </Compile>
     <Compile Include="GateIn\WareHouseClass.cs" />
     <Compile Include="GateIn\WareHouses.aspx.cs">
       <DependentUpon>WareHouses.aspx</DependentUpon>
@@ -488,7 +473,6 @@
     <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\package.json" />
     <Content Include="now-ui-dashboard-master\now-ui-dashboard-master\README.md" />
     <Content Include="Ddd\CheckMaster.Master" />
-    <Content Include="GateIn\WareHouse.Master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

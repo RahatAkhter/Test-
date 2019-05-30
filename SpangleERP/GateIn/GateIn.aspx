@@ -52,14 +52,7 @@
 
 
       function Popup(Val, i) {
-          
-            
-           
-
-
-
-
-
+      
   $.ajax({  
                 url: 'GateIn.aspx/approve', 
                 contentType: "application/json; charset=utf-8", 
@@ -189,25 +182,7 @@
 
      }
      
-    function SearchRecords() {
-      var input, filter, table, tr, td, i;
-      input = document.getElementById("search");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("tblEmployee");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[1];
-        td1 = tr[i].getElementsByTagName("td")[2];
-        if (td+td1) {
-          if ((td.innerHTML.toUpperCase().indexOf(filter)+td1.innerHTML.toUpperCase().indexOf(filter)) > -2) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }       
-      }
-    }
-       
+ 
 
 function AllowOnlyNumbers(e) {
 
@@ -320,27 +295,24 @@ function AllowOnlyNumbers(e) {
         element.value = element.value.substr(0, max_chars);
     } 
        }
-        //end//
-     // insert data by loop//
-   //  $(
      function savetable() {
-             //
-    //     $("#savetable").click(function () {
+             
         
                  var n = $("#CallTable").find("tr").length;
                  for (var i = 1; i < n - 1; i++) {
                      var Id = $("#txtgetid").text();
+                    
                      var ItemsNames = $("#CallTable").find("tr").eq(i + 1).find("td").eq(0).text();
                      var Quantities = $("#CallTable").find("tr").eq(i + 1).find("td").eq(1).text();
-                
-                    $.ajax({
+                     
+                     $.ajax({
                          type: "Post",
                          url: "GateIn.aspx/ItemInsert",
                          data: "{'ItemsId':" + Id + ",'ItemsNames':'" + ItemsNames + "','Quantities':'" + Quantities + "'}",
                           contentType: "application/json; charset=utf-8",
                          dataType: "json",
                          success: function (data) {
-                             alert(data.d);
+                             
                              window.location = "GateIn.aspx";
                              //alert("complete");
                          },
@@ -393,8 +365,30 @@ function AllowOnlyNumbers(e) {
                                var ddl = document.getElementById("<%=getitems.ClientID%>");
                                var siteems = ddl.options[ddl.selectedIndex].value;
 
-                               var markup = "<tr><td>" + siteems + "</td><td>" + quantity + "</td><td><input type='button'; value='Delete Row' class='btn btn-danger' onclick='SomeDeleteRowFunction(this)'> </td></tr>";
+                            var n = $("#CallTable").find("tr").length;
+         var flag = true;
+         for (var i = 0; i < n - 1; i++) {
+
+             var pid = $("#CallTable").find("tr").eq(i + 1).find("td").eq(0).text();
+
+            
+
+             if (siteems == pid) {
+                 flag = false;
+             }
+
+
+         }
+
+                            if (flag == false) {
+             alert("You Already Select This Item");
+         }
+         else {
+
+             var markup = "<tr><td>" + siteems + "</td><td>" + quantity + "</td><td><input type='button'; value='Delete Row' class='btn btn-danger' onclick='SomeDeleteRowFunction(this)'> </td></tr>";
                                $("#CallTable tbody").append(markup);
+         }
+                               
                            } 
       
      }
@@ -609,7 +603,7 @@ function AllowOnlyNumbers(e) {
 
           </div>
       </div>
-    
+    <div style="">
   <table id="CallTable" class="table table-responsive-lg table-hover" style="font-size:15px;"> 
                
            <thead style="font-family:Cambria ;font-size:14px;text-decoration-style:solid;color:#0A408A;">
@@ -640,6 +634,7 @@ function AllowOnlyNumbers(e) {
     </tbody>
       
   </table>
+        </div>
       <input type="button" id="savetae" class="btn btn-primary" value="Save" onclick="savetable()" style="background-color:#0A408A;color:white;"/>
                  
   
