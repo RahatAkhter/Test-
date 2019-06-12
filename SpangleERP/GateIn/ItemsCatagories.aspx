@@ -26,7 +26,7 @@
     <script>
       $(document).ready(function () {  
             $.ajax({  
-                url: 'ItemsCataFgories.aspx/GetUserDetail', 
+                url: 'ItemsCatagories.aspx/GetUserDetail', 
                 contentType: "application/json; charset=utf-8", 
                 dataType: "json",  
                 method: 'post',

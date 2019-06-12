@@ -22,43 +22,86 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
  <script type="text/javascript">
      var $j = jQuery.noConflict();
      $j(document).ready(function () {
          $('#hide').hide();
-
-            $.ajax({  
-                url: 'GateIn.aspx/GetUserDetail', 
-                contentType: "application/json; charset=utf-8", 
-                dataType: "json",  
-                method: 'post',
-                data: "{}",
-                success: function (data) {  
-                    
-                    var employeeTable = $('#tblEmployee tbody');  
-                    employeeTable.empty();  
-                    for (var i = 0; i < data.d.length; i++) {
-
-                        //employeeTable.append('<tr><td>' + data.d[i].Emp_id + '</td><td>' +data.d[i].Emp_name.toString() + '</td><td> <Input type="time"  id="Txt' + i + '"  class="form-control"/></td><td><button type="button" id="btnAdd" class="btn btn-xs btn-primary   value="' + data.d[i].Emp_id + '"  onclick="add(this.value,' + i + ');">Check In</button></td><td> <Input type="time"  id="Txts' + i + '" class="form-control" /></td ><td><button type="button"  class="btn btn-xs btn-primary value="' + data.d[i].Emp_id + '" onclick="update(this.value,' + i + ');" >Check Out</button></td> </tr > ');
-                        employeeTable.append('<tr ><td class="control_label">' + data.d[i].G_Date + '</td><td class="control_label">' + data.d[i].ReferenceBy + '</td><td class="control_label">' + data.d[i].PO_Number + '</td><td class="control_label">' + data.d[i].DriverName + '</td><td><button type="button" id="vw"  value="' + data.d[i].GateIn_Id + '" data-toggle="modal" data-target="#Popup"  onclick="Popup(this.value,' + i + ')" class="btn btn-primary" style="background-color:#0A408A;">View</button></td></tr>')
-                    }
-                    },  
-                error: function (err) {  
-                    alert(err);  
-                }  
-            });  
+         Show();
+          
      });
 
+      function Show() {
+
+         
+                    $j('#datatable').DataTable({
+                        "aLengthMenu": [[10, 25, 5], [10, 25, 5]],
+                        "iDisplayLength": 5,
+                           
+                        
+                        columns: [
+
+                            { 'data': 'G_Date' },
+                            { 'data': 'G_Time' },
+                            { 'data': 'VehicleNo' },
+
+                            { 'data': 'DriverName' },
+                            { 'data': 'ReferenceBy' },
+                            { 'data': 'PO_Number' },
+                             
+
+                            {
+                                'data': 'G_Status',
+
+                                'sortable': false,
+
+                                'render': function (webSite) {
+                                    if (webSite == 0) return "Not Aprove"
+
+                                    else return "Aprove";
+
+                                }
 
 
-      function Popup(Val, i) {
-      
+                            },
+                           
+                          {
+                                'data': 'GateIn_Id',
+
+                                
+
+                              'render': function (val) {
+                                  return '<button type="button" id="vw" value="' + val + '"  onclick="Popup(this.value);"   data-toggle="modal" data-target="#Popup" class="btn btn-primary" style="background-color:#0A408A;">View</button>';
+
+                                }
+
+
+                            }
+                   
+                    
+                            
+                                        
+                    ],
+                bServerSide: true,
+                sAjaxSource: 'InventoryService.asmx/Get_All_GateIn',
+                sServerMethod: 'post'
+            });
+
+        }
+
+
+      function Popup(Val) {
+         
+
   $.ajax({  
                 url: 'GateIn.aspx/approve', 
                 contentType: "application/json; charset=utf-8", 
                 dataType: "json",  
       method: 'post',
+
       data: "{'value':'" + Val + "'}",
+      async: false,
       success: function (data) {
           $('#ok').text(data.d[0].GateIn_Id);
            $('#ok2').text(data.d[0].GateIn_Id);
@@ -67,8 +110,7 @@
           employeeTable.empty();
           count = data.d.length;
                     for (var i = 0; i < data.d.length; i++) {
-
-                                      employeeTable.append('<tr ><td class="control_label">' + data.d[i].I_Quantity + '</td><td class="control_label">' + data.d[i].Itemsname + '</td>')
+ employeeTable.append('<tr ><td class="control_label">' + data.d[i].I_Quantity + '</td><td class="control_label">' + data.d[i].Itemsname + '</td>')
           }
 
                     },  
@@ -85,13 +127,12 @@
    
 
      function SomeDeleteRowFunction(row) {
-       
         var d = row.parentNode.parentNode.rowIndex;
       document.getElementById('CallTable').deleteRow(d);
      }
      
     
-
+      
      
 
      function Insert() {
@@ -475,7 +516,6 @@ function AllowOnlyNumbers(e) {
               <table  class="pull-right">
                   <tr>
                       <td>
-<input type="text" placeholder="Search Here By vendor Name" id="search" class="form-control fas fa-search" style="border-radius:6px;font-family:Cambria;font:bold;height:30px;" onkeyup="SearchRecords()" />
                   </td>
                       <td>
 
@@ -486,25 +526,25 @@ function AllowOnlyNumbers(e) {
                 </div>
 
        <br />
-       <table id="tblEmployee" class="table table-responsive-lg table-hover" style="font-size:15px;"> 
-               
-           <thead style="font-family:Cambria ;font-size:14px;text-decoration-style:solid;color:#0A408A;">
-      <tr>
-      
-        <th>Date</th>
-        <th>Vendor </th>
-
-
-            <th>PO #</th>
-            <th>Driver Name</th>
+      <div class="table-responsive"> 
+   
+       <br />
+  <table class="table" id="datatable">
     
-      
-      </tr>
-    </thead>
-    <tbody>
-      
-    </tbody>
+    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>VehicalNumb</th>
+                        <th>Driver</th>
+                        <th>Reference</th>
+                        <th>PO Numb</th>
+                       <th>Status</th>
+                        <th>djh</th>
+                    </tr>
+                </thead>
   </table>
+  </div>
   </div>
 </div>
   </div>
@@ -708,10 +748,7 @@ function AllowOnlyNumbers(e) {
       <div class="modal-body mx-3" >
     
    <div class="panel-body">
-
-
-           <div class="table-responsive"> 
-      <div class="table-responsive">
+       <div class="table-responsive">
               <table  class="pull-right">
                   <tr>
                       <td>
@@ -743,8 +780,8 @@ function AllowOnlyNumbers(e) {
     </tbody>
   </table>
   </div>
-      <%--<button type="button" class="btn btn-primary" onclick="print();" value="ok" id="app" style="background-color:#0A408A;">Print</button>--%>
-       <div class="col-sm-12 text-center ">
+
+           <div class="col-sm-12 text-center ">
             <asp:Button ID="Button2" runat="server" Text="Print" OnClick="Button1_Click" UseSubmitBehavior="false" CssClass="btn btn-primary" BackColor="#0A408A" ForeColor="White"/>              
                        </div>
                         </div>

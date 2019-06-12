@@ -33,7 +33,7 @@ namespace SpangleERP.WareHouse
 
             if (Session["id"] != null)
             {
-                GetUserDetail();
+                
                 string sd = (string)Session["id"];
                 uid = Convert.ToInt32(sd);
             }
@@ -210,46 +210,10 @@ namespace SpangleERP.WareHouse
             conn.Close();
         }
 
-        [WebMethod]
-        public static List<Gate_InClass> GetUserDetail()
-        {
-            List<Gate_InClass> list_item = new List<Gate_InClass>();
-
-
-            DataTable dt = getuserdata();
-            for (Int32 i = 0; i < dt.Rows.Count; i++)
-            {
-                Gate_InClass u = new Gate_InClass();
-                u.GateIn_Id = Convert.ToInt32(dt.Rows[i]["gate_id"].ToString());
-                u.G_Date = dt.Rows[i]["date"].ToString();
-                u.DriverName = dt.Rows[i]["drivername"].ToString();
-                u.ReferenceBy = dt.Rows[i]["reference"].ToString();
-                u.PO_Number = Convert.ToString(dt.Rows[i]["po_number"].ToString());
+       
 
 
 
-
-
-                list_item.Add(u);
-            }
-            return list_item;
-        }
-        private static DataTable getuserdata()
-        {
-
-            string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
-            SqlConnection conn = new SqlConnection(con1);
-            SqlCommand cmd = new SqlCommand(@"select * from gatein", conn);
-            conn.Open();
-            DataTable dt = new DataTable();
-            SqlDataReader dr = cmd.ExecuteReader();
-            dt.Load(dr);
-            dr.Close();
-            conn.Close();
-
-            return dt;
-
-        }
         public void login()
         {
             string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;

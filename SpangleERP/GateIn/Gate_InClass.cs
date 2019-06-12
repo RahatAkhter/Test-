@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SpangleERP.WareHouse
+namespace SpangleERP.GateIn
 {
     public class Gate_InClass
     {

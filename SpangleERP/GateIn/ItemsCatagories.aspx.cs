@@ -25,7 +25,7 @@ namespace SpangleERP.invent
             }
             else
             {
-                Response.Redirect("~/Index.aspx");
+                Response.Redirect("~/Index.aspx");  
             }
 
 
@@ -130,7 +130,7 @@ namespace SpangleERP.invent
             }
             return "Edit Succesfully";
         }
-        //end//
+        
 
     }
 }
