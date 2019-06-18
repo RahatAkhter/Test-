@@ -13,6 +13,8 @@ namespace SpangleERP.GateIn
         public string Dateof { get; set; }
         public int User_id { get; set; }
         public int Items_id { get; set; }
+        public string emp_name { get; set; }
+        public string Items_name { get; set; }
 
         public int grn_id { get; set; }
         public string Date { get; set; }

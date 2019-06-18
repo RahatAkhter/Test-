@@ -12,6 +12,8 @@ namespace SpangleERP.WareHouse
         public string items_name { get; set; }
     
         public int cat_id { get; set; }
+        public string cat_name { get; set; }
+        public int type { get; set; }
     }
    
 }

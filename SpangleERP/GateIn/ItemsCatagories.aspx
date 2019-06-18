@@ -38,7 +38,7 @@
                     for (var i = 0; i < data.d.length; i++) {
 
                         //employeeTable.append('<tr><td>' + data.d[i].Emp_id + '</td><td>' +data.d[i].Emp_name.toString() + '</td><td> <Input type="time"  id="Txt' + i + '"  class="form-control"/></td><td><button type="button" id="btnAdd" class="btn btn-xs btn-primary   value="' + data.d[i].Emp_id + '"  onclick="add(this.value,' + i + ');">Check In</button></td><td> <Input type="time"  id="Txts' + i + '" class="form-control" /></td ><td><button type="button"  class="btn btn-xs btn-primary value="' + data.d[i].Emp_id + '" onclick="update(this.value,' + i + ');" >Check Out</button></td> </tr > ');
-                        employeeTable.append('<tr ><td class="control-label" >' + data.d[i].cat_id + '</td><td class="control_label">' + data.d[i].cat_name + '</td><td class="control_label">' + data.d[i].type + '</td>    <td><button type="button" value="' + data.d[i].cat_id + '" data-toggle="modal" data-target="#EditPopup"  onclick="CallEditPopup(this.value,' + i + ')" class="btn" style="background-color:#0A408A;">Edit</button></td></tr>')
+                        employeeTable.append('<tr ><td class="control-label" >' + data.d[i].cat_id + '</td><td class="control_label">' + data.d[i].cat_name + '</td><td class="control_label">' + data.d[i].type + '</td>    <td><button type="button" value="' + data.d[i].cat_id + '"  onclick="CallEditPopup(this.value)" data-toggle="modal" data-target="#EditPopup"  class="btn" style="background-color:#0A408A;">Edit</button></td></tr>')
                     }
                     },  
                 error: function (err) {  
@@ -47,6 +47,7 @@
             });  
         });
 
+        
 function Insert() {
                  var txtname = ($('#ItemsName').val());
        
@@ -73,49 +74,32 @@ function Insert() {
         }
 
 
-             
-        function CallEditPopup(Val, i) {
-            var ItemsName = document.getElementById("EditName");
-            var getid = ItemsName.innerText;
-            var Items_Id = document.getElementById("Editd");
-            var getname = ItemsName.innerText;
-            alert(Val);
-            $.ajax({
-                url: 'ItemsCategories.aspx/GotoPopup',
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                method: 'post',
-                data: "{'id':'" + Val + "','txtname':'" + getid + "','txtid':'" + Items_Id + "'}",
+        var id;
+        function CallEditPopup(Val) {
 
-                success: function (data) {
-
-                    $('#Editid').text(data.d);
-
-                },
-                error: function (err) {
-                    alert(err);
-                }
-            });
+            id = Val;
+            
+          
         }
 
 
           function EditRecords() {
-        
+
+             
             var txtname = ($('#EditName').val());
             
-            var xs = document.getElementById("Editid");
-            var dobs = xs.innerText;
-            alert(dobs);
+            
                   $.ajax({  
                 url: 'ItemsCatagories.aspx/Edit', 
                 contentType: "application/json; charset=utf-8", 
                 dataType: "json",  
                       method: 'post',
-                    data: "{'id':'" + dobs + "','txtname':'" + txtname + "'}",
+                      async: false,
+                    data: "{'id':'" + id + "','txtname':'" + txtname + "'}",
                      
                 success: function (data) {  
                     alert(data.d);
-                 
+                    window.location = "ItemsCatagories.aspx";
                     },  
                 error: function (err) {  
                     alert(err);  
@@ -272,9 +256,7 @@ function AllowOnlyNumbers(e) {
       <div class="table-responsive">
               <table  class="pull-right">
                   <tr>
-                      <td>
-<input type="text" placeholder="Search By Category" id="search" style="border-radius:6px;font-family:Cambria;font:bold;height:30px;" onkeyup="SearchRecords()" onkeypress="return onlyAlphabets(event,this);" onpaste="return false"/>
-                  </td><td>
+                     <td>
      
                   </td></tr>
               </table>
@@ -382,7 +364,7 @@ function AllowOnlyNumbers(e) {
           <div class="form-horizontal">
         <div class="form-group">
  
-                 <label class="control-label col-sm-3" for="ItemsName" >Cat_id</label>
+                 <label class="control-label col-sm-3" for="ItemsName" style="display:none;" >Cat_id</label>
              
                      <div class="col-sm-3">
                 <label class="control-label col-sm-3" for="ItemsName" id="Editid"></label>

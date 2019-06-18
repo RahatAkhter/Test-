@@ -23,32 +23,74 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+         <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
  <script type="text/javascript">
-     $(document).ready(function () {  
-           
-            $.ajax({  
-                url: 'Items.aspx/GetUserDetail', 
-                contentType: "application/json; charset=utf-8", 
-                dataType: "json",  
-                method: 'post',
-                data: "{}",
-                success: function (data) {  
-                  
-                    var employeeTable = $('#tblEmployee tbody');  
-                    employeeTable.empty();  
-                    for (var i = 0; i < data.d.length; i++) {
+     var $j = jQuery.noConflict();
+     $j(document).ready(function () {  
+        
 
-                        //employeeTable.append('<tr><td>' + data.d[i].Emp_id + '</td><td>' +data.d[i].Emp_name.toString() + '</td><td> <Input type="time"  id="Txt' + i + '"  class="form-control"/></td><td><button type="button" id="btnAdd" class="btn btn-xs btn-primary   value="' + data.d[i].Emp_id + '"  onclick="add(this.value,' + i + ');">Check In</button></td><td> <Input type="time"  id="Txts' + i + '" class="form-control" /></td ><td><button type="button"  class="btn btn-xs btn-primary value="' + data.d[i].Emp_id + '" onclick="update(this.value,' + i + ');" >Check Out</button></td> </tr > ');
-                        employeeTable.append('<tr ><td class="control-label" >' + data.d[i].items_id + '</td><td class="control_label">' + data.d[i].items_name + '</td><td><button type="button" value="' + data.d[i].items_id + '" data-toggle="modal" data-target="#EditPopup"  onclick="CallEditPopup(this.value,' + i + ')" class="btn btn-primary" style="background-color:#0A408A;">Edit</button></td></tr>')
-                    }
-                    },  
-                error: function (err) {  
-                    alert(err);  
-                }  
-            });  
+         $j('#datatable').DataTable({
+             "aLengthMenu": [[10, 25, 5], [10, 25, 5]],
+             "iDisplayLength": 5,
+
+
+             columns: [
+
+
+                 { 'data': 'items_name' },
+                 {
+                     'data': 'cat_name',
+
+                 },
+                 { 'data': 'type' },
+
+                 {
+                     'data': 'items_id',
+
+                     'sortable': false,
+
+                     'render': function (val) {
+
+                         return '<button type="button" id="vw" value="' + val + '" data-toggle="modal" data-target="#EditPopup"  onclick="CallEditPopup(this.value)"    class="btn btn-primary" style="background-color:#0A408A;">Edit</button>';
+
+
+                                    
+
+                                }
+
+
+                            }
+                              
+                    ],
+                bServerSide: true,
+                sAjaxSource: 'InventoryService.asmx/Get_All_Items',
+                sServerMethod: 'post'
+            });
+
+            //$.ajax({  
+            //    url: 'Items.aspx/GetUserDetail', 
+            //    contentType: "application/json; charset=utf-8", 
+            //    dataType: "json",  
+            //    method: 'post',
+            //    data: "{}",
+            //    success: function (data) {  
+                  
+            //        var employeeTable = $('#tblEmployee tbody');  
+            //        employeeTable.empty();  
+            //        for (var i = 0; i < data.d.length; i++) {
+
+            //            //employeeTable.append('<tr><td>' + data.d[i].Emp_id + '</td><td>' +data.d[i].Emp_name.toString() + '</td><td> <Input type="time"  id="Txt' + i + '"  class="form-control"/></td><td><button type="button" id="btnAdd" class="btn btn-xs btn-primary   value="' + data.d[i].Emp_id + '"  onclick="add(this.value,' + i + ');">Check In</button></td><td> <Input type="time"  id="Txts' + i + '" class="form-control" /></td ><td><button type="button"  class="btn btn-xs btn-primary value="' + data.d[i].Emp_id + '" onclick="update(this.value,' + i + ');" >Check Out</button></td> </tr > ');
+            //            employeeTable.append('<tr ><td class="control-label" >' + data.d[i].items_id + '</td><td class="control_label">' + data.d[i].items_name + '</td><td><button type="button" value="' + data.d[i].items_id + '" data-toggle="modal" data-target="#EditPopup"  onclick="CallEditPopup(this.value,' + i + ')" class="btn btn-primary" style="background-color:#0A408A;">Edit</button></td></tr>')
+            //        }
+            //        },  
+            //    error: function (err) {  
+            //        alert(err);  
+            //    }  
+            //});  
      });
-     $(document).ready(function () {  
-         $.ajax({
+     $j(document).ready(function () {  
+         $j.ajax({
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 //url is the path of our web method (Page name/function name)
@@ -105,7 +147,7 @@
                });  
      }
 
-     function CallEditPopup(Val,i) {
+     function CallEditPopup(Val) {
          var ItemsName = document.getElementById("EditName");
          var getid = ItemsName.innerText;
          var Items_Id = document.getElementById("Item_id");
@@ -140,7 +182,7 @@
             
             var xs = document.getElementById("Item_id");
             var dobs = xs.innerText;
-            alert(dobs);
+            //alert(dobs);
                   $.ajax({  
                 url: 'Items.aspx/Edit', 
                 contentType: "application/json; charset=utf-8", 
@@ -150,7 +192,7 @@
                            
                       success: function (data) { 
                      
-                          alert(data.d);
+                          //alert(data.d);
                            window.location = "Items.aspx";
                 
                       },  
@@ -246,21 +288,22 @@
                 </div>
 
        <br />
-       <table id="tblEmployee" class="table table-responsive-lg table-hover" style="font-size:15px;"> 
-               
-           <thead style="font-family:Cambria ;font-size:14px;text-decoration-style:solid;color:#0A408A;">
-      <tr>
-        <th>Items_Id</th>
-        <th>Items_Name</th>
-        
-          <th>Edit</th>
-      
-      </tr>
-    </thead>
-    <tbody>
-      
-    </tbody>
+       
+             
+     <table class="table" id="datatable">
+    
+    <thead>
+                    <tr>
+                        <th>Items Name</th>
+                        <th>Cataegory</th>
+                        <th>Type</th>
+                        <th>Edit</th>
+                        
+                        
+                    </tr>
+                </thead>
   </table>
+
   </div>
 </div>
   </div>

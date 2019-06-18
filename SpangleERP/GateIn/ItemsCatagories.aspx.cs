@@ -97,21 +97,22 @@ namespace SpangleERP.invent
             
         }
 
-        [WebMethod]
-        public static string GotoPopup(string id, string txtname)
-        {
+        //[WebMethod]
+        //public static string GotoPopup(string id, string txtname)
+        //{
 
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString);
-            con.Open();
-            SqlCommand cmd = new SqlCommand("select cat_name from ItemsCategories where cat_id ='" + id + "'", con);
-            string getItemName = cmd.ExecuteScalar().ToString();
-            cmd.ExecuteNonQuery();
+        //    SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString);
+        //    con.Open();
+        //    SqlCommand cmd = new SqlCommand("select cat_name from ItemsCategories where cat_id ='" + id + "'", con);
+        //    string getItemName = cmd.ExecuteScalar().ToString();
+        //    cmd.ExecuteNonQuery();
 
-            txtname = getItemName;
+        //    txtname = getItemName;
 
 
-            return id;
-        }
+        //    return id;
+        //}
+
 
         [WebMethod]
         public static string Edit(string id, string txtname)

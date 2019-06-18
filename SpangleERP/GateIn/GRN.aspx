@@ -15,38 +15,89 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+       <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript"> 
         var count;
-     $(document).ready(function () {  
-           
-            $.ajax({  
-                url: 'GRN.aspx/GateItems', 
-                contentType: "application/json; charset=utf-8", 
-                dataType: "json",  
-                method: 'post',
-                data: "{}",
-                success: function (data) {  
+        var $j = jQuery.noConflict();
+     $j(document).ready(function () {  
+
+
+         var gate_id;
+                    $j('#datatable').DataTable({
+                        "aLengthMenu": [[10, 25, 5], [10, 25, 5]],
+                        "iDisplayLength": 5,
+                           
+                        
+                        columns: [
+
+                            
+                            { 'data': 'G_Date' },
+                            {
+                                'data': 'GateIn_Id',
+
+                                'render': function (val) {
+                                    gate_id = val;
+                                    return val;
+                                }
+
+
+                            },
+                              
+
+                            {
+                                'data': 'G_Status',
+
+                                'sortable': false,
+
+                                'render': function (webSite) {
+                                    if (webSite == 0)
+                                        return '<button type="button" id="vw" value="' + gate_id + '"  data-toggle="modal" data-target="#EditPopup" onclick="CallEditPopup(this.value);"    class="btn btn-primary" style="background-color:#0A408A;">Pending</button>';
+
+
+                                    else
+                                        return '<button type="button" id="vw" value="' + gate_id + '" data-toggle="modal" data-target="#Popup"  onclick="Popup(this.value);"    class="btn btn-primary" style="background-color:#0A408A;">View</button>';
+
+
+                                }
+
+
+                            }
+                              
+                    ],
+                bServerSide: true,
+                sAjaxSource: 'InventoryService.asmx/Get_All_GRN',
+                sServerMethod: 'post'
+            });
+
+            //$.ajax({  
+            //    url: 'GRN.aspx/GateItems', 
+            //    contentType: "application/json; charset=utf-8", 
+            //    dataType: "json",  
+            //    method: 'post',
+            //    data: "{}",
+            //    success: function (data) {  
                  
-                    var employeeTable = $('#tblEmployee tbody');  
-                    employeeTable.empty();  
-                    for (var i = 0; i < data.d.length; i++) {
-                        if (data.d[i].G_Status == 0) {
-                              employeeTable.append('<tr ><td class="control_label">' + data.d[i].G_Date + '</td><td><button type="button" id="pen"  value="' + data.d[i].GateIn_Id + '" data-toggle="modal" data-target="#EditPopup"  onclick="CallEditPopup(this.value,' + i + ')" class="btn btn-sucess" >Pending</button></td></tr>');
-                        } else {
-                            employeeTable.append('<tr ><td class="control_label">' + data.d[i].G_Date + '</td><td><button type="button" id="vw"  value="' + data.d[i].GateIn_Id + '" data-toggle="modal" data-target="#Popup"  onclick="Popup(this.value,' + i + ')" class="btn btn-primary" style="background-color:#0A408A;">View</button></td></tr>')
-                        }
-                    }
-                    },  
-                error: function (err) {  
-                    alert(err);  
-                }  
-            });  
+            //        var employeeTable = $('#tblEmployee tbody');  
+            //        employeeTable.empty();  
+            //        for (var i = 0; i < data.d.length; i++) {
+            //            if (data.d[i].G_Status == 0) {
+            //                  employeeTable.append('<tr ><td class="control_label">' + data.d[i].G_Date + '</td><td><button type="button" id="pen"  value="' + data.d[i].GateIn_Id + '" data-toggle="modal" data-target="#EditPopup"  onclick="CallEditPopup(this.value,' + i + ')" class="btn btn-sucess" >Pending</button></td></tr>');
+            //            } else {
+            //                employeeTable.append('<tr ><td class="control_label">' + data.d[i].G_Date + '</td><td><button type="button" id="vw"  value="' + data.d[i].GateIn_Id + '" data-toggle="modal" data-target="#Popup"  onclick="Popup(this.value,' + i + ')" class="btn btn-primary" style="background-color:#0A408A;">View</button></td></tr>')
+            //            }
+            //        }
+            //        },  
+            //    error: function (err) {  
+            //        alert(err);  
+            //    }  
+            //});  
         });
 
-        function CallEditPopup(Val, i) {
+        function CallEditPopup(Val) {
 
 
-            
+            alert(Val);
           
   $.ajax({  
                 url: 'GRN.aspx/Gatepassitem', 
@@ -77,9 +128,9 @@
 
 
 
-  function Popup(Val, i) {
+  function Popup(Val) {
            
-          
+      alert(Val);
   $.ajax({  
                 url: 'GRN.aspx/approve', 
                 contentType: "application/json; charset=utf-8", 
@@ -270,21 +321,20 @@
                 </div>
 
        <br />
-       <table id="tblEmployee" class="table table-responsive-lg table-hover" style="font-size:15px;"> 
-               
-           <thead style="font-family:Cambria ;font-size:14px;text-decoration-style:solid;color:#0A408A;">
-      <tr>
-     
-        <th>Date</th>
-               
       
-      
-      </tr>
-    </thead>
-    <tbody>
-      
-    </tbody>
+     <table class="table" id="datatable">
+    
+    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Gate Id</th>
+                        <th>View</th>
+                        
+                        
+                    </tr>
+                </thead>
   </table>
+
   </div>
 </div>
 

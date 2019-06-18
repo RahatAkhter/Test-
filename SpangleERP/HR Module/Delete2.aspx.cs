@@ -7,13 +7,30 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.Services;
+using System.Configuration;
 namespace SpangleERP.HR_Module
 {
     public partial class Delete2 : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            var con1 = ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
+            SqlConnection conn = new SqlConnection(con1);
+            SqlCommand cmds = new SqlCommand("select User_id(count) * FROM uSERS", conn);
+            int getcount = Convert.ToInt32(cmds.ToString());
+            SqlCommand cmd = new SqlCommand(@"select * from Users ", conn);
+            conn.Open();
+            SqlDataReader rea = cmd.ExecuteReader();
+            while (rea.Read())
+            {
+            
+                string id = rea["Email"].ToString();
+              //  string name = rea["friend_Id"].ToString();
 
+            }
+            rea.Close();
+
+            conn.Close();
         }
 
 

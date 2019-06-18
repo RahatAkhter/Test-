@@ -340,4 +340,14 @@ namespace SpangleERP.WareHouse
     }
 }
 
-    
+
+class Cls_Grn
+{
+    public string BatchNumber { get; set; }
+    public string EXP { get; set; }
+    public int grn_id { get; set; }
+    public string MFG { get; set; }
+    public string items_name { get; set; }
+   
+
+}

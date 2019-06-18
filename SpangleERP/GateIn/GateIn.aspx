@@ -136,6 +136,7 @@
      
 
      function Insert() {
+         //g sir g??
        var xs = document.getElementById("Date");
                  var txtdates = xs.value
         

@@ -22,40 +22,40 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
  
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $j = jQuery.noConflict();
+        $j(document).ready(function () {
+
+            showtable();
+        });
 
         function showtable() { 
+            
 
-            var x = document.getElementById("sDate");
-            var sdate = x.value;
 
-            var y = document.getElementById("endDate");
-            var enddate = y.value;
-                  var ddl = document.getElementById("<%=getitems.ClientID%>");
-            var siteems = ddl.options[ddl.selectedIndex].value;
-    
- 
-            $.ajax({  
-                url: 'InventoryOut.aspx/approve', 
-                contentType: "application/json; charset=utf-8", 
-                dataType: "json",  
-                method: 'post',
-                data: "{'Sdate':'" + sdate + "','FromDate':'" + enddate + "','ItemdNames':'" + siteems + "'}",
-                success: function (data) {  
-          
-                    var employeeTable = $('#tblEmployee tbody');  
-                    employeeTable.empty();  
-                    for (var i = 0; i < data.d.length; i++) {
+                $j('#datatable').DataTable({
+                        "aLengthMenu": [[10, 25, 5], [10, 25, 5]],
+                        "iDisplayLength": 5,
+                           
+                        
+                        columns: [
 
-             employeeTable.append('<tr ><td class="control_label">' + data.d[i].Quantity + '</td><td class="control_label">' + data.d[i].Dateof + '</td><td class="control_label">' + data.d[i].grn_id + '</td>  <td class="control_label">' + data.d[i].Date + '</td></tr>');
-                     
-                    }
-                    },  
-                error: function (err) {  
-                    alert(err);  
-                }  
-            });  
+                            { 'data': 'Items_name' },
+                            { 'data': 'Dateof' },
+                            { 'data': 'Quantity' },
+
+                            { 'data': 'grn_id' },
+                            { 'data': 'emp_name' }
+                            
+                                        
+                    ],
+                bServerSide: true,
+                sAjaxSource: 'InventoryService.asmx/Get_All_Inventory_Out',
+                sServerMethod: 'post'
+            });
 }
 
         function remainQuantity() {
@@ -363,7 +363,7 @@
 
             }
             else {
-                showtable();
+                
                 remainQuantity();
                 remainTotalQuantity();
                 OutQuantity();
@@ -471,25 +471,20 @@
                         
     </div>
                                 <br />
-      <table id="tblEmployee" class="table table-responsive-lg table-hover" style="font-size: 15px;">
-
-                                    <thead style="font-family: Cambria; font-size: 14px; text-decoration-style: solid; color: #0A408A;">
-                                        <tr>
-                                     
-                                            <th>Quantity Out</th>
-                                            <th>Inventory Out Date</th>
-                                          
-                                            <th>Grn #</th>
-                                            <th>Inventory In Date</th>
-                                            
-                                      
-
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+   
+                             <table class="table" id="datatable">
+    
+    <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>OutDate</th>
+                        <th>Quantity</th>
+                        <th>Grn</th>
+                        <th>Out BY</th>
+  
+                    </tr>
+                </thead>
+  </table>
                             </div>
                  
                     </div>
