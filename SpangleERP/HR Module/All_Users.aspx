@@ -167,7 +167,8 @@
                     method: 'post',
                         data: "{}",
                         async: false,
-                    success: function (data) {
+                        success: function (data) {
+                            
                         Access = data.d;
                         view = Access.includes("V");
                         Create = Access.includes("I");

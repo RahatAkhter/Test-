@@ -20,11 +20,52 @@
     <script type="text/javascript"> 
         var count;
         var $j = jQuery.noConflict();
+          var view = false;
+        var Create = false;
+        var Update = false;  
+        var Access="";
+
      $j(document).ready(function () {  
+         Access_Levels();
+        
+
+         if (view == true) {
+             Show();
+            }
+            else {
+                alert("You Have Not Rights to View Data");
+
+         }
 
 
          var gate_id;
-                    $j('#datatable').DataTable({
+
+            //$.ajax({  
+            //    url: 'GRN.aspx/GateItems', 
+            //    contentType: "application/json; charset=utf-8", 
+            //    dataType: "json",  
+            //    method: 'post',
+            //    data: "{}", 
+            //    success: function (data) {  
+                 
+            //        var employeeTable = $('#tblEmployee tbody');  
+            //        employeeTable.empty();  
+            //        for (var i = 0; i < data.d.length; i++) {
+            //            if (data.d[i].G_Status == 0) {
+            //                  employeeTable.append('<tr ><td class="control_label">' + data.d[i].G_Date + '</td><td><button type="button" id="pen"  value="' + data.d[i].GateIn_Id + '" data-toggle="modal" data-target="#EditPopup"  onclick="CallEditPopup(this.value,' + i + ')" class="btn btn-sucess" >Pending</button></td></tr>');
+            //            } else {
+            //                employeeTable.append('<tr ><td class="control_label">' + data.d[i].G_Date + '</td><td><button type="button" id="vw"  value="' + data.d[i].GateIn_Id + '" data-toggle="modal" data-target="#Popup"  onclick="Popup(this.value,' + i + ')" class="btn btn-primary" style="background-color:#0A408A;">View</button></td></tr>')
+            //            }
+            //        }
+            //        },  
+            //    error: function (err) {  
+            //        alert(err);  
+            //    }  
+            //});  
+        });
+
+        function Show() {
+                                $j('#datatable').DataTable({
                         "aLengthMenu": [[10, 25, 5], [10, 25, 5]],
                         "iDisplayLength": 5,
                            
@@ -51,9 +92,14 @@
                                 'sortable': false,
 
                                 'render': function (webSite) {
-                                    if (webSite == 0)
-                                        return '<button type="button" id="vw" value="' + gate_id + '"  data-toggle="modal" data-target="#EditPopup" onclick="CallEditPopup(this.value);"    class="btn btn-primary" style="background-color:#0A408A;">Pending</button>';
-
+                                    if (webSite == 0) {
+                                        if (Update == true) {
+                                            return '<button type="button" id="vw" value="' + gate_id + '"  data-toggle="modal" data-target="#EditPopup" onclick="CallEditPopup(this.value);"    class="btn btn-primary" style="background-color:#0A408A;">Pending</button>';
+                                        }
+                                        else {
+                                            return 'No Rights';
+                                        }
+                                        }
 
                                     else
                                         return '<button type="button" id="vw" value="' + gate_id + '" data-toggle="modal" data-target="#Popup"  onclick="Popup(this.value);"    class="btn btn-primary" style="background-color:#0A408A;">View</button>';
@@ -70,30 +116,34 @@
                 sServerMethod: 'post'
             });
 
-            //$.ajax({  
-            //    url: 'GRN.aspx/GateItems', 
-            //    contentType: "application/json; charset=utf-8", 
-            //    dataType: "json",  
-            //    method: 'post',
-            //    data: "{}",
-            //    success: function (data) {  
-                 
-            //        var employeeTable = $('#tblEmployee tbody');  
-            //        employeeTable.empty();  
-            //        for (var i = 0; i < data.d.length; i++) {
-            //            if (data.d[i].G_Status == 0) {
-            //                  employeeTable.append('<tr ><td class="control_label">' + data.d[i].G_Date + '</td><td><button type="button" id="pen"  value="' + data.d[i].GateIn_Id + '" data-toggle="modal" data-target="#EditPopup"  onclick="CallEditPopup(this.value,' + i + ')" class="btn btn-sucess" >Pending</button></td></tr>');
-            //            } else {
-            //                employeeTable.append('<tr ><td class="control_label">' + data.d[i].G_Date + '</td><td><button type="button" id="vw"  value="' + data.d[i].GateIn_Id + '" data-toggle="modal" data-target="#Popup"  onclick="Popup(this.value,' + i + ')" class="btn btn-primary" style="background-color:#0A408A;">View</button></td></tr>')
-            //            }
-            //        }
-            //        },  
-            //    error: function (err) {  
-            //        alert(err);  
-            //    }  
-            //});  
-        });
+        }
 
+        function Access_Levels() {
+
+                    $.ajax({
+                    url: 'GRN.aspx/Access_Levels',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    method: 'post',
+                        data: "{}",
+                        async: false,
+                        success: function (data) {
+                           
+                        Access = data.d;
+                        view = Access.includes("V");
+                        Create = Access.includes("I");
+                        Update = Access.includes("U");
+                        
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+            });
+
+            
+              
+                
+            }
         function CallEditPopup(Val) {
 
 
@@ -310,9 +360,7 @@
       <div class="table-responsive" style="border-color:#0A408A;border:2px;" >
               <table  class="pull-right">
                   <tr>
-                      <td>
-<input type="text" placeholder="Search Here By Id Or Status" id="search" class="form-control fas fa-search" style="border-radius:6px;font-family:Cambria;font:bold;height:30px;" onkeyup="SearchRecords()" />
-                  </td><td>
+                     <td>
    
                   </td></tr>
               </table>

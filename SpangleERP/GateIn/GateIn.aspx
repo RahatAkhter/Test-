@@ -26,12 +26,61 @@
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
  <script type="text/javascript">
      var $j = jQuery.noConflict();
+     var Access = "";
+     
+        var view = false;
+        var Create = false;
+        var Update = false;
+
      $j(document).ready(function () {
          $('#hide').hide();
-         Show();
+        
+          Access_Levels();
+
+         if (Create == true) {
+                $j('#In').show();
+            }
+            else {
+                $j('#In').hide();
+            }
+
+            if (view == true) {
+                Show();
+            }
+            else {
+                alert("You Have Not Rights to View Data");
+
+            }
+
+
           
      });
+     function Access_Levels() {
 
+                    $.ajax({
+                    url: 'GateIn.aspx/Access_Levels',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    method: 'post',
+                        data: "{}",
+                        async: false,
+                        success: function (data) {
+                           
+                        Access = data.d;
+                        view = Access.includes("V");
+                        Create = Access.includes("I");
+                        Update = Access.includes("U");
+                        
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+            });
+
+            
+              
+                
+            }
       function Show() {
 
          
@@ -501,8 +550,10 @@ function AllowOnlyNumbers(e) {
               <table  class="pull-right">
                   <tr>
                       <td>
-         <button type="button" class="btn btn-primary" style=" font-size:18px;background-color:#0A408A;color:white;" data-toggle="modal" data-target="#MachinePopup" data-backdrop="false" >Add New</button>
-                  </td><td>
+                          
+         <button type="button" id="In" class="btn btn-primary" style=" font-size:18px;background-color:#0A408A;color:white;" data-toggle="modal" data-target="#MachinePopup" data-backdrop="false" >Add New</button>
+                 
+                              </td><td>
                 
               </table>
 
