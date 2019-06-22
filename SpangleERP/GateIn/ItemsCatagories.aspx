@@ -24,7 +24,60 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script>
-      $(document).ready(function () {  
+        
+        var view = false;
+        var Create = false;
+        var Update = false;
+        var Access="";
+
+
+        $(document).ready(function () {  
+
+              Access_Levels();
+            
+            if (Create == true) {
+                $('#btn').show();
+            }
+            else {
+                $('#btn').hide();
+            }
+
+            if (view == true) {
+                showData();
+            }
+            else {
+                alert("You Have Not Rights to View Data");
+
+            }
+        });
+
+        function Access_Levels() {
+
+                    $.ajax({
+                    url: 'ItemsCatagories.aspx/Access_Levels',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    method: 'post',
+                        data: "{}",
+                        async: false,
+                        success: function (data) {
+                            
+                        Access = data.d;
+                        view = Access.includes("V");
+                        Create = Access.includes("I");
+                        Update = Access.includes("U");
+                        
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+            });
+
+            
+              
+                
+            }
+        function showData() {
             $.ajax({  
                 url: 'ItemsCatagories.aspx/GetUserDetail', 
                 contentType: "application/json; charset=utf-8", 
@@ -36,32 +89,32 @@
                     var employeeTable = $('#tblEmployee tbody');  
                     employeeTable.empty();  
                     for (var i = 0; i < data.d.length; i++) {
-
-                        //employeeTable.append('<tr><td>' + data.d[i].Emp_id + '</td><td>' +data.d[i].Emp_name.toString() + '</td><td> <Input type="time"  id="Txt' + i + '"  class="form-control"/></td><td><button type="button" id="btnAdd" class="btn btn-xs btn-primary   value="' + data.d[i].Emp_id + '"  onclick="add(this.value,' + i + ');">Check In</button></td><td> <Input type="time"  id="Txts' + i + '" class="form-control" /></td ><td><button type="button"  class="btn btn-xs btn-primary value="' + data.d[i].Emp_id + '" onclick="update(this.value,' + i + ');" >Check Out</button></td> </tr > ');
-                        employeeTable.append('<tr ><td class="control-label" >' + data.d[i].cat_id + '</td><td class="control_label">' + data.d[i].cat_name + '</td><td class="control_label">' + data.d[i].type + '</td>    <td><button type="button" value="' + data.d[i].cat_id + '"  onclick="CallEditPopup(this.value)" data-toggle="modal" data-target="#EditPopup"  class="btn" style="background-color:#0A408A;">Edit</button></td></tr>')
-                    }
+                        if (Update == true) {
+                            //employeeTable.append('<tr><td>' + data.d[i].Emp_id + '</td><td>' +data.d[i].Emp_name.toString() + '</td><td> <Input type="time"  id="Txt' + i + '"  class="form-control"/></td><td><button type="button" id="btnAdd" class="btn btn-xs btn-primary   value="' + data.d[i].Emp_id + '"  onclick="add(this.value,' + i + ');">Check In</button></td><td> <Input type="time"  id="Txts' + i + '" class="form-control" /></td ><td><button type="button"  class="btn btn-xs btn-primary value="' + data.d[i].Emp_id + '" onclick="update(this.value,' + i + ');" >Check Out</button></td> </tr > ');
+                            employeeTable.append('<tr ><td class="control-label" >' + data.d[i].cat_id + '</td><td class="control_label">' + data.d[i].cat_name + '</td>    <td><button type="button" value="' + data.d[i].cat_id + '"  onclick="CallEditPopup(this.value)" data-toggle="modal" data-target="#EditPopup"  class="btn" style="background-color:#0A408A;">Edit</button></td></tr>')
+                        }
+                        else {
+                            employeeTable.append('<tr ><td class="control-label" >' + data.d[i].cat_id + '</td><td class="control_label">' + data.d[i].cat_name + '</td>    <td>NoRights</td></tr>')
+                        
+                        }
+                        }
                     },  
                 error: function (err) {  
                     alert(err);  
                 }  
-            });  
-        });
+            });
+        }
 
-        
 function Insert() {
                  var txtname = ($('#ItemsName').val());
-       
-               
-        var ddl = document.getElementById("<%=DropDownList1.ClientID%>");
-    var type = ddl.options[ddl.selectedIndex].value;
-    alert(type);
+    
                  $.ajax({  
                 url: 'ItemsCatagories.aspx/Save', 
                 contentType: "application/json; charset=utf-8", 
                 dataType: "json",  
                 method: 'post',
 
-                     data: "{'ItemsName':'" + txtname + "','Val':'" + type + "'}",
+                     data: "{'ItemsName':'" + txtname + "'}",
                      
                 success: function (data) {  
                     alert(data.d);
@@ -240,7 +293,7 @@ function AllowOnlyNumbers(e) {
               <table  class="pull-right">
                   <tr>
                       <td>
-         <button type="button" class="btn btn-primary" style=" font-size:18px;background-color:#0A408A;color:white; " data-toggle="modal" data-target="#MachinePopup" data-backdrop="false" >Create New Categories</button>
+         <button type="button" id="btn" class="btn btn-primary" style=" font-size:18px;background-color:#0A408A;color:white; " data-toggle="modal" data-target="#MachinePopup" data-backdrop="false" >Create New Categories</button>
                   </td><td>
 
                   </td></tr>
@@ -270,8 +323,7 @@ function AllowOnlyNumbers(e) {
       <tr>
         <th>Categories_Id</th>
         <th>Categories_Name</th>
-        <th>Size</th>
-
+        
          <th>Edit</th>
 
       </tr>
@@ -311,13 +363,7 @@ function AllowOnlyNumbers(e) {
      <input type="text" class="form-control" id="ItemsName" placeholder="Categories Name" maxlength="40"   required>
 
             </div>
-  <label class="control-label col-sm-2" for="Size">Size:</label>
-                     <div class="col-sm-3">
-                         <asp:DropDownList ID="DropDownList1" runat="server">
-                             <asp:ListItem Text="Packaging Material" Value="0"></asp:ListItem>
-                             <asp:ListItem Text="Row Material" Value="1"></asp:ListItem>
-                         </asp:DropDownList>
-            </div>
+ 
                         </div>
     
            <br />

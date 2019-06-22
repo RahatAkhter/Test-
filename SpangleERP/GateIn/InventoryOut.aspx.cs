@@ -15,6 +15,8 @@ namespace SpangleERP.GateIn
     public partial class InventoryOut : System.Web.UI.Page
     {
         public static int id;
+
+        public static string Access;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["id"] != null)
@@ -25,6 +27,8 @@ namespace SpangleERP.GateIn
 
                 this.bind();
                 this.bind1();
+                Access = PageName().ToString();
+
             }
             else
             {
@@ -34,6 +38,51 @@ namespace SpangleERP.GateIn
 
 
         }
+
+        [WebMethod]
+        public static string Access_Levels()
+        {
+
+            return Access;
+        }
+        public string PageName()
+        {
+            string sPath = Request.Url.AbsolutePath;
+            System.IO.FileInfo oInfo = new System.IO.FileInfo(sPath);
+            string sRet = oInfo.Name;
+
+
+            try
+            {
+                string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
+                SqlConnection conn = new SqlConnection(con1);
+                SqlCommand cmd = new SqlCommand(@" Select r.Rights from pages as p
+ left join Roles_Content as r
+ on p.page_id=r.Page_id
+ left join Roles as rc
+ on rc.Role_id=r.Role_id
+ left join users as u
+ on u.Role=rc.Role_id
+ where u.User_id=@id and  p.URl=@pname", conn);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@pname", sRet);
+
+                conn.Open();
+                string level = cmd.ExecuteScalar().ToString();
+                conn.Close();
+
+
+                return level;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+
+            }
+
+
+        }
+
 
         [WebMethod]
         public static List<Inventory_OutClass> getall()

@@ -13,15 +13,20 @@ namespace SpangleERP.invent
 {
     public partial class ItemsCategories : System.Web.UI.Page
     {
+
+
+        public static int id;
+        public static string Access;
         protected void Page_Load(object sender, EventArgs e)
         {
             
 
             if (Session["id"] != null)
             {
+                id = Convert.ToInt32(Session["id"].ToString());
+                Access = PageName().ToString();
 
-              
-               GetUserDetail();
+                GetUserDetail();
             }
             else
             {
@@ -32,7 +37,52 @@ namespace SpangleERP.invent
           
         }
 
-        
+        public string PageName()
+        {
+            string sPath = Request.Url.AbsolutePath;
+            System.IO.FileInfo oInfo = new System.IO.FileInfo(sPath);
+            string sRet = oInfo.Name;
+
+
+            try
+            {
+                string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
+                SqlConnection conn = new SqlConnection(con1);
+                SqlCommand cmd = new SqlCommand(@" Select r.Rights from pages as p
+ left join Roles_Content as r
+ on p.page_id=r.Page_id
+ left join Roles as rc
+ on rc.Role_id=r.Role_id
+ left join users as u
+ on u.Role=rc.Role_id
+ where u.User_id=@id and  p.URl=@pname", conn);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@pname", sRet);
+
+                conn.Open();
+                string level = cmd.ExecuteScalar().ToString();
+                conn.Close();
+
+
+                return level;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+
+            }
+
+
+        }
+
+
+        [WebMethod]
+        public static string Access_Levels()
+        {
+
+            return Access;
+        }
+
 
         [WebMethod]
         public static List<ItemCategories> GetUserDetail()
@@ -46,7 +96,7 @@ namespace SpangleERP.invent
                 ItemCategories u = new ItemCategories();
                 u.cat_id = Convert.ToInt32(dt.Rows[i]["cat_id"].ToString());
                 u.cat_name = dt.Rows[i]["cat_name"].ToString();
-                u.type = Convert.ToInt32(dt.Rows[i]["type"]);
+              //u.type = Convert.ToInt32(dt.Rows[i]["type"]);
 
 
 
@@ -73,17 +123,17 @@ namespace SpangleERP.invent
 
         }
         [WebMethod]
-        public static string Save(string ItemsName, string Val)
+        public static string Save(string ItemsName)
         {
 
             try
             {
-                if (ItemsName != "" && Val !="")
+                if (ItemsName != "")
                 {
 
                     SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString);
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("insert into ItemsCategories values('" + ItemsName + "','" + Convert.ToInt32(Val) + "')", con);
+                    SqlCommand cmd = new SqlCommand("insert into ItemsCategories values('" + ItemsName + "')", con);
                     cmd.ExecuteNonQuery();
                     con.Close();
                     return "Save Successfully";

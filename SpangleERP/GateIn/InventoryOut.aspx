@@ -27,11 +27,62 @@
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
         $j = jQuery.noConflict();
-        $j(document).ready(function () {
+         var view = false;
+        var Create = false;
+        var Update = false;
+        var Access="";
 
-            showtable();
+        $j(document).ready(function () {
+            Access_Levels();
+            
+            if (Create == true) {
+                $('#btn').show();
+            }
+            else {
+                $('#btn').hide();
+            }
+
+            if (view == true) {
+                $j('#In').show();
+                showtable();
+            }
+            else {
+               $j('#In').hide();
+
+            }
+            
+
+
         });
 
+
+            function Access_Levels() {
+
+                    $.ajax({
+                    url: 'InventoryOut.aspx/Access_Levels',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    method: 'post',
+                        data: "{}",
+                        async: false,
+                        success: function (data) {
+                            
+                            Access = data.d;
+                           
+                        view = Access.includes("V");
+                        Create = Access.includes("I");
+                        Update = Access.includes("U");
+                        
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+            });
+
+            
+              
+                
+            }
         function showtable() { 
             
 
@@ -390,7 +441,7 @@
                                 <table class="pull-right">
                                     <tr>
                                         <td>
-                                            <button type="button" class="btn btn-primary" style="font-size: 18px; background-color: #0A408A; color: white;" data-toggle="modal" data-target="#MachinePopup" data-backdrop="false">Insert Records</button>
+                                            <button type="button" id="btn" class="btn btn-primary" style="font-size: 18px; background-color: #0A408A; color: white;" data-toggle="modal" data-target="#MachinePopup" data-backdrop="false">Insert Records</button>
                                         </td>
                                         <td></td>
                                     </tr>
@@ -399,6 +450,7 @@
 
                             </div>
                         </div>
+                        <div id="In">
                         <div class="panel-body" >
 
                             <!--Table-->
@@ -486,7 +538,7 @@
                 </thead>
   </table>
                             </div>
-                 
+                 </div>
                     </div>
                 </div>
     

@@ -27,46 +27,30 @@
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
  <script type="text/javascript">
      var $j = jQuery.noConflict();
+     var view = false;
+        var Create = false;
+        var Update = false;
+        var Access="";
      $j(document).ready(function () {  
         
+          Access_Levels();
+            
+            if (Create == true) {
+                $j('#btn').show();
+            }
+            else {
+                $j('#btn').hide();
+            }
 
-         $j('#datatable').DataTable({
-             "aLengthMenu": [[10, 25, 5], [10, 25, 5]],
-             "iDisplayLength": 5,
+            if (view == true) {
+                ShowData();
+            }
+            else {
+                alert("You Have Not Rights to View Data");
 
-
-             columns: [
-
-
-                 { 'data': 'items_name' },
-                 {
-                     'data': 'cat_name',
-
-                 },
-                 { 'data': 'type' },
-
-                 {
-                     'data': 'items_id',
-
-                     'sortable': false,
-
-                     'render': function (val) {
-
-                         return '<button type="button" id="vw" value="' + val + '" data-toggle="modal" data-target="#EditPopup"  onclick="CallEditPopup(this.value)"    class="btn btn-primary" style="background-color:#0A408A;">Edit</button>';
-
-
-                                    
-
-                                }
-
-
-                            }
-                              
-                    ],
-                bServerSide: true,
-                sAjaxSource: 'InventoryService.asmx/Get_All_Items',
-                sServerMethod: 'post'
-            });
+            }
+            
+       
 
             //$.ajax({  
             //    url: 'Items.aspx/GetUserDetail', 
@@ -89,6 +73,79 @@
             //    }  
             //});  
      });
+
+          function Access_Levels() {
+
+                    $.ajax({
+                    url: 'Items.aspx/Access_Levels',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    method: 'post',
+                        data: "{}",
+                        async: false,
+                        success: function (data) {
+                            
+                            Access = data.d;
+                           
+                        view = Access.includes("V");
+                        Create = Access.includes("I");
+                        Update = Access.includes("U");
+                        
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+            });
+
+            
+              
+                
+            }
+
+
+     function ShowData() {
+           $j('#datatable').DataTable({
+             "aLengthMenu": [[10, 25, 5], [10, 25, 5]],
+             "iDisplayLength": 5,
+
+
+             columns: [
+
+
+                 { 'data': 'items_name' },
+                 {
+                     'data': 'cat_name',
+
+                 },
+                 { 'data': 'type' },
+
+                 {
+                     'data': 'items_id',
+
+                     'sortable': false,
+
+                     'render': function (val) {
+                         if (Update == true) {
+                             return '<button type="button" id="vw" value="' + val + '" data-toggle="modal" data-target="#EditPopup"  onclick="CallEditPopup(this.value)"    class="btn btn-primary" style="background-color:#0A408A;">Edit</button>';
+                         }
+                         else {
+                             return 'No Rights';
+                         }
+
+                                    
+
+                                }
+
+
+                            }
+                              
+                    ],
+                bServerSide: true,
+                sAjaxSource: 'InventoryService.asmx/Get_All_Items',
+                sServerMethod: 'post'
+            });
+     }
+
      $j(document).ready(function () {  
          $j.ajax({
                 type: "POST",
@@ -262,7 +319,7 @@
               <table  class="pull-right">
                   <tr>
                       <td>
-         <button type="button" class="btn btn-primary" style=" font-size:18px;background-color:#0A408A;color:white;" data-toggle="modal" data-target="#MachinePopup" data-backdrop="false" >Create New Items</button>
+         <button type="button" id="btn" class="btn btn-primary" style=" font-size:18px;background-color:#0A408A;color:white;" data-toggle="modal" data-target="#MachinePopup" data-backdrop="false" >Create New Items</button>
                   </td><td>
 
                   </td></tr>
