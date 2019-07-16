@@ -158,7 +158,7 @@
          var Items_Id = document.getElementById("Item_id");
              var getname = ItemsName.innerText;
      
-                     alert(Val);
+                     //alert(Val);
                 
 
 
@@ -171,49 +171,81 @@
          var n = $("#CallTable1").find("tr").length;
        
          if (n == 1) {
-Swal.fire({
-  title: 'if you Insert Empty Data ',
-  text: "This Role Will Be Delete!",
-  type: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes, delete it!'
-}).then((result) => {
-    if (result.value) {
+             Swal.fire({
+  type: 'error',
+  title: 'Oops...',
+  text: 'Something went wrong!',
+  footer: '<a href>Why do I have this issue?</a>'
+})
 
-            $.ajax({
-                     type: "POST",
-                     contentType: "application/json; charset=utf-8",
-                     url: 'User_Roles.aspx/Delete_Parent',
-                     data: "{}",
+//Swal.fire({
+//  title: 'if you Insert Empty Data ',
+//  text: "This Role Will Be Delete!",
+//  type: 'warning',
+//  showCancelButton: true,
+//  confirmButtonColor: '#3085d6',
+//  cancelButtonColor: '#d33',
+//  confirmButtonText: 'Yes, delete it!'
+//}).then((result) => {
+//    if (result.value) {
 
-                     dataType: "json",
-                     async: false,
+//            $.ajax({
+//                     type: "POST",
+//                     contentType: "application/json; charset=utf-8",
+//                     url: 'User_Roles.aspx/Delete_Parent',
+//                     data: "{}",
 
-                     success: function (data) {
-                         Swal.fire(
-      'Deleted!',
-      'Your file has been deleted.'+data.d,
-      'success'
-                         )
-                          $j('#child').hide();
-             $j('#parent').show();
+//                     dataType: "json",
+//                     async: false,
 
-                     },
-                     Error: function (res) {
-                         alert("Error Occure" + res);
+//                     success: function (data) {
+//                         Swal.fire(
+//      'Deleted!',
+//      'Your file has been deleted.'+data.d,
+//      'success'
+//                         )
+//                          $j('#child').hide();
+//             $j('#parent').show();
 
-                     }
-                 });
+//                     },
+//                     Error: function (res) {
+//                         alert("Error Occure" + res);
+
+//                     }
+//                 });
 
     
-  }
-})
+//  }
+//})
 
 
          }
          else {
+
+                $.ajax({
+                 type: "POST",
+                 contentType: "application/json; charset=utf-8",
+                 url: 'User_Roles.aspx/Insert_Parent',
+                 data: "{'Name':'" + name + "'}",
+
+                 dataType: "json",
+                 async: false,
+
+                 success: function (data) {
+                     if (data.d == "Save") {
+                         alert("Parent Ho gya ");
+                     }
+                     else {
+                         alert(data.d);
+                     }
+                 },
+                 Error: function (res) {
+                     alert("Error Occure" + res);
+
+                 }
+             });
+
+
              for (var i = 0; i < n - 1; i++) {
                  //var Id = $("#txtgetid").text();
 
@@ -291,44 +323,20 @@ Swal.fire({
          }
      }
     
-
+     var name;
 
      function SaveParent() {
 
-         var name = $('#name').val();
+         name = $('#name').val();
        
 
          if (name != "" ) {
-
-             $.ajax({
-                 type: "POST",
-                 contentType: "application/json; charset=utf-8",
-                 url: 'User_Roles.aspx/Insert_Parent',
-                 data: "{'Name':'" + name + "'}",
-
-                 dataType: "json",
-                 async: false,
-
-                 success: function (data) {
-                     if (data.d == "Save") {
-                         $('#parent').hide();
+             $('#parent').hide();
                          $('#child').show();
-                     }
-                     else {
-                         alert(data.d);
-                     }
-                 },
-                 Error: function (res) {
-                     alert("Error Occure" + res);
-
-                 }
-             });
-
-
-
+          
          }
          else {
-             alert("Please Enter ROle Name");
+             alert("Please Enter Role Name");
          }
         
      }

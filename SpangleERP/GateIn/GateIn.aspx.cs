@@ -243,7 +243,7 @@ namespace SpangleERP.WareHouse
             string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
             SqlConnection conn = new SqlConnection(con1);
 
-            SqlCommand com = new SqlCommand("SELECT * from Items", conn); // table name 
+            SqlCommand com = new SqlCommand("SELECT * from Items", conn); 
             SqlDataAdapter da = new SqlDataAdapter(com);
             conn.Open();
             DataSet ds = new DataSet();

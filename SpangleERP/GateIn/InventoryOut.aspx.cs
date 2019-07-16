@@ -359,9 +359,7 @@ where ino.Items_Id ='" + ItemdNames + "'", conn);
 
 
 
-            try
-            {
-                int orderItems = Convert.ToInt32(ItemsQuantity);
+             int orderItems = Convert.ToInt32(ItemsQuantity);
                 if ((ItemsQuantity != cn && ItemsQuantity != "") && (ItemsName != ""))
                 {
                     //if (MfgDate != StopEmptyMfg && ExpDate != StopEmptyMfg)
@@ -434,8 +432,8 @@ where ino.Items_Id ='" + ItemdNames + "'", conn);
                                                 SqlCommand getgrns = new SqlCommand("select grn_id from inventry where invent_id ='" + getnextrow + "'", con);
                                                 int grngets = Convert.ToInt32(getgrns.ExecuteScalar());
                                                 SqlCommand expdates = new SqlCommand("select EXP from GRN where grn_id ='" + grngets + "'", con);
-                                                DateTime gettexpdates = Convert.ToDateTime(expdates.ExecuteScalar());
-                                                // DateTime twoMonthsBack = gettexpdates.AddMonths(-3);
+                                                //DateTime gettexpdates = Convert.ToDateTime(expdates.ExecuteScalar());
+                                                //// DateTime twoMonthsBack = gettexpdates .AddMonths(-3);
 
                                                 if (inventmatchrow > lastidoutquantity)
                                                 {
@@ -528,8 +526,8 @@ where ino.Items_Id ='" + ItemdNames + "'", conn);
                                 quantities = Convert.ToInt32(FIFO.ExecuteScalar());
                                 SqlCommand getgrns = new SqlCommand("select grn_id from inventry where invent_id ='" + getfirstrow + "'", con);
                                 int grngets = Convert.ToInt32(getgrns.ExecuteScalar());
-                                SqlCommand expdates = new SqlCommand("select EXP from GRN where grn_id ='" + grngets + "'", con);
-                                DateTime gettexpdates = Convert.ToDateTime(expdates.ExecuteScalar());
+                                //SqlCommand expdates = new SqlCommand("select EXP from GRN where grn_id ='" + grngets + "'", con);
+                                //DateTime gettexpdates = Convert.ToDateTime(expdates.ExecuteScalar());
                                 
 
                                 while (i < CountRows)
@@ -602,12 +600,8 @@ where ino.Items_Id ='" + ItemdNames + "'", conn);
                 {
                     return "fill Are Required";
                 }
-            }
-            catch (Exception ex)
-            {
-                return ex.Message + "Not Valid";
-            }
-
+            
+           
 
 
         }

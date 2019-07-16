@@ -127,7 +127,7 @@
                                     $tbl.append('<tr ><td ><label>' + data.d[i].emp_name + '</label></td><td><label >' + data.d[i].timein + '</label></td><td><label>' + data.d[i].time_out + '</label></td><td><label>' + data.d[i].late + '</label></td><td><label>' + data.d[i].half + '</label></td><td><label>' + data.d[i].date + '</label></td><td><label>'+data.d[i].status+'</label></td><td><label>'+data.d[i].Overtime+'</label></td></tr>');
                                 }
 
-                                //ye uncomment krna he
+                                
                              id = "";
                              $('#txtseach').val("");
                                

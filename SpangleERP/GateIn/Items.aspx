@@ -117,7 +117,7 @@
                      'data': 'cat_name',
 
                  },
-                 { 'data': 'type' },
+               
 
                  {
                      'data': 'items_id',
@@ -353,7 +353,7 @@
                     <tr>
                         <th>Items Name</th>
                         <th>Cataegory</th>
-                        <th>Type</th>
+                        
                         <th>Edit</th>
                         
                         

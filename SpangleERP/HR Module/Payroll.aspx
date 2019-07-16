@@ -35,9 +35,7 @@
 
             var holidays = 0;
             var month = $('#month').val();
-            //alert("Previos" + previousMonth + " selected month" + selectedmonth);
-            //alert("selected year" + SelectedYear + " cur year" + curyear);
-           
+            
            
             
                 $.ajax({

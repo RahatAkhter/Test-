@@ -51,7 +51,7 @@
             }
         });
 
-        function Access_Levels() {
+        function Access_Levels() { 
 
                     $.ajax({
                     url: 'ItemsCatagories.aspx/Access_Levels',

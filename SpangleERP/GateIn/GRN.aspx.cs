@@ -196,7 +196,7 @@ namespace SpangleERP.WareHouse
                 // ic.items_name = dt.Rows[i]["gate_id"].ToString();
                 //   u.it.items_name = dt.Rows[i][u.it.items_name].ToString();
                 u.Itemsname = dt.Rows[i]["items_name"].ToString();
-
+                u.cat_name = dt.Rows[i]["cat_name"].ToString();
 
                 list_item.Add(u);
 
@@ -246,7 +246,13 @@ namespace SpangleERP.WareHouse
             // valueid = value.ToString();
             string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
             SqlConnection conn = new SqlConnection(con1);
-            SqlCommand cmd = new SqlCommand(@"select c.gate_id,c.I_Quantity,c.Id,c.Item_id,i.items_name from gateitemsin as c left join gatein as p on p.gate_id=c.Id left join Items  as i on i.items_id=c.Item_id where c.gate_id=" + Convert.ToInt32(value) + " ", conn);
+            SqlCommand cmd = new SqlCommand(@"
+select c.gate_id,c.I_Quantity,c.Id,c.Item_id,i.items_name,cat.cat_name from gateitemsin
+ as c left join gatein as p on p.gate_id=c.Id
+  left join Items  as i on i.items_id=c.Item_id
+  left join ItemsCategories as cat
+  on cat.cat_id=i.cat_id
+   where c.gate_id='"+Convert.ToInt32(value)+"' ", conn);
             conn.Open();
             DataTable dt = new DataTable();
             SqlDataReader dr = cmd.ExecuteReader();
@@ -275,7 +281,7 @@ namespace SpangleERP.WareHouse
         //}
 
         [WebMethod]
-        public static string Insert(string Id, string mfg, string exp, string btc, string value, string ware)
+        public static string Insert(string Id, string mfg, string exp, string btc, string value, string ware,string cat)
         {
             string con2 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
             SqlConnection conn1 = new SqlConnection(con2);
@@ -285,58 +291,98 @@ namespace SpangleERP.WareHouse
             int chk = Convert.ToInt32(getid.ExecuteScalar());
 
             conn1.Close();
-            //    if (chk == 0)
-            //    {
-            if (mfg != "" && exp != "" && btc != "")
+            if (cat == "POS")
             {
+                string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
+                SqlConnection conn = new SqlConnection(con1);
+                conn.Open();
 
-                DateTime dtMF = DateTime.Parse(mfg.ToString());
-                DateTime dtEx = DateTime.Parse(exp.ToString());
+                SqlCommand cmd = new SqlCommand(@"insert into GRN values('" + Id + "',@dtmf,@dtex,@btc)", conn);
+                cmd.Parameters.AddWithValue("@dtmf",DBNull.Value);
+                cmd.Parameters.AddWithValue("@dtex", DBNull.Value);
+                cmd.Parameters.AddWithValue("@btc", DBNull.Value);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                conn.Open();
+                SqlCommand getGRN = new SqlCommand("select top 1 grn_id from GRN order By grn_id DESC", conn);
+                string GRNget = getGRN.ExecuteScalar().ToString();
+                conn.Close();
 
+                conn.Open();
 
+                SqlCommand getItems = new SqlCommand("select c.Item_id from gateitemsin as c left join GRN as p on p.id=c.Id  where p.grn_id='" + GRNget + "'", conn);
+                string ItemsGet = getItems.ExecuteScalar().ToString();
+                conn.Close();
 
-                if (dtMF < dtEx)
-                {
-                    string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
-                    SqlConnection conn = new SqlConnection(con1);
-                    conn.Open();
+                conn.Open();
 
-                    SqlCommand cmd = new SqlCommand(@"insert into GRN values('" + Id + "','" + dtMF + "','" + dtEx + "','" + btc.ToString() + "')", conn);
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                    conn.Open();
-                    SqlCommand getGRN = new SqlCommand("select top 1 grn_id from GRN order By grn_id DESC", conn);
-                    string GRNget = getGRN.ExecuteScalar().ToString();
-                    conn.Close();
-
-                    conn.Open();
-
-                    SqlCommand getItems = new SqlCommand("select c.Item_id from gateitemsin as c left join GRN as p on p.id=c.Id  where p.grn_id='" + GRNget + "'", conn);
-                    string ItemsGet = getItems.ExecuteScalar().ToString();
-                    conn.Close();
-
-                    conn.Open();
-
-                    SqlCommand getquantity = new SqlCommand("select c.I_Quantity from gateitemsin as c left join GRN as p on p.id=c.Id  where p.grn_id='" + GRNget + "'", conn);
-                    string quantityGet = getquantity.ExecuteScalar().ToString();
-                    conn.Close();
-                    conn.Open();
-                    SqlCommand insertcmd = new SqlCommand("insert into inventry values('" + quantityGet + "','" + ware + "','" + GRNget + "','" + ItemsGet + "','Qurantine')", conn);
-                    insertcmd.ExecuteNonQuery();
-                    conn.Close();
-                    conn.Open();
-                    SqlCommand cmdup = new SqlCommand(@"update gatein set status = '1' where gate_id ='" + value.ToString() + "'", conn);
-                    cmdup.ExecuteNonQuery();
-                    conn.Close();
-                }
-                else
-                {
-                    return "MFG is alaways less then Exp Date";
-                }
+                SqlCommand getquantity = new SqlCommand("select c.I_Quantity from gateitemsin as c left join GRN as p on p.id=c.Id  where p.grn_id='" + GRNget + "'", conn);
+                string quantityGet = getquantity.ExecuteScalar().ToString();
+                conn.Close();
+                conn.Open();
+                SqlCommand insertcmd = new SqlCommand("insert into inventry values('" + quantityGet + "','" + ware + "','" + GRNget + "','" + ItemsGet + "','Qurantine')", conn);
+                insertcmd.ExecuteNonQuery();
+                conn.Close();
+                conn.Open();
+                SqlCommand cmdup = new SqlCommand(@"update gatein set status = '1' where gate_id ='" + value.ToString() + "'", conn);
+                cmdup.ExecuteNonQuery();
+                conn.Close();
             }
             else
             {
-                return "All Feilds Are Required";
+
+                if (mfg != "" && exp != "" && btc != "")
+                {
+
+                    DateTime dtMF = DateTime.Parse(mfg.ToString());
+                    DateTime dtEx = DateTime.Parse(exp.ToString());
+
+
+
+                    if (dtMF < dtEx)
+                    {
+                        string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
+                        SqlConnection conn = new SqlConnection(con1);
+                        conn.Open();
+
+                        SqlCommand cmd = new SqlCommand(@"insert into GRN values('" + Id + "','" + dtMF + "','" + dtEx + "','" + btc.ToString() + "')", conn);
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        conn.Open();
+                        SqlCommand getGRN = new SqlCommand("select top 1 grn_id from GRN order By grn_id DESC", conn);
+                        string GRNget = getGRN.ExecuteScalar().ToString();
+                        conn.Close();
+
+                        conn.Open();
+
+                        SqlCommand getItems = new SqlCommand("select c.Item_id from gateitemsin as c left join GRN as p on p.id=c.Id  where p.grn_id='" + GRNget + "'", conn);
+                        string ItemsGet = getItems.ExecuteScalar().ToString();
+                        conn.Close();
+
+                        conn.Open();
+
+                        SqlCommand getquantity = new SqlCommand("select c.I_Quantity from gateitemsin as c left join GRN as p on p.id=c.Id  where p.grn_id='" + GRNget + "'", conn);
+                        string quantityGet = getquantity.ExecuteScalar().ToString();
+                        conn.Close();
+                        conn.Open();
+                        SqlCommand insertcmd = new SqlCommand("insert into inventry values('" + quantityGet + "','" + ware + "','" + GRNget + "','" + ItemsGet + "','Qurantine')", conn);
+                        insertcmd.ExecuteNonQuery();
+                        conn.Close();
+                        conn.Open();
+                        SqlCommand cmdup = new SqlCommand(@"update gatein set status = '1' where gate_id ='" + value.ToString() + "'", conn);
+                        cmdup.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                    else
+                    {
+                        return "MFG is alaways less then Exp Date";
+                    }
+                }
+
+                else
+                {
+                    return "All Feilds Are Required";
+                }
             }
 
             return "Save Successfully";

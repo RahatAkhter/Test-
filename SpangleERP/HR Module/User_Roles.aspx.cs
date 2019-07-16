@@ -154,12 +154,12 @@ namespace SpangleERP.HR_Module
                 string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
                 SqlConnection conn = new SqlConnection(con1);
 
-                SqlCommand cmd1 = new SqlCommand(@"insert into Roles_Content values(@Role_Id,@User_Id,@Page_Id,@rights)", conn);
+                SqlCommand cmd1 = new SqlCommand(@"insert into Roles_Content values(@Role_Id,@Page_Id,@rights)", conn);
 
                 cmd1.Parameters.AddWithValue("@Page_Id",Convert.ToInt32(page_id));
                 cmd1.Parameters.AddWithValue("@rights", level);
                 cmd1.Parameters.AddWithValue("@Role_Id", Convert.ToInt32(Role_Id));
-                cmd1.Parameters.AddWithValue("@User_Id", id);
+                //cmd1.Parameters.AddWithValue("@User_Id", id);
                
                 conn.Open();
                 cmd1.ExecuteNonQuery();

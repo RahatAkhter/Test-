@@ -389,7 +389,7 @@ namespace SpangleERP.GateIn
                     filteredCount = Convert.ToInt32(rdr["TotalCount"]);
                     emp.items_id = Convert.ToInt32(rdr["items_id"]);
                     emp.cat_name = Convert.ToString(rdr["cat_name"]);
-                    emp.type = Convert.ToInt32(rdr["type"]);
+                   // emp.type = Convert.ToInt32(rdr["type"]);
 
                     listEmployees.Add(emp);
                 }

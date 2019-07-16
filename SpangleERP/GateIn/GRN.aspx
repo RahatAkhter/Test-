@@ -162,10 +162,17 @@
                     var employeeTable = $('#tblEmployee1 tbody');  
           employeeTable.empty();
           count = data.d.length;
-                    for (var i = 0; i < data.d.length; i++) {
+          for (var i = 0; i < data.d.length; i++) {
 
-                           employeeTable.append('<tr ><td class="control-label" style="display:none;" >' + data.d[i].ItemIn_Id + '</td><td class="control_label">' + data.d[i].I_Quantity + '</td><td class="control_label" style="display:none;">' + data.d[i].ItemsId + '</td><td class="control_label">' + data.d[i].Itemsname + '</td><td><Input type="date"  id="mfg' + i + '" class="form-control" /></td ><td><Input type="date"  id="exp' + i + '" class="form-control" /></td ><td><Input type="text"  id= "btch' + i + '" class="form-control" /></td >')
-          }
+              if (data.d[i].cat_name == "POS") {
+                  employeeTable.append('<tr ><td><Input type="text" value="' + data.d[i].cat_name + '"  id= "Cat' + i + '"  readonly class="form-control" /></td><td class="control-label" style="display:none;" >' + data.d[i].ItemIn_Id + '</td><td class="control_label">' + data.d[i].I_Quantity + '</td><td class="control_label" style="display:none;">' + data.d[i].ItemsId + '</td><td class="control_label">' + data.d[i].Itemsname + '</td><td style="display:none;"><Input type="date"  id="mfg' + i + '" class="form-control" /></td ><td style="display:none;><Input type="date"  id="exp' + i + '" class="form-control" /></td ><td style="display:none;><Input type="text"  id= "btch' + i + '" class="form-control" /></td >')
+              
+              }
+              else {
+
+                  employeeTable.append('<tr ><td><Input type="text" value="' + data.d[i].cat_name + '" id= "Cat' + i + '" readonly class="form-control" /></td><td class="control-label" style="display:none;" >' + data.d[i].ItemIn_Id + '</td><td class="control_label">' + data.d[i].I_Quantity + '</td><td class="control_label" style="display:none;">' + data.d[i].ItemsId + '</td><td class="control_label">' + data.d[i].Itemsname + '</td><td><Input type="date"  id="mfg' + i + '" class="form-control" /></td ><td><Input type="date"  id="exp' + i + '" class="form-control" /></td ><td><Input type="text"  id= "btch' + i + '" class="form-control" /></td >')
+              }
+              }
 
                     },  
                 error: function (err) {  
@@ -239,11 +246,14 @@
 
                       var check = ($('#btch' + i).val());
                       var checkmfg = ($('#mfg' + i).val());
-                           var checkexp = ($('#exp' + i).val());
-                      if (check == "" || check == null || checkmfg > checkexp ) {
-                          flag = false;
-                         
-                          
+                      var checkexp = ($('#exp' + i).val());
+                      var cat = ($('#Cat' + i).val());
+                      
+                      if (cat != "POS") {
+                          if (check == "" || check == null || checkmfg > checkexp) {
+                              flag = false;
+
+                          }
                       }
                      
                   }
@@ -268,22 +278,35 @@
 
          
          var n = $("#tblEmployee1").find("tr").length;
-
+            var id, mfg, exp, btc;
+            var j = 0;
              for (var i = 1; i < n; i++) {
-              
-                 var id = $("#tblEmployee1").find("tr").eq(i).find("td").eq(0).text();
-              
-                
-                 var mfg =  $("#tblEmployee1").find("tr").eq(i).find('td:eq(4) input[type="date"]').val();
-                 var exp = $("#tblEmployee1").find("tr").eq(i).find('td:eq(5) input[type="date"]').val(); 
-                  var btc =  $("#tblEmployee1").find("tr").eq(i).find('td:eq(6) input[type="text"]').val(); 
-               
-                 
+                 var cat =  $("#tblEmployee1").find("tr").eq(i).find('td:eq(0) input[type="text"]').val(); 
+                 if (cat != "POS") {
+                     id = $("#tblEmployee1").find("tr").eq(i).find("td").eq(1).text();
 
-                     $.ajax({
+
+                     mfg = $("#tblEmployee1").find("tr").eq(i).find('td:eq(5) input[type="date"]').val();
+                     exp = $("#tblEmployee1").find("tr").eq(i).find('td:eq(6) input[type="date"]').val();
+                     btc = $("#tblEmployee1").find("tr").eq(i).find('td:eq(7) input[type="text"]').val();
+                 }
+                 else {
+                      id = $("#tblEmployee1").find("tr").eq(i).find("td").eq(1).text();
+
+                     mfg = "";
+                     exp = "";
+                     btc = "";
+                     
+                     
+                 }
+                 
+                   var cat1 = ($('#Cat' + j).val());
+                 alert(id + " " + mfg + " " + exp + " " + btc + " " + txtid + " " + " " + wh + " " + cat1);
+                 j++;
+                   $.ajax({
                         type: "Post",
                          url: "GRN.aspx/Insert",
-                         data: "{'Id':" + id + ",'mfg':'" + mfg + "','exp':'" + exp + "','btc':'" + btc + "','value':'" + txtid + "','ware':'" + wh + "'}",
+                         data: "{'Id':" + id + ",'mfg':'" + mfg + "','exp':'" + exp + "','btc':'" + btc + "','value':'" + txtid + "','ware':'" + wh + "','cat':'" + cat+ "'}",
 
                       contentType: "application/json; charset=utf-8",
                         dataType: "json",
@@ -300,6 +323,7 @@
 
                          }
                      })
+                   
 
                  }
 
@@ -470,7 +494,7 @@
                
            <thead style="font-family:Cambria ;font-size:14px;text-decoration-style:solid;color:#0A408A;">
       <tr>
-     
+     <th>Cat</th>
         <th>Quantity</th>
       
           <th>Item Name</th>
@@ -486,7 +510,7 @@
     </tbody>
   </table>
   </div>
-                 
+                  
                       
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-offset-3">
@@ -520,7 +544,7 @@
     
    <div class="panel-body">
 
-
+       
            <div class="table-responsive"> 
       <div class="table-responsive">
               <table  class="pull-right">

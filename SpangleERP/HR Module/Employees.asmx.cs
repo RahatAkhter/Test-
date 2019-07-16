@@ -121,6 +121,112 @@ namespace SpangleERP.HR_Module
 
         }
 
+        // here we get All Users
+        [WebMethod]
+        public void GetAll_Users(int iDisplayLength, int iDisplayStart, int iSortCol_0, string sSortDir_0, string sSearch)
+        {
+            int displayLength = iDisplayLength;
+            int displayStart = iDisplayStart;
+            int sortCol = iSortCol_0;
+            string sortDir = sSortDir_0;
+            string search = sSearch;
+
+            string cs = ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
+
+            List<Users> listEmployees = new List<Users>();
+            int filteredCount = 0;
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                SqlCommand cmd = new SqlCommand("Sp_GetUsers", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter paramDisplayLength = new SqlParameter()
+                {
+                    ParameterName = "@DisplayLength",
+                    Value = displayLength
+                };
+                cmd.Parameters.Add(paramDisplayLength);
+
+                SqlParameter paramDisplayStart = new SqlParameter()
+                {
+                    ParameterName = "@DisplayStart",
+                    Value = displayStart
+                };
+                cmd.Parameters.Add(paramDisplayStart);
+
+                SqlParameter paramSortCol = new SqlParameter()
+                {
+                    ParameterName = "@SortCol",
+                    Value = sortCol
+                };
+                cmd.Parameters.Add(paramSortCol);
+
+                SqlParameter paramSortDir = new SqlParameter()
+                {
+                    ParameterName = "@SortDir",
+                    Value = sortDir
+                };
+                cmd.Parameters.Add(paramSortDir);
+
+                SqlParameter paramSearchString = new SqlParameter()
+                {
+                    ParameterName = "@Search",
+                    Value = string.IsNullOrEmpty(search) ? null : search
+                };
+                cmd.Parameters.Add(paramSearchString);
+
+                con.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    Users emp = new Users();
+                    emp.User_id = Convert.ToInt32(rdr["User_id"]);
+                    filteredCount = Convert.ToInt32(rdr["TotalCount"]);
+                    emp.emp_name = rdr["emp_name"].ToString();
+                    emp.Desig = Convert.ToString(rdr["Designation"]);
+                    emp.Role = rdr["Role_name"].ToString();
+                    emp.Img = Convert.ToString(rdr["Img"]);
+                    emp.dep = Convert.ToString(rdr["dep_name"]);
+                    listEmployees.Add(emp);
+                }
+            }
+
+            var result = new
+            {
+                iTotalRecords = GetUsersTotalCount(),
+                iTotalDisplayRecords = filteredCount,
+                aaData = listEmployees
+            };
+
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            Context.Response.Write(js.Serialize(result));
+
+        }
+
+        private int GetUsersTotalCount()
+        {
+            int totalEmployeeCount = 0;
+            string cs = ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                SqlCommand cmd = new
+                    SqlCommand("select count(*) from Users", con);
+                con.Open();
+                totalEmployeeCount = (int)cmd.ExecuteScalar();
+            }
+            return totalEmployeeCount;
+
+
+
+        }
+
+
+
+
+
+
+
 
         //here we All Roles
         [WebMethod]
@@ -701,9 +807,9 @@ on l.emp_id = e.emp_id", con);
 
         }
 
-        //here we het All Users
+       // here we het All Users
         [WebMethod]
-        public void GetAll_Users(int iDisplayLength, int iDisplayStart, int iSortCol_0, string sSortDir_0, string sSearch)
+        public void Get_Departments(int iDisplayLength, int iDisplayStart, int iSortCol_0, string sSortDir_0, string sSearch)
         {
             int displayLength = iDisplayLength;
             int displayStart = iDisplayStart;
@@ -713,11 +819,11 @@ on l.emp_id = e.emp_id", con);
 
             string cs = ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
 
-            List<Users> listEmployees = new List<Users>();
+            List<ClsDepartments> listEmployees = new List<ClsDepartments>();
             int filteredCount = 0;
             using (SqlConnection con = new SqlConnection(cs))
             {
-                SqlCommand cmd = new SqlCommand("Sp_GetUsers", con);
+                SqlCommand cmd = new SqlCommand("Sp_GetDepartment", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 SqlParameter paramDisplayLength = new SqlParameter()
@@ -759,21 +865,19 @@ on l.emp_id = e.emp_id", con);
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    Users emp = new Users();
-                    emp.User_id = Convert.ToInt32(rdr["User_id"]);
+                    ClsDepartments emp = new ClsDepartments();
+                    emp.dep_name = Convert.ToString(rdr["dep_name"]);
                     filteredCount = Convert.ToInt32(rdr["TotalCount"]);
-                    emp.emp_name = rdr["emp_name"].ToString();
-                    emp.Desig = Convert.ToString(rdr["Designation"]);
-                    emp.Role = rdr["Role_name"].ToString();
-                    emp.Img = Convert.ToString(rdr["Img"]);
-                    emp.dep = Convert.ToString(rdr["dep_name"]);
+                    emp.dep_id =Convert.ToInt32(rdr["dep_id"].ToString());
+                    emp.desc = Convert.ToString(rdr["dep_discription"]);
+                   
                     listEmployees.Add(emp);
                 }
             }
 
             var result = new
             {
-                iTotalRecords = GetUsersTotalCount(),
+                iTotalRecords = GetDepTotalCount(),
                 iTotalDisplayRecords = filteredCount,
                 aaData = listEmployees
             };
@@ -783,7 +887,7 @@ on l.emp_id = e.emp_id", con);
 
         }
 
-        private int GetUsersTotalCount()
+        private int GetDepTotalCount()
         {
             int totalEmployeeCount = 0;
             string cs = ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
@@ -791,7 +895,7 @@ on l.emp_id = e.emp_id", con);
             using (SqlConnection con = new SqlConnection(cs))
             {
                 SqlCommand cmd = new
-                    SqlCommand("select count(*) from Users", con);
+                    SqlCommand("select count(*) from Department", con);
                 con.Open();
                 totalEmployeeCount = (int)cmd.ExecuteScalar();
             }
