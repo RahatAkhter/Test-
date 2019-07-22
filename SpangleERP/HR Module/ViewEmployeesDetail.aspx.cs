@@ -174,7 +174,7 @@ namespace SpangleERP.HR_Module
 
 
         [WebMethod]
-        public static string emp(string fname, string lname, string doj, string dob, string desig, string father, string lno, string nic, string mobile, string gender, string cur, string pur, string exp, string bnk, string emr, string pid, string type_id, string edu_id, string dep_id,string job_type)
+        public static string emp(string fname, string lname, string doj, string dob, string desig, string father, string lno, string nic, string mobile, string gender, string cur, string pur, string exp, string bnk, string emr, string pid, string type_id, string edu_id, string dep_id,string job_type,string excpetion)
         {
 
             try
@@ -182,7 +182,7 @@ namespace SpangleERP.HR_Module
 
                 string con1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBMS"].ConnectionString;
                 SqlConnection conn = new SqlConnection(con1);
-                SqlCommand cmd1 = new SqlCommand(@"insert into Employee OUTPUT inserted.emp_id values(@name,@cnic,@dob,@licn,@mobile,@cur,@pur,@doj,@dep_id,@packid,@contr,@eduid,@gender,@bnk,@emp_type,@hr,@father,@emrg,@exp,@Img,@status)", conn);
+                SqlCommand cmd1 = new SqlCommand(@"insert into Employee OUTPUT inserted.emp_id values(@name,@cnic,@dob,@licn,@mobile,@cur,@pur,@doj,@dep_id,@packid,@contr,@eduid,@gender,@bnk,@emp_type,@hr,@father,@emrg,@exp,@Img,@status,@excption)", conn);
                 cmd1.Parameters.AddWithValue("@name", fname + " " + lname);
                 cmd1.Parameters.AddWithValue("@cnic", nic);
                 cmd1.Parameters.AddWithValue("@dob", SqlDbType.Date).Value = dob;
@@ -204,6 +204,7 @@ namespace SpangleERP.HR_Module
                 cmd1.Parameters.AddWithValue("@exp", Convert.ToInt32(exp));
                 cmd1.Parameters.AddWithValue("@Img", "");
                 cmd1.Parameters.AddWithValue("@status", 1);
+                cmd1.Parameters.AddWithValue("@excption",Convert.ToInt32(excpetion));
                 conn.Open();
                 emp_id = Convert.ToInt32(cmd1.ExecuteScalar());
 
@@ -226,7 +227,7 @@ namespace SpangleERP.HR_Module
 
 
         [WebMethod]
-        public static string Update(string fname, string lname, string doj, string dob, string desig, string father, string lno, string nic, string mobile, string gender, string cur, string pur, string exp, string bnk, string emr, string pid, string type_id, string edu_id, string dep_id,string eid,string jobtype)
+        public static string Update(string fname, string lname, string doj, string dob, string desig, string father, string lno, string nic, string mobile, string gender, string cur, string pur, string exp, string bnk, string emr, string pid, string type_id, string edu_id, string dep_id,string eid,string jobtype,string exception)
         {
 
             try
@@ -239,7 +240,9 @@ namespace SpangleERP.HR_Module
 update Employee set emp_name=@name,cnic=@cnic,dob=@dob,license=@licn,
 mobile=@mobile,currant_address=@cur,permenant_address=@pur,experience=@exp,date_of_joining=@doj,
 dep_id=@dep_id,salary_pack=@packid,contract=@contr,edu_id=@eduid,gender=@gender,bankAccount=@bnk,Emp_type=@emp_type,
-Designation=@hr,f_name=@father,emer_number=@emrg where emp_id=@emp_id", conn);
+Designation=@hr,f_name=@father,emer_number=@emrg,exception=@exception where emp_id=@emp_id", conn);
+
+
                 cmd1.Parameters.AddWithValue("@name", fname + " " + lname);
                 cmd1.Parameters.AddWithValue("@cnic", nic);
                 cmd1.Parameters.AddWithValue("@dob", SqlDbType.Date).Value = dob;
@@ -260,12 +263,12 @@ Designation=@hr,f_name=@father,emer_number=@emrg where emp_id=@emp_id", conn);
                 cmd1.Parameters.AddWithValue("@emrg", emr);
                 cmd1.Parameters.AddWithValue("@exp", Convert.ToInt32(exp));
                 cmd1.Parameters.AddWithValue("@emp_id", Convert.ToInt32(eid));
-
+                cmd1.Parameters.AddWithValue("@exception",Convert.ToInt32(exception));
                 conn.Open();
                 cmd1.ExecuteNonQuery();
                 conn.Close();
                 conn.Dispose();
-                // ViewEmployeesDetail obj = new ViewEmployeesDetail();
+               
                 upd_id = Convert.ToInt32(eid);
                 return "Save";
 

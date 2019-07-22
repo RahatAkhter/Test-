@@ -100,8 +100,16 @@
 
                           return ' <button type="button" class=" btn btn-primary" value="' + val + '"  onclick="View(this.value);" style=" background-color: #0A408A;" >View</button>';
                       }
-                    }
-                   
+                    },
+                  {
+                                'data': 'Role_Id',
+                                'sortable': false,
+                                'searchable': false,
+                      'render': function (val) {
+
+                          return ' <button type="button" class=" btn btn-primary" value="' + val + '"  onclick="Edit(this.value);" style=" background-color: #0A408A;" >Edit</button>';
+                      }
+                    } 
                             
                                         
                     ],
@@ -111,8 +119,12 @@
             });
         }
 
-   
 
+     function Edit(Val) {
+
+         alert(Val);
+
+     }
 
      function View(Val) {
 
@@ -540,7 +552,7 @@ display: block;
                        
                         <th>Role Name</th>
                         <th>View</th>
-                        
+                        <th>Edit</th>
                         
                     </tr>
                 </thead>

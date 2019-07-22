@@ -193,16 +193,16 @@
               var emr_numb = $('#emr_num').val();
            var ddl6 = document.getElementById("<%=DropDownList6.ClientID%>");
            var jobtype = ddl6.options[ddl6.selectedIndex].text;
-           
-              
+           var ddl7 = document.getElementById("<%=DropDownList7.ClientID%>");
+           var exception = ddl7.options[ddl7.selectedIndex].value;
+           alert(exception);
            $.ajax({
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
                         url: 'ViewEmployeesDetail.aspx/emp',
                         
                //  data: "{'fname':'" + fname.toString() + "','lname':'" + lanme.toString() + "','doj':'" + doj.toString() + "','dob':'" + dob.toString() + "','desig':'" + desig.toString() + "','father':'" + father.toString() + "','lno':'" + lno.toString() + "','nic':'" + nic.toString() + "','mobile':'" + mobile.toString() + "','gender':'" + gender.toString() + "','cur':'" + curaddress.toString() + "','pur':'" + puraddress.toString() + "','exp':'" + exp.toString() + "','bnk':'" + bnk.toString() + "','emr':'" + emr_numb.toString() + "','pid':'" + pack_id.toString() + "','type_id':'" + typeid.toString() + "','edu_id':'" + edu_id.toString() + "','dep_id':'" + dep_id.toString() + "'}",
-               data: "{'fname':'" + fname.toString() + "','lname':'" + lname.toString() + "','doj':'" + doj + "','dob':'" + dob + "','desig':'" + desig.toString() + "','father':'" + father.toString() + "','lno':'" + lno.toString() + "','nic':'" + nic.toString() + "','mobile':'" + mobil.toString() + "','gender':'" + gender.toString() + "','cur':'" + curaddress.toString() + "','pur':'" + puraddress.toString() + "','exp':'" + exp.toString() + "','bnk':'" + bnk.toString() + "','emr':'" + emr_numb.toString() + "','pid':'" + pack_id.toString() + "','type_id':'" + typeid.toString() + "','edu_id':'" + edu_id.toString() + "','dep_id':'" + dep_id.toString() + "','job_type':'" + jobtype + "'}",
-
+               data: "{'fname':'" + fname.toString() + "','lname':'" + lname.toString() + "','doj':'" + doj + "','dob':'" + dob + "','desig':'" + desig.toString() + "','father':'" + father.toString() + "','lno':'" + lno.toString() + "','nic':'" + nic.toString() + "','mobile':'" + mobil.toString() + "','gender':'" + gender.toString() + "','cur':'" + curaddress.toString() + "','pur':'" + puraddress.toString() + "','exp':'" + exp.toString() + "','bnk':'" + bnk.toString() + "','emr':'" + emr_numb.toString() + "','pid':'" + pack_id.toString() + "','type_id':'" + typeid.toString() + "','edu_id':'" + edu_id.toString() + "','dep_id':'" + dep_id.toString() + "','job_type':'" + jobtype + "','excpetion':'" + exception + "'}",
             //   data: "{}",                  
                dataType: "json",
                         async: false,
@@ -231,8 +231,8 @@
         
        function Update() {
 
-
-            var fname = $('#fname').val();
+           alert("agaya");
+            <%--var fname = $('#fname').val();
         var lname = $('#lname').val();
         var desig = $('#desig').val();
         var father = $('#faname').val();
@@ -262,7 +262,10 @@
 
            var ddl5 = document.getElementById("<%=DropDownList6.ClientID%>");
            var job_type = ddl5.options[ddl5.selectedIndex].text;
-              
+
+           var ddl7 = document.getElementById("<%=DropDownList7.ClientID%>");
+           var exception = ddl7.options[ddl7.selectedIndex].value;
+
               var x = document.getElementById("dob");
               var dob = x.value;
               var y = document.getElementById("doj");
@@ -277,10 +280,7 @@
                    url: 'ViewEmployeesDetail.aspx/Update',
 
                    //  data: "{'fname':'" + fname.toString() + "','lname':'" + lanme.toString() + "','doj':'" + doj.toString() + "','dob':'" + dob.toString() + "','desig':'" + desig.toString() + "','father':'" + father.toString() + "','lno':'" + lno.toString() + "','nic':'" + nic.toString() + "','mobile':'" + mobile.toString() + "','gender':'" + gender.toString() + "','cur':'" + curaddress.toString() + "','pur':'" + puraddress.toString() + "','exp':'" + exp.toString() + "','bnk':'" + bnk.toString() + "','emr':'" + emr_numb.toString() + "','pid':'" + pack_id.toString() + "','type_id':'" + typeid.toString() + "','edu_id':'" + edu_id.toString() + "','dep_id':'" + dep_id.toString() + "'}",
-                   data: "{'fname':'" + fname.toString() + "','lname':'" + lname.toString() + "','doj':'" + doj + "','dob':'" + dob + "','desig':'" + desig.toString() + "','father':'" + father.toString() + "','lno':'" + lno.toString() + "','nic':'" + nic.toString() + "','mobile':'" + mobil.toString() + "','gender':'" + gender.toString() + "','cur':'" + curaddress.toString() + "','pur':'" + puraddress.toString() + "','exp':'" + exp.toString() + "','bnk':'" + bnk.toString() + "','emr':'" + emr_numb.toString() + "','pid':'" + pack_id.toString() + "','type_id':'" + typeid.toString() + "','edu_id':'" + edu_id.toString() + "','dep_id':'" + dep_id.toString() + "','eid':'" + eid + "','jobtype':'" + job_type + "'}",
-
-                   //   data: "{}",                  
-                   dataType: "json",
+                   data: "{'fname':'" + fname.toString() + "','lname':'" + lname.toString() + "','doj':'" + doj + "','dob':'" + dob + "','desig':'" + desig.toString() + "','father':'" + father.toString() + "','lno':'" + lno.toString() + "','nic':'" + nic.toString() + "','mobile':'" + mobil.toString() + "','gender':'" + gender.toString() + "','cur':'" + curaddress.toString() + "','pur':'" + puraddress.toString() + "','exp':'" + exp.toString() + "','bnk':'" + bnk.toString() + "','emr':'" + emr_numb.toString() + "','pid':'" + pack_id.toString() + "','type_id':'" + typeid.toString() + "','edu_id':'" + edu_id.toString() + "','dep_id':'" + dep_id.toString() + "','eid':'" + eid + "','jobtype':'" + job_type + "','exception':'" + exception + "'}",                   //   data: "{}",                                     dataType: "json",
                    async: false,
 
                    success: function (data) {
@@ -306,7 +306,7 @@
            else {
                alert("Please Select Employee First");
 
-           }
+           }--%>
 
 
         }
@@ -449,7 +449,95 @@ img.src = ''+data.d[i].Img;
             
         }
    
-      
+
+
+        function update1() {
+
+            alert("sdjdhjd");
+
+
+              var fname = $('#fname').val();
+        var lname = $('#lname').val();
+        var desig = $('#desig').val();
+        var father = $('#faname').val();
+              var lno = $('#lno').val();
+              var nic = $('#nic').val();
+              
+              var mobil = $('#Mobile').val();
+              var curaddress = $('#curentaddress').val();
+              var puraddress = $('#Permenentddress').val();
+              
+              var exp = $('#experience').val();
+              
+              var bnk = $('#bankacnt').val();
+
+        var ddl = document.getElementById("<%=DropDownList1.ClientID%>");
+        var typeid = ddl.options[ddl.selectedIndex].value;
+        var ddl1 = document.getElementById("<%=DropDownList2.ClientID%>");
+        var dep_id = ddl1.options[ddl1.selectedIndex].value;
+              
+        var ddl2 = document.getElementById("<%=DropDownList3.ClientID%>");
+        var pack_id = ddl2.options[ddl2.selectedIndex].value;
+        var ddl3 = document.getElementById("<%=DropDownList4.ClientID%>");
+              var edu_id = ddl3.options[ddl3.selectedIndex].value;
+
+              var ddl4 = document.getElementById("<%=DropDownList5.ClientID%>");
+              var gender = ddl4.options[ddl4.selectedIndex].text;
+
+           var ddl5 = document.getElementById("<%=DropDownList6.ClientID%>");
+           var job_type = ddl5.options[ddl5.selectedIndex].text;
+
+           var ddl7 = document.getElementById("<%=DropDownList7.ClientID%>");
+           var exception = ddl7.options[ddl7.selectedIndex].value;
+
+              var x = document.getElementById("dob");
+              var dob = x.value;
+              var y = document.getElementById("doj");
+              var doj = y.value;
+              var emr_numb = $('#emr_num').val();
+
+           
+           if (eid != "") {
+               $.ajax({
+                   type: "POST",
+                   contentType: "application/json; charset=utf-8",
+                   url: 'ViewEmployeesDetail.aspx/Update',
+
+                   //  data: "{'fname':'" + fname.toString() + "','lname':'" + lanme.toString() + "','doj':'" + doj.toString() + "','dob':'" + dob.toString() + "','desig':'" + desig.toString() + "','father':'" + father.toString() + "','lno':'" + lno.toString() + "','nic':'" + nic.toString() + "','mobile':'" + mobile.toString() + "','gender':'" + gender.toString() + "','cur':'" + curaddress.toString() + "','pur':'" + puraddress.toString() + "','exp':'" + exp.toString() + "','bnk':'" + bnk.toString() + "','emr':'" + emr_numb.toString() + "','pid':'" + pack_id.toString() + "','type_id':'" + typeid.toString() + "','edu_id':'" + edu_id.toString() + "','dep_id':'" + dep_id.toString() + "'}",
+                   data: "{'fname':'" + fname.toString() + "','lname':'" + lname.toString() + "','doj':'" + doj + "','dob':'" + dob + "','desig':'" + desig.toString() + "','father':'" + father.toString() + "','lno':'" + lno.toString() + "','nic':'" + nic.toString() + "','mobile':'" + mobil.toString() + "','gender':'" + gender.toString() + "','cur':'" + curaddress.toString() + "','pur':'" + puraddress.toString() + "','exp':'" + exp.toString() + "','bnk':'" + bnk.toString() + "','emr':'" + emr_numb.toString() + "','pid':'" + pack_id.toString() + "','type_id':'" + typeid.toString() + "','edu_id':'" + edu_id.toString() + "','dep_id':'" + dep_id.toString() + "','eid':'" + eid + "','jobtype':'" + job_type + "','exception':'" + exception + "'}",                   //   data: "{}",                                     dataType: "json",
+                   async: false,
+
+                   success: function (data) {
+                       if (data.d == "Save") {
+                           alert("Update Successfully ");
+
+                           eid = "";
+                       }
+                       else {
+                           alert("Some thing went wromg" + data.d);
+
+                       }
+
+                   },
+                   Error: function (res) {
+                       alert("Error Occure" + res);
+
+                   }
+               });
+
+
+           }
+           else {
+               alert("Please Select Employee First");
+
+           }
+
+
+
+
+        }
+
+
 
     </script>
   
@@ -633,7 +721,22 @@ img.src = ''+data.d[i].Img;
         </div>
         </div>
              
-        
+
+          <div class="form-group">
+                  <label class="control-label col-sm-2" for="DateOfJoinning">Exception:</label>
+            <div class="col-sm-3">
+                
+<asp:DropDownList ID="DropDownList7" CssClass="form-control" runat="server" style=" width:100%; height:36px ;font-weight:bold">
+         <asp:ListItem Text="No" Value="0" />
+         <asp:ListItem Text="Yes" Value="1" />
+          </asp:DropDownList>
+
+
+            </div>
+           
+    
+        </div>
+             
       
              <br>
         <div class="form-group">
@@ -644,8 +747,9 @@ img.src = ''+data.d[i].Img;
                         
                       <button type="button" class="btn btn-primary" ID="BTN_CLICK" OnClick="Save_Emp();" style="background-color:#0A408A;color:white;">Save</button>
                
-                             <button type="button" class="btn btn-primary" onclick="Update();" style="background-color:#0A408A;color:white;">Update</button>
-                           </div>
+                             <button type="button" onclick="update1();" class="btn btn-primary"  style="background-color:#0A408A;color:white;" >Update</button> 
+                         
+                     </div>
         </div>
              
               <br />
